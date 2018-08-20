@@ -1,0 +1,36 @@
+{
+  "name": "infinito-wallet",
+  "version": "1.0.0",
+  "description": "infinito wallet ",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "pretest": "eslint .",
+    "test": "mocha --timeout 10000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/infinityblockchainlabs/node-infinito-wallet.git"
+  },
+  "keywords": [
+    "infinito",
+    "wallet",
+    "SDK",
+    "IBL"
+  ],
+  "author": "IBL",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/infinityblockchainlabs/node-infinito-wallet/issues"
+  },
+  "homepage": "https://github.com/infinityblockchainlabs/node-infinito-wallet#readme",
+  "dependencies": {
+    "infinito-util": "git+https://github.com/infinityblockchainlabs/node-infinito-util.git#develop"
+  },
+  "devDependencies": {
+    "eslint": "^5.2.0",
+    "mocha": "^5.2.0"
+  }
+}
