@@ -2,7 +2,6 @@
   "name": "infinito-wallet",
   "version": "1.0.0",
   "description": "infinito wallet ",
-  "main": "index.js",
   "directories": {
     "lib": "lib"
   },
