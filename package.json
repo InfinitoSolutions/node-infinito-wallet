@@ -27,7 +27,9 @@
   },
   "homepage": "https://github.com/infinityblockchainlabs/node-infinito-wallet#readme",
   "dependencies": {
-    "infinito-util": "git+https://github.com/infinityblockchainlabs/node-infinito-util.git#develop"
+    "bip39": "^2.5.0",
+    "infinito-util": "git+https://github.com/infinityblockchainlabs/node-infinito-util.git#develop",
+    "node-infinito-api": "git+https://github.com/infinityblockchainlabs/node-infinito-api.git#develop"
   },
   "devDependencies": {
     "eslint": "^5.2.0",
