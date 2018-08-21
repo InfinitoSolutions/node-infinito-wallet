@@ -2,12 +2,12 @@
   "name": "infinito-wallet",
   "version": "1.0.0",
   "description": "infinito wallet ",
-  "main": "index.js",
   "directories": {
     "lib": "lib"
   },
   "scripts": {
     "pretest": "eslint .",
+    "fix": "eslint --fix lib/**/*.js",
     "test": "mocha --timeout 10000"
   },
   "repository": {
@@ -27,7 +27,10 @@
   },
   "homepage": "https://github.com/infinityblockchainlabs/node-infinito-wallet#readme",
   "dependencies": {
+    "bigi": "^1.4.2",
+    "bip32": "^1.0.2",
     "bip39": "^2.5.0",
+    "bitcoinjs-lib": "^4.0.1",
     "infinito-util": "git+https://github.com/infinityblockchainlabs/node-infinito-util.git#develop",
     "node-infinito-api": "git+https://github.com/infinityblockchainlabs/node-infinito-api.git#develop"
   },
