@@ -8,6 +8,7 @@
   },
   "scripts": {
     "pretest": "eslint .",
+    "fix": "eslint --fix lib/**/*.js",
     "test": "mocha --timeout 10000"
   },
   "repository": {
@@ -28,8 +29,7 @@
   "homepage": "https://github.com/infinityblockchainlabs/node-infinito-wallet#readme",
   "dependencies": {
     "bip39": "^2.5.0",
-    "infinito-util": "git+https://github.com/infinityblockchainlabs/node-infinito-util.git#develop",
-    "node-infinito-api": "git+https://github.com/infinityblockchainlabs/node-infinito-api.git#develop"
+    "bitcoinjs-lib": "^4.0.1"
   },
   "devDependencies": {
     "eslint": "^5.2.0",
