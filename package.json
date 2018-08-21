@@ -28,8 +28,11 @@
   "homepage": "https://github.com/infinityblockchainlabs/node-infinito-wallet#readme",
   "dependencies": {
     "bigi": "^1.4.2",
+    "bip32": "^1.0.2",
     "bip39": "^2.5.0",
-    "bitcoinjs-lib": "^4.0.1"
+    "bitcoinjs-lib": "^4.0.1",
+    "infinito-util": "git+https://github.com/infinityblockchainlabs/node-infinito-util.git#develop",
+    "node-infinito-api": "git+https://github.com/infinityblockchainlabs/node-infinito-api.git#develop"
   },
   "devDependencies": {
     "eslint": "^5.2.0",
