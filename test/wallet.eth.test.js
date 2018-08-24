@@ -18,8 +18,11 @@ async function test() {
   wallet.setApi(api);
 
 
-  let result = await wallet.getAddress();
-  console.log('result getAddress ETH: ' + JSON.stringify(result));
+  // let result = await wallet.getAddress();
+  // console.log('result getAddress ETH: ' + JSON.stringify(result));
+
+  let result = await wallet.getNonce();
+  console.log('result getNonce ETH: ' + JSON.stringify(result));
   // let result = await wallet.Accounts[CoinType.BTC.symbol].send('mt2EqmgkCKdwuM1N6N9PdsdPWBwCAh4YSE', 0.02);
   // console.log('result send BTC: ' + JSON.stringify(result));
 }
