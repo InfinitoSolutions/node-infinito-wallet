@@ -8,7 +8,7 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Program",
-      "program": "${workspaceFolder}/test/wallet.test.js"
+      "program": "${workspaceFolder}/test/account.eth.test.js"
     }
   ]
 }
