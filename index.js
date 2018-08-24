@@ -1,1 +1,1 @@
-console.log('server');
+module.exports = require('./lib/wallet');

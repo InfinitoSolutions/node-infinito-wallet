@@ -32,7 +32,7 @@
     "bip39": "^2.5.0",
     "bitcoinjs-lib": "^4.0.1",
     "coinselect": "^3.1.11",
-    "infinito-util": "git+https://github.com/infinityblockchainlabs/node-infinito-util.git#develop",
+    "node-infinito-util": "git+https://github.com/infinityblockchainlabs/node-infinito-util.git#develop",
     "node-infinito-api": "git+https://github.com/infinityblockchainlabs/node-infinito-api.git#develop"
   },
   "devDependencies": {
