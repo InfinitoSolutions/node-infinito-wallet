@@ -1,6 +1,5 @@
 const Wallet = require('../lib/wallet');
 const ConfigTest = require('./config.test');
-const Account = require('../lib/account');
 const CoinType = require('../lib/support_coin');
 
 const opts = {
