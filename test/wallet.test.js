@@ -9,8 +9,10 @@ const opts = {
   baseUrl: ConfigTest.BASE_URL,
   logLevel: ConfigTest.LOG_LEVEL,
   coinType: CoinType.BTC.symbol,
-  isTestNet: true
+  isTestNet: true,
+  privateKey: 'cVg2gYrsfHBf4iBWncrm86VHd1VqcUCFdJ9FJtLbdLfwvqc1eL6v'
 };
+//address: 'mssJexznaEypEfeLGf4v7J2WvKX6vFAjrs'
 
 async function test() {
   let api = new InfinitApi(opts);
@@ -19,10 +21,16 @@ async function test() {
 
 
 
-  let result = await wallet.getBalance();
-  console.log('result getBalance ETH: ' + JSON.stringify(result));
-  // let result = await wallet.Accounts[CoinType.BTC.symbol].send('mt2EqmgkCKdwuM1N6N9PdsdPWBwCAh4YSE', 0.02);
-  // console.log('result send BTC: ' + JSON.stringify(result));
+  let resultgetBalance = await wallet.getBalance();
+  console.log('result getBalance BTC: ' + JSON.stringify(resultgetBalance));
+  let result = await wallet.send({
+    txParams: {
+      to: 'mg5G1LAphJKvz2RM81A7HphHcZzS5sppaq',
+      amount: 0.02
+    },
+    isBroadCast: true
+  });
+  console.log('result send BTC: ' + JSON.stringify(result));
 }
 
 test();
