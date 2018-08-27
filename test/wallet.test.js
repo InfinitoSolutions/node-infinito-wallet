@@ -15,14 +15,13 @@ const opts = {
 async function test() {
   let api = new InfinitApi(opts);
   let wallet = new Wallet(opts);
+  console.log(wallet);
   wallet.setApi(api);
 
 
 
   let result = await wallet.getBalance();
-  console.log('result getBalance ETH: ' + JSON.stringify(result));
-  // let result = await wallet.Accounts[CoinType.BTC.symbol].send('mt2EqmgkCKdwuM1N6N9PdsdPWBwCAh4YSE', 0.02);
-  // console.log('result send BTC: ' + JSON.stringify(result));
+  console.log('result getBalance BTC: ' + JSON.stringify(result));
 }
 
 test();
