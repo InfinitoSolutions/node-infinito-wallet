@@ -1,7 +1,8 @@
 const WalletNeo = require('../lib/wallet_neo');
-const ConfigTest = require('./config.test');
-const ConfigTestMainnet = require('./config.test.mainnet');
+const ConfigTest = require('./config/config.test.staging.testnet');
+const ConfigTestMainnet = require('./config/config.test.staging.mainnet');
 const CoinType = require('../lib/support_coin');
+const InfinitApi = require('node-infinito-api');
 
 const opts = {
   apiKey: ConfigTest.API_KEY,
@@ -13,8 +14,10 @@ const opts = {
 };
 
 async function test() {
+  let api = new InfinitApi(opts);
   let wallet = new WalletNeo(opts);
   console.log('wallet neo: ' + JSON.stringify(wallet.Account.address));
+  wallet.setApi(api);
 
   // NEO c56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b
   // GAS 602c79718b16e442de58778e148d0b1084e3b2dffd5de6b7b16cee7969282de7

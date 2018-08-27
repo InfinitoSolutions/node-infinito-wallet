@@ -1,5 +1,5 @@
 const WalletEth = require('../lib/wallet_eth');
-const ConfigTest = require('./config.test.mainnet');
+const ConfigTest = require('./config/config.test.staging.testnet');
 const CoinType = require('../lib/support_coin');
 const InfinitApi = require('node-infinito-api');
 
