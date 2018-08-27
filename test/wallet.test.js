@@ -3,7 +3,7 @@ const ConfigTest = require('./config/config.test.staging.testnet');
 const CoinType = require('../lib/support_coin');
 const InfinitApi = require('node-infinito-api');
 const Assert = require('assert');
-const chai = require("chai");
+const chai = require('chai');
 chai.should();
 
 const opts = {
@@ -13,7 +13,7 @@ const opts = {
   logLevel: ConfigTest.LOG_LEVEL,
   coinType: CoinType.BTC.symbol,
   isTestNet: true,
-  wif: 'cVg2gYrsfHBf4iBWncrm86VHd1VqcUCFdJ9FJtLbdLfwvqc1eL6v'
+  privateKey: 'cVg2gYrsfHBf4iBWncrm86VHd1VqcUCFdJ9FJtLbdLfwvqc1eL6v'
 };
 var wallet = null;
 
@@ -43,15 +43,22 @@ describe('wallet.btc', async () => {
   describe('#getAddress()', async () => {
     it('Get address', async () => {
       let result = await wallet.getAddress();
-      console.log(result.addr);
-      Assert.ok(result.addr !== 'mssJexznaEypEfeLGf4v7J2WvKX6vFAjrs', 'address must be exist');
+      console.log('getAddress', result);
+      Assert.ok(result.addr !== undefined, 'address must be exist');
     });
   });
 
   describe('#send()', async () => {
-    it.only('Send', async () => {
-      let result = await wallet.send('mssJexznaEypEfeLGf4v7J2WvKX6vFAjrs', 0.01, 100, true);
-      Assert.ok(result.tx_id !== undefined, 'tx id must be exist');
+    it('Send', async () => {
+      let result = await wallet.send({
+        txParams: {
+          to: 'mssJexznaEypEfeLGf4v7J2WvKX6vFAjrs',
+          amount: 0.01,
+          feePerB: 100
+        }
+      }, true);
+      console.log('Send', result);
+      Assert.ok(result.tx_hex !== undefined, 'tx_hex must be exist');
     });
   });
 });
