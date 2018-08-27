@@ -28,23 +28,23 @@ describe('wallet.btc', async () => {
   describe('#getBalance()', async () => {
     it('Get balance', async () => {
       let result = await wallet.getBalance();
-      Assert.ok(result.data.balance !== undefined, 'balance must be exist');
-      Assert.ok(result.data.unconfirmed_balance !== undefined, 'unconfirmed_balance must be exist');
+      Assert.ok(result.balance !== undefined, 'balance must be exist');
+      Assert.ok(result.unconfirmed_balance !== undefined, 'unconfirmed_balance must be exist');
     });
   });
 
   describe('#getHistory()', async () => {
     it('Get history', async () => {
       let result = await wallet.getHistory(0, 10);
-      Assert.ok(result.data.txs !== undefined, 'history must be exist');
+      Assert.ok(result.txs !== undefined, 'history must be exist');
     });
   });
 
   describe('#getAddress()', async () => {
     it('Get address', async () => {
       let result = await wallet.getAddress();
-      console.log(result.data.addr);
-      Assert.ok(result.data.addr !== 'mssJexznaEypEfeLGf4v7J2WvKX6vFAjrs', 'address must be exist');
+      console.log(result.addr);
+      Assert.ok(result.addr !== 'mssJexznaEypEfeLGf4v7J2WvKX6vFAjrs', 'address must be exist');
     });
   });
 
