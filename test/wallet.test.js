@@ -1,7 +1,10 @@
 const Wallet = require('../lib/wallet');
-const ConfigTest = require('./config.test');
+const ConfigTest = require('./config/config.test.staging.testnet');
 const CoinType = require('../lib/support_coin');
 const InfinitApi = require('node-infinito-api');
+const Assert = require('assert');
+const chai = require("chai");
+chai.should();
 
 const opts = {
   apiKey: ConfigTest.API_KEY,
@@ -9,19 +12,46 @@ const opts = {
   baseUrl: ConfigTest.BASE_URL,
   logLevel: ConfigTest.LOG_LEVEL,
   coinType: CoinType.BTC.symbol,
-  isTestNet: true
+  isTestNet: true,
+  wif: 'cVg2gYrsfHBf4iBWncrm86VHd1VqcUCFdJ9FJtLbdLfwvqc1eL6v'
 };
+var wallet = null;
 
-async function test() {
-  let api = new InfinitApi(opts);
-  let wallet = new Wallet(opts);
-  console.log(wallet);
-  wallet.setApi(api);
+describe('wallet.btc', async () => {
 
+  beforeEach(async () => {
+    let api = new InfinitApi(opts);
+    wallet = new Wallet(opts);
+    wallet.setApi(api);
+  });
 
+  describe('#getBalance()', async () => {
+    it('Get balance', async () => {
+      let result = await wallet.getBalance();
+      Assert.ok(result.data.balance !== undefined, 'balance must be exist');
+      Assert.ok(result.data.unconfirmed_balance !== undefined, 'unconfirmed_balance must be exist');
+    });
+  });
 
-  let result = await wallet.getBalance();
-  console.log('result getBalance BTC: ' + JSON.stringify(result));
-}
+  describe('#getHistory()', async () => {
+    it('Get history', async () => {
+      let result = await wallet.getHistory(0, 10);
+      Assert.ok(result.data.txs !== undefined, 'history must be exist');
+    });
+  });
 
-test();
+  describe('#getAddress()', async () => {
+    it('Get address', async () => {
+      let result = await wallet.getAddress();
+      console.log(result.data.addr);
+      Assert.ok(result.data.addr !== 'mssJexznaEypEfeLGf4v7J2WvKX6vFAjrs', 'address must be exist');
+    });
+  });
+
+  describe('#send()', async () => {
+    it.only('Send', async () => {
+      let result = await wallet.send('mssJexznaEypEfeLGf4v7J2WvKX6vFAjrs', 0.01, 100, true);
+      Assert.ok(result.tx_id !== undefined, 'tx id must be exist');
+    });
+  });
+});

@@ -1,4 +1,4 @@
-const ConfigTest = require('./config.test');
+const ConfigTest = require('./config/config.test.staging.testnet');
 const EthAccount = require('../lib/account/eth');
 const CoinType = require('../lib/support_coin');
 
