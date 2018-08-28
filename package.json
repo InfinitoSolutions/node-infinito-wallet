@@ -42,7 +42,9 @@
     "ethereumjs-util": "^5.2.0",
     "ethereumjs-wallet": "^0.6.2",
     "node-infinito-api": "git+https://github.com/infinityblockchainlabs/node-infinito-api.git#develop",
-    "node-infinito-util": "git+https://github.com/infinityblockchainlabs/node-infinito-util.git#develop"
+    "node-infinito-util": "git+https://github.com/infinityblockchainlabs/node-infinito-util.git#develop",
+    "secp256k1": "^3.5.2",
+    "wif": "^2.0.6"
   },
   "devDependencies": {
     "eslint": "^5.2.0",

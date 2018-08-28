@@ -1,5 +1,5 @@
 const Wallet = require('../lib/wallet_eth');
-const ConfigTest = require('./config/config.test.staging.mainnet');
+const ConfigTest = require('./config/config.test.staging.testnet');
 const CoinType = require('../lib/support_coin');
 const InfinitApi = require('node-infinito-api');
 const Assert = require('assert');
@@ -15,6 +15,7 @@ const opts = {
   isTestNet: true,
   privateKey: '0x77d6f0d8768942c098e664bb4e930c5019755b90d6b0fb2fb43450d6270efb3d'
   //'0x6426b293207e124d334c8cb44380a4999ecc900e'
+
 };
 var wallet = null;
 
