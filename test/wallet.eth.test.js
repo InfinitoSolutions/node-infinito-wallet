@@ -63,10 +63,9 @@ describe('wallet.eth', async () => {
       let result = await wallet.send({
         txParams: {
           to: '0xe0bcec523eb3661cfd8a349330f04955c9a2ed6c',
-          value: 12,
-          nonce: 1,
+          value: 12000000000,
           gasLimit: 300000,
-          gasPrice: 20000000000
+          gasPrice: 40000000000
         },
         isBroadCast: true
       });
