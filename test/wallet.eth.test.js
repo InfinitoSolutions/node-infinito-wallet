@@ -28,7 +28,7 @@ describe('wallet.eth', async () => {
   });
 
   describe('#getBalance()', async () => {
-    it('Get balance', async () => {
+    it.only('Get balance', async () => {
       let result = await wallet.getBalance();
       Assert.ok(result.balance !== undefined, 'balance must be exist');
     });
@@ -63,7 +63,7 @@ describe('wallet.eth', async () => {
       let result = await wallet.send({
         txParams: {
           to: '0xe0bcec523eb3661cfd8a349330f04955c9a2ed6c',
-          value: 12000000000,
+          amount: 12000000000,
           gasLimit: 300000,
           gasPrice: 40000000000
         },
@@ -75,9 +75,15 @@ describe('wallet.eth', async () => {
   });
 
   describe('#transfer()', async () => {
+<<<<<<< HEAD
     it.only('transfer', async () => {
       // 0xad0c4aecee4761f82b8dd37431f57a41d95815ac
       // 0x9d539c8534c156d76828992fd55a16f79afa9a36
+=======
+    it('transfer', async () => {
+      //0xad0c4aecee4761f82b8dd37431f57a41d95815ac
+      //0x9d539c8534c156d76828992fd55a16f79afa9a36
+>>>>>>> develop
       let result = await wallet.transfer('0x9d539c8534c156d76828992fd55a16f79afa9a36', '0xe0bcec523eb3661cfd8a349330f04955c9a2ed6c', 10000);
       console.log('result transfer ETH: ' + JSON.stringify(result));
       Assert.ok(result.tx_id !== undefined, 'tx id must be exist');
