@@ -14,7 +14,7 @@ const opts = {
   coinType: CoinType.BTC.symbol,
   isTestNet: true,
   privateKey: 'cVg2gYrsfHBf4iBWncrm86VHd1VqcUCFdJ9FJtLbdLfwvqc1eL6v'
-  //f170b01f106f1ba37d87a19a0e7a02de93bc9364d09d52cd04345bde9453937c
+  // f170b01f106f1ba37d87a19a0e7a02de93bc9364d09d52cd04345bde9453937c
 };
 
 var wallet = null;
