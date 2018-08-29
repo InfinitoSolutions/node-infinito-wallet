@@ -68,17 +68,17 @@ describe('wallet.neo', async () => {
   });
 
   describe('#getHistory()', async () => {
-    it.only('Get history', async () => {
+    it('Get history', async () => {
       let result = await wallet.getHistory(0, 10);
       console.log(result);
-      Assert.ok(result.txs !== undefined, 'history must be exist');
+      Assert.ok(result.transactions !== undefined, 'history must be exist');
     });
   });
 
   describe('#getAddress()', async () => {
-    it('Get address', async () => {
+    it.only('Get address', async () => {
       let result = await wallet.getAddress();
-      console.log('getAddress', result);
+      console.log('getAddress', wallet.Account.acount);
       Assert.ok(result.addr !== undefined, 'address must be exist');
     });
   });
