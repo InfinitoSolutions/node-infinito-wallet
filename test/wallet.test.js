@@ -50,17 +50,26 @@ describe('wallet.btc', async () => {
     });
   });
 
+  describe('#getFeeRate()', async () => {
+    it('get FeeRate', async () => {
+      let result = await wallet.getDefaultFee();
+      console.log('getFeeRate', result);
+      Assert.ok(result !== undefined, 'address must be exist');
+    });
+  });
+
+
   describe('#send()', async () => {
-    it('Send', async () => {
+    it.only('Send', async () => {
       let result = await wallet.send({
         txParams: {
           to: 'mssJexznaEypEfeLGf4v7J2WvKX6vFAjrs',
-          amount: 0.01,
-          feePerB: 100
+          amount: 1000,
+          fee: 50
         }
       }, true);
       console.log('Send', result);
-      Assert.ok(result.tx_hex !== undefined, 'tx_hex must be exist');
+      Assert.ok(result.raw !== undefined, 'raw must be exist');
     });
   });
 });
