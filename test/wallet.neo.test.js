@@ -63,27 +63,27 @@ describe('wallet.neo', async () => {
   describe('#getBalance()', async () => {
     it('Get balance', async () => {
       let result = await wallet.getBalance('c56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b');
-      Assert.ok(result.balance !== undefined, 'balance must be exist');
-      Assert.ok(result.unconfirmed_balance !== undefined, 'unconfirmed_balance must be exist');
+      Assert.ok(result.assets !== undefined, 'balance must be exist');
     });
   });
 
-  /* describe('#getHistory()', async () => {
+  describe('#getHistory()', async () => {
     it('Get history', async () => {
       let result = await wallet.getHistory(0, 10);
-      Assert.ok(result.txs !== undefined, 'history must be exist');
+      console.log(result);
+      Assert.ok(result.transactions !== undefined, 'history must be exist');
     });
   });
 
   describe('#getAddress()', async () => {
-    it('Get address', async () => {
+    it.only('Get address', async () => {
       let result = await wallet.getAddress();
-      console.log('getAddress', result);
+      console.log('getAddress', wallet.Account.acount);
       Assert.ok(result.addr !== undefined, 'address must be exist');
     });
   });
 
-  describe('#send()', async () => {
+  /* describe('#send()', async () => {
     it.only('Send', async () => {
       let result = await wallet.send({
         txParams: {
