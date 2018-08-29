@@ -1,6 +1,6 @@
 const Wallet = require('../lib/wallet');
 const ConfigTest = require('./config/config.test.staging.testnet');
-const CoinType = require('../lib/support_coin');
+const CoinType = require('../lib/coin_type');
 const InfinitApi = require('node-infinito-api');
 const Assert = require('assert');
 const chai = require('chai');
