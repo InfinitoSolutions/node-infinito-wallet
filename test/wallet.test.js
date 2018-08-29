@@ -67,7 +67,7 @@ describe('wallet.btc', async () => {
           amount: 1000,
           fee: 50
         }
-      }, true);
+      });
       console.log('Send', result);
       Assert.ok(result.raw !== undefined, 'raw must be exist');
     });
