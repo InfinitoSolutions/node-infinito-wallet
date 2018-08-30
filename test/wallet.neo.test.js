@@ -33,7 +33,6 @@ describe('wallet.neo', async () => {
   describe('#getBalance()', async () => {
     it('Get balance', async () => {
       let result = await wallet.getBalance('c56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b');
-      console.log('getBalance', result);
       Assert.ok(result.assets !== undefined, 'balance must be exist');
     });
   });
@@ -41,7 +40,6 @@ describe('wallet.neo', async () => {
   describe('#getHistory()', async () => {
     it('Get history', async () => {
       let result = await wallet.getHistory(0, 10);
-      console.log(result);
       Assert.ok(result.transactions !== undefined, 'history must be exist');
     });
   });
@@ -49,7 +47,6 @@ describe('wallet.neo', async () => {
   describe('#getClaimable()', async () => {
     it('Get Claimable', async () => {
       let result = await wallet.getClaimable();
-      console.log('result', result);
       Assert.ok(result.transactions !== undefined, 'transactions must be exist');
     });
   });
@@ -57,7 +54,6 @@ describe('wallet.neo', async () => {
   describe('#getUnclaimed()', async () => {
     it('Get UnClaimable', async () => {
       let result = await wallet.getUnclaimed();
-      console.log('result', result);
       Assert.ok(result.available !== undefined, 'available must be exist');
     });
   });
@@ -71,7 +67,6 @@ describe('wallet.neo', async () => {
         assetId: 'c56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b',
         assetSymbol: 'NEO'
       })
-      console.log('createRawTx', result);
       Assert.ok(result !== '', 'tx_hex must be exist');
     });
   });
@@ -86,16 +81,21 @@ describe('wallet.neo', async () => {
           assetSymbol: 'NEO'
         }
       });
-      console.log('Send', result);
       Assert.ok(result.tx_id !== undefined, 'tx_id must be exist');
     });
   });
 
   describe('#transfer()', async () => {
-
     it('transfer', async () => {
       let result = await wallet.transfer('0x025c91e6f6792e087feebb30fd4761f4fbcb4e82', 'ASe43ZxsveYDhVEt2SYtRXRNtx17QZEu9C', 1);
-      console.log('result transfer NEO: ' + JSON.stringify(result));
+      Assert.ok(result.tx_id !== undefined, 'tx id must be exist');
+    });
+  });
+
+  describe('#claim()', async () => {
+
+    it.only('transfer', async () => {
+      let result = await wallet.claim();
       Assert.ok(result.tx_id !== undefined, 'tx id must be exist');
     });
   });
