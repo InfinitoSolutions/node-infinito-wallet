@@ -25,7 +25,6 @@ describe('wallet.neo', async () => {
     let api = new InfinitApi(opts);
     wallet = new NeoWallet(opts);
     wallet.setApi(api);
-
   });
 
   describe('#getBalance()', async () => {
@@ -58,7 +57,7 @@ describe('wallet.neo', async () => {
   });
 
   describe('#send()', async () => {
-    it.only('Send', async () => {
+    it('Send', async () => {
       let result = await wallet.send({
         txParams: {
           to: 'APtUVHSAEchsCd6HPrmWXKAK7SETxhAvjU',
@@ -74,7 +73,7 @@ describe('wallet.neo', async () => {
 
   describe('#transfer()', async () => {
 
-    it('transfer', async () => {
+    it.only('transfer', async () => {
       let result = await wallet.transfer('0x9d539c8534c156d76828992fd55a16f79afa9a36', 'APtUVHSAEchsCd6HPrmWXKAK7SETxhAvjU', 1);
       console.log('result transfer NEO: ' + JSON.stringify(result));
       Assert.ok(result.tx_id !== undefined, 'tx id must be exist');
