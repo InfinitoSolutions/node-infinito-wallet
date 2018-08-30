@@ -1,5 +1,5 @@
 const Wallet = require('../lib/wallet_eth');
-const ConfigTest = require('./config/config.test.staging.testnet');
+const ConfigTest = require('./config/config.test.staging.mainnet');
 const CoinType = require('../lib/coin_type');
 const InfinitApi = require('node-infinito-api');
 const Assert = require('assert');
@@ -13,7 +13,7 @@ const opts = {
   logLevel: ConfigTest.LOG_LEVEL,
   coinType: CoinType.ETH.symbol,
   isTestNet: true,
-  privateKey: '0x77d6f0d8768942c098e664bb4e930c5019755b90d6b0fb2fb43450d6270efb3d'
+  //privateKey: '0x77d6f0d8768942c098e664bb4e930c5019755b90d6b0fb2fb43450d6270efb3d'
   // '0x6426b293207e124d334c8cb44380a4999ecc900e'
 
 };
@@ -28,7 +28,7 @@ describe('wallet.eth', async () => {
   });
 
   describe('#getBalance()', async () => {
-    it.only('Get balance', async () => {
+    it('Get balance', async () => {
       let result = await wallet.getBalance();
       Assert.ok(result.balance !== undefined, 'balance must be exist');
     });
@@ -51,15 +51,24 @@ describe('wallet.eth', async () => {
   });
 
   describe('#getNonce()', async () => {
-    it('Get nonce', async () => {
+    it.only('Get nonce', async () => {
       let result = await wallet.getNonce();
       console.log('getnonce', result);
-      Assert.ok(result.nonce !== undefined, 'nonce must be exist');
+      Assert.ok(result !== undefined, 'result must be exist');
     });
   });
 
+  describe('#getTxCount()', async () => {
+    it('Get TxCount', async () => {
+      let result = await wallet.getTxCount();
+      console.log('TxCount', result);
+      Assert.ok(result !== undefined, 'result must be exist');
+    });
+  });
+
+
   describe('#send()', async () => {
-    it.only('Send', async () => {
+    it('Send', async () => {
       let result = await wallet.send({
         txParams: {
           to: '0xe0bcec523eb3661cfd8a349330f04955c9a2ed6c',

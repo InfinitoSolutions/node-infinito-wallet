@@ -43,10 +43,10 @@ describe('wallet.btc', async () => {
   });
 
   describe('#getAddress()', async () => {
-    it('Get address', async () => {
-      let result = await wallet.getAddress();
+    it('Get address', () => {
+      let result = wallet.getAddress();
       console.log('getAddress', result);
-      Assert.ok(result.addr !== undefined, 'address must be exist');
+      Assert.ok(result !== undefined, 'address must be exist');
     });
   });
 

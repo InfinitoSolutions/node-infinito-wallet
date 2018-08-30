@@ -17,6 +17,9 @@ const opts = {
   // APtUVHSAEchsCd6HPrmWXKAK7SETxhAvjU
 };
 
+// KwmJq28J4mXJ81Fxszk3zn3Cwm1oaHct6ng1ADJwNHRSoMwZ3F5b
+// ASe43ZxsveYDhVEt2SYtRXRNtx17QZEu9C
+
 var wallet = null;
 
 describe('wallet.neo', async () => {
@@ -42,6 +45,23 @@ describe('wallet.neo', async () => {
       Assert.ok(result.transactions !== undefined, 'history must be exist');
     });
   });
+
+  describe('#getClaimable()', async () => {
+    it('Get Claimable', async () => {
+      let result = await wallet.getClaimable();
+      console.log('result', result);
+      Assert.ok(result.transactions !== undefined, 'transactions must be exist');
+    });
+  });
+
+  describe('#getUnclaimed()', async () => {
+    it('Get UnClaimable', async () => {
+      let result = await wallet.getUnclaimed();
+      console.log('result', result);
+      Assert.ok(result.available !== undefined, 'available must be exist');
+    });
+  });
+
 
   describe('#createRawTx()', async () => {
     it('createRawTx', async () => {
@@ -73,10 +93,11 @@ describe('wallet.neo', async () => {
 
   describe('#transfer()', async () => {
 
-    it.only('transfer', async () => {
-      let result = await wallet.transfer('0x9d539c8534c156d76828992fd55a16f79afa9a36', 'APtUVHSAEchsCd6HPrmWXKAK7SETxhAvjU', 1);
+    it('transfer', async () => {
+      let result = await wallet.transfer('0x025c91e6f6792e087feebb30fd4761f4fbcb4e82', 'ASe43ZxsveYDhVEt2SYtRXRNtx17QZEu9C', 1);
       console.log('result transfer NEO: ' + JSON.stringify(result));
       Assert.ok(result.tx_id !== undefined, 'tx id must be exist');
     });
   });
 });
+
