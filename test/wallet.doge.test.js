@@ -27,7 +27,7 @@ describe('wallet.dash', async () => {
   });
 
   describe('#getBalance()', async () => {
-    it.only('Get balance', async () => {
+    it('Get balance', async () => {
       let result = await wallet.getBalance();
       console.log('result', result);
       Assert.ok(result.balance !== undefined, 'balance must be exist');
