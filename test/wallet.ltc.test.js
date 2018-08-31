@@ -1,4 +1,4 @@
-const Wallet = require('../lib/wallet');
+const { Wallet } = require('../index');
 const ConfigTest = require('./config/config.test.staging.testnet');
 const CoinType = require('../lib/coin_type');
 const InfinitApi = require('node-infinito-api');
@@ -64,7 +64,7 @@ describe('wallet.btc', async () => {
     it.only('Send', async () => {
       let result = await wallet.send({
         txParams: {
-          to: 'QiqbgFSAmKEC9ws3oanCiTsmiiwDq74Thb',
+          to: 'mgj9pJgeZp2c7HJZUb8PxQPjmioHgwY71a',
           amount: 1,
           fee: 5
         }
