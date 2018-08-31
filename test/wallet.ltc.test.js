@@ -11,10 +11,10 @@ const opts = {
   secret: ConfigTest.SECRECT,
   baseUrl: ConfigTest.BASE_URL,
   logLevel: ConfigTest.LOG_LEVEL,
-  coinType: CoinType.BTC.symbol,
+  coinType: CoinType.LTC.symbol,
   isTestNet: true,
-  privateKey: 'cVg2gYrsfHBf4iBWncrm86VHd1VqcUCFdJ9FJtLbdLfwvqc1eL6v'
-  // f170b01f106f1ba37d87a19a0e7a02de93bc9364d09d52cd04345bde9453937c
+  privateKey: 'cNAxZ8z4yMeRUuqXGTnZ5dPsMYQayA1LEsJQYAZn4veqxMt7jPSM'
+  // QiqbgFSAmKEC9ws3oanCiTsmiiwDq74Thb
 };
 
 var wallet = null;
@@ -60,14 +60,13 @@ describe('wallet.btc', async () => {
     });
   });
 
-
   describe('#send()', async () => {
     it.only('Send', async () => {
       let result = await wallet.send({
         txParams: {
-          to: 'mssJexznaEypEfeLGf4v7J2WvKX6vFAjrs',
-          amount: 1000,
-          fee: 50
+          to: 'QiqbgFSAmKEC9ws3oanCiTsmiiwDq74Thb',
+          amount: 1,
+          fee: 5
         }
       });
       console.log('Send', result);

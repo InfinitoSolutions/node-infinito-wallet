@@ -11,10 +11,10 @@ const opts = {
   secret: ConfigTest.SECRECT,
   baseUrl: ConfigTest.BASE_URL,
   logLevel: ConfigTest.LOG_LEVEL,
-  coinType: CoinType.BTC.symbol,
+  coinType: CoinType.BCH.symbol,
   isTestNet: true,
   privateKey: 'cVg2gYrsfHBf4iBWncrm86VHd1VqcUCFdJ9FJtLbdLfwvqc1eL6v'
-  // f170b01f106f1ba37d87a19a0e7a02de93bc9364d09d52cd04345bde9453937c
+  // mssJexznaEypEfeLGf4v7J2WvKX6vFAjrs
 };
 
 var wallet = null;
@@ -66,7 +66,7 @@ describe('wallet.btc', async () => {
       let result = await wallet.send({
         txParams: {
           to: 'mssJexznaEypEfeLGf4v7J2WvKX6vFAjrs',
-          amount: 1000,
+          amount: 100,
           fee: 50
         }
       });

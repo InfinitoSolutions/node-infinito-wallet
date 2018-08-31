@@ -1,7 +1,7 @@
 {
-  "name": "infinito-wallet",
+  "name": "node-infinito-wallet",
   "version": "1.0.0",
-  "description": "infinito wallet ",
+  "description": "node-infinito wallet ",
   "directories": {
     "lib": "lib"
   },
