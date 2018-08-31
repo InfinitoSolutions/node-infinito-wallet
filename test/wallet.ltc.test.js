@@ -1,6 +1,5 @@
-const { Wallet } = require('../index');
+const { Wallet, CoinType } = require('../index');
 const ConfigTest = require('./config/config.test.staging.testnet');
-const CoinType = require('../lib/coin_type');
 const InfinitApi = require('node-infinito-api');
 const Assert = require('assert');
 const chai = require('chai');
@@ -28,7 +27,7 @@ describe('wallet.btc', async () => {
   });
 
   describe('#getBalance()', async () => {
-    it('Get balance', async () => {
+    it.only('Get balance', async () => {
       let result = await wallet.getBalance();
       console.log('result', result);
       Assert.ok(result.balance !== undefined, 'balance must be exist');
@@ -61,10 +60,11 @@ describe('wallet.btc', async () => {
   });
 
   describe('#send()', async () => {
-    it.only('Send', async () => {
+    it('Send', async () => {
       let result = await wallet.send({
         txParams: {
-          to: 'mgj9pJgeZp2c7HJZUb8PxQPjmioHgwY71a',
+          to: 'mrekeohAmra9GtJdAGkZTqQkzUzHSVKWA5',
+          // f048911646960d35c693ae21a3c10dfe2498de9c66b9ca6ab63b2a1d56920fee
           amount: 1,
           fee: 5
         }
