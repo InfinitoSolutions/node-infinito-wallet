@@ -93,7 +93,7 @@ describe('wallet.neo', async () => {
 
   describe('#claim()', async () => {
 
-    it.only('transfer', async () => {
+    it('transfer', async () => {
       let result = await wallet.claim();
       Assert.ok(result.tx_id !== undefined, 'tx id must be exist');
     });

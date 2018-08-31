@@ -1,6 +1,5 @@
-const { EthWallet, CoinType } = require('../index');
+const { EthWallet, CoinType, InfinitApi } = require('..');
 const ConfigTest = require('./config/config.test.staging.testnet');
-const InfinitApi = require('node-infinito-api');
 const Assert = require('assert');
 const chai = require('chai');
 chai.should();
@@ -10,15 +9,15 @@ const opts = {
   secret: ConfigTest.SECRECT,
   baseUrl: ConfigTest.BASE_URL,
   logLevel: ConfigTest.LOG_LEVEL,
-  coinType: CoinType.ETH.symbol,
+  coinType: CoinType.ETC.symbol,
   isTestNet: true,
-  // privateKey: '0x77d6f0d8768942c098e664bb4e930c5019755b90d6b0fb2fb43450d6270efb3d'
-  // '0x6426b293207e124d334c8cb44380a4999ecc900e'
+  privateKey: '0xa2365198cb10309a5afdf0683c0c285410313839f7ccbd66aac068fcfe5b72ee'
+  // '0x5f7ec793ed8aec6d8817e287434b5095895c9b6c'
 
 };
 var wallet = null;
 
-describe('wallet.eth', async () => {
+describe('wallet.etc', async () => {
 
   beforeEach(async () => {
     let api = new InfinitApi(opts);
@@ -107,7 +106,8 @@ describe('wallet.eth', async () => {
     it('Send', async () => {
       let result = await wallet.send({
         txParams: {
-          to: '0xe0bcec523eb3661cfd8a349330f04955c9a2ed6c',
+          to: '0xa481871cd544979e3f1650fda97bc208abdc894e',
+          // 0x665cf6083e074f113d5da501763710aa138033c5c3bbd57b30f781ed86b6d5c4
           amount: 12000000000,
           gasLimit: 300000,
           gasPrice: 40000000000
@@ -123,7 +123,7 @@ describe('wallet.eth', async () => {
     it('transfer', async () => {
       // 0xad0c4aecee4761f82b8dd37431f57a41d95815ac
       // 0x9d539c8534c156d76828992fd55a16f79afa9a36
-      let result = await wallet.transfer('0x9d539c8534c156d76828992fd55a16f79afa9a36', '0xe0bcec523eb3661cfd8a349330f04955c9a2ed6c', 10000);
+      let result = await wallet.transfer('0x9d539c8534c156d76828992fd55a16f79afa9a36', '0xa481871cd544979e3f1650fda97bc208abdc894e', 10000);
       console.log('result transfer ETH: ' + JSON.stringify(result));
       Assert.ok(result.tx_id !== undefined, 'tx id must be exist');
     });

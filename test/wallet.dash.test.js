@@ -1,4 +1,4 @@
-const { Wallet, CoinType } = require('../index');
+const { Wallet, CoinType } = require('..');
 const ConfigTest = require('./config/config.test.staging.testnet');
 const InfinitApi = require('node-infinito-api');
 const Assert = require('assert');
@@ -10,16 +10,15 @@ const opts = {
   secret: ConfigTest.SECRECT,
   baseUrl: ConfigTest.BASE_URL,
   logLevel: ConfigTest.LOG_LEVEL,
-  coinType: CoinType.LTC.symbol,
+  coinType: CoinType.DASH.symbol,
   isTestNet: true,
-  privateKey: 'cNAxZ8z4yMeRUuqXGTnZ5dPsMYQayA1LEsJQYAZn4veqxMt7jPSM'
-  // QiqbgFSAmKEC9ws3oanCiTsmiiwDq74Thb 
-  //  mxmf2VYt6L9YzbzaQzBpr7WTcyQV4L434Q
+  privateKey: '6ce3ccd1b5a958a7ed3b23fa5785796415e30306c0ddfe4cdb64efb4074bd679'
+  // yRYtyKurDQipoaHCiDyz4rZ6QAiewSEz9k
 };
 
 var wallet = null;
 
-describe('wallet.ltc', async () => {
+describe('wallet.dash', async () => {
 
   beforeEach(async () => {
     let api = new InfinitApi(opts);
@@ -60,13 +59,14 @@ describe('wallet.ltc', async () => {
     });
   });
 
+
   describe('#send()', async () => {
-    it.only('Send', async () => {
+    it('Send', async () => {
       let result = await wallet.send({
         txParams: {
-          to: 'mrekeohAmra9GtJdAGkZTqQkzUzHSVKWA5',
-          // f048911646960d35c693ae21a3c10dfe2498de9c66b9ca6ab63b2a1d56920fee
-          amount: 10
+          to: 'ybsb5WrLX8eE9Wu74Kdmh1ksprenrrxoNc',
+          // dcb4cafb668be8bad50da4c1ae8e880b8f9ce1ac7884c076fb49864920e7ef16
+          amount: 10000
         }
       });
       console.log('Send', result);
