@@ -1,4 +1,4 @@
-const Wallet = require('../lib/wallet');
+const Wallet = require('../lib/wallet_bch');
 const ConfigTest = require('./config/config.test.staging.testnet');
 const CoinType = require('../lib/coin_type');
 const InfinitApi = require('node-infinito-api');
@@ -13,7 +13,7 @@ const opts = {
   logLevel: ConfigTest.LOG_LEVEL,
   coinType: CoinType.BCH.symbol,
   isTestNet: true,
-  privateKey: 'cVg2gYrsfHBf4iBWncrm86VHd1VqcUCFdJ9FJtLbdLfwvqc1eL6v'
+  privateKey: 'cNqemSkkxjtbe4VQp92TMrMdCz434RHcRtAADM8cRoC2nWnjY4Do'
   // mssJexznaEypEfeLGf4v7J2WvKX6vFAjrs
 };
 
@@ -65,9 +65,8 @@ describe('wallet.btc', async () => {
     it.only('Send', async () => {
       let result = await wallet.send({
         txParams: {
-          to: 'mssJexznaEypEfeLGf4v7J2WvKX6vFAjrs',
-          amount: 100,
-          fee: 50
+          to: 'mk1GTLuF89WtiNSHujpWXyHK579AcPc59D',
+          amount: 100000000
         }
       });
       console.log('Send', result);
