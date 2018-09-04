@@ -13,7 +13,7 @@ const opts = {
   logLevel: ConfigTest.LOG_LEVEL,
   coinType: CoinType.BCH.symbol,
   isTestNet: true,
-  privateKey: 'cNqemSkkxjtbe4VQp92TMrMdCz434RHcRtAADM8cRoC2nWnjY4Do'
+  // privateKey: 'cNqemSkkxjtbe4VQp92TMrMdCz434RHcRtAADM8cRoC2nWnjY4Do'
   // mssJexznaEypEfeLGf4v7J2WvKX6vFAjrs
 };
 
