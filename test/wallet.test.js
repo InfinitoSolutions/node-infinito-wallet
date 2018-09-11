@@ -27,7 +27,7 @@ describe('wallet.btc', async () => {
   });
 
   describe('#getBalance()', async () => {
-    it('Get balance', async () => {
+    it.only('Get balance', async () => {
       let result = await wallet.getBalance();
       console.log('result', result);
       Assert.ok(result.balance !== undefined, 'balance must be exist');
@@ -61,7 +61,7 @@ describe('wallet.btc', async () => {
 
 
   describe('#send()', async () => {
-    it.only('Send', async () => {
+    it('Send', async () => {
       let result = await wallet.send({
         txParams: {
           to: 'mssJexznaEypEfeLGf4v7J2WvKX6vFAjrs',
