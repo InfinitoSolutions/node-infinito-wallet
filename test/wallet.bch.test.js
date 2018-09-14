@@ -1,7 +1,7 @@
 const Wallet = require('../lib/wallet_bch');
 const ConfigTest = require('./config/config.test.staging.testnet');
 const CoinType = require('../lib/coin_type');
-const InfinitApi = require('node-infinito-api');
+const InfinitoApi = require('node-infinito-api');
 const Assert = require('assert');
 const chai = require('chai');
 chai.should();
@@ -22,7 +22,7 @@ var wallet = null;
 describe('wallet.btc', async () => {
 
   beforeEach(async () => {
-    let api = new InfinitApi(opts);
+    let api = new InfinitoApi(opts);
     wallet = new Wallet(opts);
     wallet.setApi(api);
   });

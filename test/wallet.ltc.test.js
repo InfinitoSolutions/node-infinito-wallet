@@ -1,6 +1,6 @@
 const { Wallet, CoinType } = require('../index');
 const ConfigTest = require('./config/config.test.staging.testnet');
-const InfinitApi = require('node-infinito-api');
+const InfinitoApi = require('node-infinito-api');
 const Assert = require('assert');
 const chai = require('chai');
 chai.should();
@@ -12,7 +12,7 @@ const opts = {
   logLevel: ConfigTest.LOG_LEVEL,
   coinType: CoinType.LTC.symbol,
   isTestNet: true,
-  privateKey: 'cNAxZ8z4yMeRUuqXGTnZ5dPsMYQayA1LEsJQYAZn4veqxMt7jPSM'
+  // privateKey: 'cNAxZ8z4yMeRUuqXGTnZ5dPsMYQayA1LEsJQYAZn4veqxMt7jPSM'
   // QiqbgFSAmKEC9ws3oanCiTsmiiwDq74Thb 
   //  mxmf2VYt6L9YzbzaQzBpr7WTcyQV4L434Q
 };
@@ -22,7 +22,7 @@ var wallet = null;
 describe('wallet.ltc', async () => {
 
   beforeEach(async () => {
-    let api = new InfinitApi(opts);
+    let api = new InfinitoApi(opts);
     wallet = new Wallet(opts);
     wallet.setApi(api);
   });

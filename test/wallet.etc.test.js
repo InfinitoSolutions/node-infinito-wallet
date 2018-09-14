@@ -1,4 +1,4 @@
-const { EthWallet, CoinType, InfinitApi } = require('..');
+const { EthWallet, CoinType, InfinitoApi } = require('..');
 const ConfigTest = require('./config/config.test.staging.testnet');
 const Assert = require('assert');
 const chai = require('chai');
@@ -20,7 +20,7 @@ var wallet = null;
 describe('wallet.etc', async () => {
 
   beforeEach(async () => {
-    let api = new InfinitApi(opts);
+    let api = new InfinitoApi(opts);
     wallet = new EthWallet(opts);
     wallet.setApi(api);
   });

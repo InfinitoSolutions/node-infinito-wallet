@@ -1,6 +1,6 @@
 const { EthWallet, CoinType } = require('../index');
 const ConfigTest = require('./config/config.test.staging.testnet');
-const InfinitApi = require('node-infinito-api');
+const InfinitoApi = require('node-infinito-api');
 const Assert = require('assert');
 const chai = require('chai');
 chai.should();
@@ -21,7 +21,7 @@ var wallet = null;
 describe('wallet.eth', async () => {
 
   beforeEach(async () => {
-    let api = new InfinitApi(opts);
+    let api = new InfinitoApi(opts);
     wallet = new EthWallet(opts);
     wallet.setApi(api);
   });
