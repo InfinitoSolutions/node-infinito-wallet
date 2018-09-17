@@ -7,22 +7,17 @@
 
 	`node --version`
     
-    
-2. Install [Create React Native App](https://github.com/react-community/create-react-native-app)
 
-	`npm install -g create-react-native-app`
-    
+2. Use create-react-native-app to create the project boilerplate
 
-3. Use create-react-native-app to create the project boilerplate
+	`react-native init my-app`
 
-	`create-react-native-app my-app`
-
-4. Install [node-libs-browser](https://github.com/webpack/node-libs-browser)
+3. Install [node-libs-browser](https://github.com/webpack/node-libs-browser)
 	
     `npm install --save node-libs-browser`
 
 
-5. Create a file called *rn-cli.config.js* on the root of the project and add the following code into it:
+4. Create a file called *rn-cli.config.js* on the root of the project and add the following code into it:
 	
     ```javascript
    	const extraNodeModules = require('node-libs-browser');
@@ -32,7 +27,7 @@
    	};
 	```
 
-6. Create a file called *global.js* on the root of the project and add the following code into it:
+5. Create a file called *global.js* on the root of the project and add the following code into it:
 
 	```javascript
     // Inject node globals into React Native global scope.
@@ -53,22 +48,22 @@
 
 	```
     
-7. Import the *global.js* file into your *[App.js]()* file
+6. Import the *global.js* file into your *[App.js]()* file
 	
     ```javascript
    	import './global';
    	```
     
-8. Install [babel-preset-es2015](https://www.npmjs.com/package/babel-preset-es2015)
+7. Install [babel-preset-es2015](https://www.npmjs.com/package/babel-preset-es2015)
 	
 	`npm install --save-dev babel-cli babel-preset-es2015`
     
-9. Now we can install the `node-infinito-wallet`
+8. Now we can install the `node-infinito-wallet`
 
 	`npm install --save node-infinito-wallet`
     
 
-10. Require the API in your `App.js` file
+9. Require the API in your `App.js` file
 
 	```javascript
     const InfinitoWallet = require('node-infinito-wallet');
