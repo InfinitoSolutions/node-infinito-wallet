@@ -63,8 +63,17 @@
 	`npm install --save node-infinito-wallet`
     
 
-9. Require the API in your `App.js` file
-
+9. Using the Wallet in your project
 	```javascript
     const InfinitoWallet = require('node-infinito-wallet');
    	```
+
+10. Before build your app please run.
+    `react-native link`
+
+### If you got error related to `scrypto` or 'stream'. Follow below step
+ 1. `npm install rn-nodeify --save-dev`
+ 2. In file package.json. Add to 'script'
+    "postinstall": "node_modules/.bin/rn-nodeify --hack --install"
+ 
+
