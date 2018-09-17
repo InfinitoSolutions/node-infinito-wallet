@@ -63,7 +63,7 @@
 	`npm install --save node-infinito-wallet`
     
 
-9. Using the Wallet in your project
+9. Using the infinito-wallet in your project
 	```javascript
     const InfinitoWallet = require('node-infinito-wallet');
    	```
