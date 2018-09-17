@@ -74,6 +74,7 @@
 ### If you got error related to `scrypto` or 'stream'. Follow below step
  1. `npm install rn-nodeify --save-dev`
  2. In file package.json. Add to 'script'
+ 
     "postinstall": "node_modules/.bin/rn-nodeify --hack --install"
  
 
