@@ -15,7 +15,6 @@
 //     coinType: CoinType.ETH.symbol,
 //     isTestNet: true
 //   });
-//   console.log(account);
 // }
 
 // test();

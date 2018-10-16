@@ -5,11 +5,14 @@ const Assert = require('assert');
 const chai = require('chai');
 chai.should();
 
-const opts = {
+let apiConfig = {
   apiKey: ConfigTest.API_KEY,
   secret: ConfigTest.SECRECT,
   baseUrl: ConfigTest.BASE_URL,
-  logLevel: ConfigTest.LOG_LEVEL,
+  logLevel: ConfigTest.LOG_LEVEL
+};
+
+let walletConfig = {
   coinType: CoinType.NEO.symbol,
   isTestNet: true,
   privateKey: 'L3uKA9vRFoFzLE2M9i4M846QtFsVcPGJtzyLPbfcxn2gRArcS2dz'
@@ -22,16 +25,17 @@ const opts = {
 var wallet = null;
 
 describe('wallet.neo', async () => {
-
   beforeEach(async () => {
-    let api = new InfinitoApi(opts);
-    wallet = new NeoWallet(opts);
+    let api = new InfinitoApi(apiConfig);
+    wallet = new NeoWallet(walletConfig);
     wallet.setApi(api);
   });
 
   describe('#getBalance()', async () => {
     it('Get balance', async () => {
-      let result = await wallet.getBalance('c56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b');
+      let result = await wallet.getBalance(
+        'c56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b'
+      );
       Assert.ok(result.assets !== undefined, 'balance must be exist');
     });
   });
@@ -46,7 +50,10 @@ describe('wallet.neo', async () => {
   describe('#getClaimable()', async () => {
     it('Get Claimable', async () => {
       let result = await wallet.getClaimable();
-      Assert.ok(result.transactions !== undefined, 'transactions must be exist');
+      Assert.ok(
+        result.transactions !== undefined,
+        'transactions must be exist'
+      );
     });
   });
 
@@ -57,15 +64,15 @@ describe('wallet.neo', async () => {
     });
   });
 
-
   describe('#createRawTx()', async () => {
     it('createRawTx', async () => {
       let result = await wallet.createRawTx({
         to: 'APtUVHSAEchsCd6HPrmWXKAK7SETxhAvjU',
         amount: 1,
-        assetId: 'c56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b',
+        assetId:
+          'c56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b',
         assetSymbol: 'NEO'
-      })
+      });
       Assert.ok(result !== '', 'tx_hex must be exist');
     });
   });
@@ -76,7 +83,8 @@ describe('wallet.neo', async () => {
         txParams: {
           to: 'APtUVHSAEchsCd6HPrmWXKAK7SETxhAvjU',
           amount: 1,
-          assetId: 'c56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b',
+          assetId:
+            'c56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b',
           assetSymbol: 'NEO'
         }
       });
@@ -86,17 +94,19 @@ describe('wallet.neo', async () => {
 
   describe('#transfer()', async () => {
     it('transfer', async () => {
-      let result = await wallet.transfer('0x025c91e6f6792e087feebb30fd4761f4fbcb4e82', 'ASe43ZxsveYDhVEt2SYtRXRNtx17QZEu9C', 1);
+      let result = await wallet.transfer(
+        '0x025c91e6f6792e087feebb30fd4761f4fbcb4e82',
+        'ASe43ZxsveYDhVEt2SYtRXRNtx17QZEu9C',
+        1
+      );
       Assert.ok(result.tx_id !== undefined, 'tx id must be exist');
     });
   });
 
   describe('#claim()', async () => {
-
     it('transfer', async () => {
       let result = await wallet.claim();
       Assert.ok(result.tx_id !== undefined, 'tx id must be exist');
     });
   });
 });
-

@@ -3,5 +3,5 @@ module.exports = {
   API_KEY: 'test',
   SECRECT: '123456',
   BASE_URL: 'https://staging-api-mainnet.infinitowallet.io',
-  AUTH_URL: 'https://staging-api-mainnet.infinitowallet.io/v1/auth/token',
+  AUTH_URL: 'https://staging-api-mainnet.infinitowallet.io/v1/auth/token'
 };

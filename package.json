@@ -7,8 +7,9 @@
   },
   "scripts": {
     "pretest": "eslint .",
-    "fix": "eslint --fix lib/*.js",
-    "test": "mocha --timeout 10000"
+    "fix": "eslint --fix .",
+    "test": "mocha --timeout 10000",
+    "prettier": "prettier --write \"{,!(node_modules)/**/}*.js\""
   },
   "repository": {
     "type": "git",
@@ -48,8 +49,10 @@
     "wif": "^2.0.6"
   },
   "devDependencies": {
+    "chai": "^4.1.2",
     "eslint": "^5.2.0",
     "mocha": "^5.2.0",
-    "chai": "^4.1.2"
+    "prettier": "^1.14.3",
+    "eslint-plugin-prettier": "^3.0.0"
   }
 }
