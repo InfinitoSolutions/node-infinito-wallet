@@ -5,41 +5,44 @@ const Assert = require('assert');
 const chai = require('chai');
 chai.should();
 
-const opts = {
+let apiConfig = {
   apiKey: ConfigTest.API_KEY,
   secret: ConfigTest.SECRECT,
   baseUrl: ConfigTest.BASE_URL,
-  logLevel: ConfigTest.LOG_LEVEL,
+  logLevel: ConfigTest.LOG_LEVEL
+};
+
+let walletConfig = {
   coinType: CoinType.LTC.symbol,
-  isTestNet: true,
+  isTestNet: true
   // privateKey: 'cNAxZ8z4yMeRUuqXGTnZ5dPsMYQayA1LEsJQYAZn4veqxMt7jPSM'
-  // QiqbgFSAmKEC9ws3oanCiTsmiiwDq74Thb 
-  //  mxmf2VYt6L9YzbzaQzBpr7WTcyQV4L434Q
+  // QiqbgFSAmKEC9ws3oanCiTsmiiwDq74Thb
+  // mxmf2VYt6L9YzbzaQzBpr7WTcyQV4L434Q
 };
 
 var wallet = null;
 
 describe('wallet.ltc', async () => {
-
   beforeEach(async () => {
-    let api = new InfinitoApi(opts);
-    wallet = new Wallet(opts);
+    let api = new InfinitoApi(apiConfig);
+    wallet = new Wallet(walletConfig);
     wallet.setApi(api);
   });
 
   describe('#getBalance()', async () => {
     it('Get balance', async () => {
       let result = await wallet.getBalance();
-      console.log('result', result);
       Assert.ok(result.balance !== undefined, 'balance must be exist');
-      Assert.ok(result.unconfirmed_balance !== undefined, 'unconfirmed_balance must be exist');
+      Assert.ok(
+        result.unconfirmed_balance !== undefined,
+        'unconfirmed_balance must be exist'
+      );
     });
   });
 
   describe('#getHistory()', async () => {
     it('Get history', async () => {
       let result = await wallet.getHistory(0, 10);
-      console.log('result', result);
       Assert.ok(result.txs !== undefined, 'history must be exist');
     });
   });
@@ -47,7 +50,6 @@ describe('wallet.ltc', async () => {
   describe('#getAddress()', async () => {
     it('Get address', () => {
       let result = wallet.getAddress();
-      console.log('getAddress', result);
       Assert.ok(result !== undefined, 'address must be exist');
     });
   });
@@ -55,7 +57,6 @@ describe('wallet.ltc', async () => {
   describe('#getFeeRate()', async () => {
     it('get FeeRate', async () => {
       let result = await wallet.getDefaultFee();
-      console.log('getFeeRate', result);
       Assert.ok(result !== undefined, 'address must be exist');
     });
   });
@@ -69,7 +70,6 @@ describe('wallet.ltc', async () => {
           amount: 10
         }
       });
-      console.log('Send', result);
       Assert.ok(result.raw !== undefined, 'raw must be exist');
     });
   });
