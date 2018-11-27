@@ -165,7 +165,7 @@ Response
 ### BCH.
 #### Create instanse of Wallet
 ```javascript
-const { Wallet, CoinType, EthWallet,BchWallet, InfinitoApi, NeoWallet } = require('node-infinito-wallet');
+const { Wallet, CoinType, InfinitoApi } = require('node-infinito-wallet');
 let apiConfig = {
   apiKey: 'test',
   secret: '123456',
@@ -182,14 +182,14 @@ let walletConfig = {
  
 // Note: need to set InfinitoApi
 let api = new InfinitoApi(apiConfig);
-let wallet = new BchWallet(walletConfig);
+let wallet = new Wallet(walletConfig);
 wallet.setApi(api);
  ```
  
 ### ETC, ETH.
 #### Create instanse of Wallet
 ```javascript
-const { Wallet, CoinType, EthWallet,BchWallet, InfinitoApi, NeoWallet } = require('node-infinito-wallet');
+const { Wallet, CoinType, InfinitoApi } = require('node-infinito-wallet');
 let apiConfig = {
   apiKey: 'test',
   secret: '123456',
@@ -206,7 +206,7 @@ let walletConfig = {
  
 // Note: need to set InfinitoApi
 let api = new InfinitoApi(apiConfig);
-let wallet = new EthWallet(walletConfig);
+let wallet = new Wallet(walletConfig);
 wallet.setApi(api);
  ```
  
@@ -364,7 +364,7 @@ Response
 ### NEO.
 #### Create instanse of Wallet
 ```javascript
-const { Wallet, CoinType, EthWallet,BchWallet, InfinitoApi, NeoWallet } = require('node-infinito-wallet');
+const { Wallet, CoinType, InfinitoApi } = require('node-infinito-wallet');
 let apiConfig = {
   apiKey: 'test',
   secret: '123456',
@@ -381,7 +381,7 @@ let walletConfig = {
  
 // Note: need to set InfinitoApi
 let api = new InfinitoApi(apiConfig);
-let wallet = new NeoWallet(walletConfig);
+let wallet = new Wallet(walletConfig);
 wallet.setApi(api);
  ```
 Beside functions like Bitcoin, Neo support some functions below
