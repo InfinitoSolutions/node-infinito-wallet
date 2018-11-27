@@ -1,6 +1,5 @@
-const { EthWallet, CoinType } = require('../index');
+const { Wallet, CoinType, InfinitoApi } = require('../index');
 const ConfigTest = require('./config/config.test.staging.testnet');
-const InfinitoApi = require('node-infinito-api');
 const Assert = require('assert');
 const chai = require('chai');
 chai.should();
@@ -14,8 +13,8 @@ let apiConfig = {
 
 let walletConfig = {
   coinType: CoinType.ETH.symbol,
-  isTestNet: true
-  // privateKey: '0x77d6f0d8768942c098e664bb4e930c5019755b90d6b0fb2fb43450d6270efb3d'
+  isTestNet: true,
+  privateKey: '0x77d6f0d8768942c098e664bb4e930c5019755b90d6b0fb2fb43450d6270efb3d'
   // 0x6426b293207e124d334c8cb44380a4999ecc900e
 };
 
@@ -24,7 +23,7 @@ var wallet = null;
 describe('wallet.eth', async () => {
   beforeEach(async () => {
     let api = new InfinitoApi(apiConfig);
-    wallet = new EthWallet(walletConfig);
+    wallet = new Wallet(walletConfig);
     wallet.setApi(api);
   });
 
