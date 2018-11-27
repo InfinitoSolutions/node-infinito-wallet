@@ -27,7 +27,7 @@ For develop environment please using:
 ### BTC, DOGE, DASH, LTC.
 #### Create instanse of Wallet
 ```javascript
-const { Wallet, CoinType, EthWallet,BchWallet, InfinitoApi, NeoWallet } = require('node-infinito-wallet');
+const { Wallet, CoinType, InfinitoApi } = require('node-infinito-wallet');
 let apiConfig = {
   apiKey: 'test',
   secret: '123456',
