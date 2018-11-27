@@ -1,6 +1,5 @@
-const { NeoWallet, CoinType } = require('../index');
+const { Wallet, CoinType, InfinitoApi } = require('../index');
 const ConfigTest = require('./config/config.test.staging.testnet');
-const InfinitoApi = require('node-infinito-api');
 const Assert = require('assert');
 const chai = require('chai');
 chai.should();
@@ -27,7 +26,7 @@ var wallet = null;
 describe('wallet.neo', async () => {
   beforeEach(async () => {
     let api = new InfinitoApi(apiConfig);
-    wallet = new NeoWallet(walletConfig);
+    wallet = new Wallet(walletConfig);
     wallet.setApi(api);
   });
 
