@@ -1,7 +1,5 @@
-const Wallet = require('../lib/wallet_bch');
+const { Wallet, CoinType, InfinitoApi } = require('../index');
 const ConfigTest = require('./config/config.test.staging.testnet');
-const CoinType = require('../lib/coin_type');
-const InfinitoApi = require('node-infinito-api');
 const Assert = require('assert');
 const chai = require('chai');
 chai.should();
@@ -15,8 +13,8 @@ let apiConfig = {
 
 let walletConfig = {
   coinType: CoinType.BCH.symbol,
-  isTestNet: true
-  // privateKey: 'cNqemSkkxjtbe4VQp92TMrMdCz434RHcRtAADM8cRoC2nWnjY4Do'
+  isTestNet: true,
+  privateKey: 'cNqemSkkxjtbe4VQp92TMrMdCz434RHcRtAADM8cRoC2nWnjY4Do'
   // mssJexznaEypEfeLGf4v7J2WvKX6vFAjrs
 };
 

@@ -1,6 +1,5 @@
-const { Wallet, CoinType } = require('../index');
+const { Wallet, CoinType, InfinitoApi } = require('../index');
 const ConfigTest = require('./config/config.test.staging.testnet');
-const InfinitoApi = require('node-infinito-api');
 const Assert = require('assert');
 const chai = require('chai');
 chai.should();
@@ -62,7 +61,7 @@ describe('wallet.ltc', async () => {
   });
 
   describe('#send()', async () => {
-    it.only('Send', async () => {
+    it('Send', async () => {
       let result = await wallet.send({
         txParams: {
           to: 'mrekeohAmra9GtJdAGkZTqQkzUzHSVKWA5',
