@@ -8,7 +8,7 @@ var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 var uglify = require('gulp-uglify-es').default;
 var pump = require('pump');
-var runSequence = require('run-sequence');
+var runSequence = require('gulp4-run-sequence');
 var config = {
   entryFile: './build/index.js',
   outputDir: './build/dist/',
@@ -43,18 +43,19 @@ function bundle() {
     .pipe(reload({ stream: true }));
 }
 
-gulp.task('build-persistent', ['clean'], function() {
+gulp.task('build-persistent', gulp.series('clean', function() {
   return bundle();
-});
+}));
 
-gulp.task('build', ['build-persistent'], function() {
+gulp.task('build', gulp.series('build-persistent', function() {
   process.exit(0);
-});
+}));
 
 gulp.task('compress', function(cb) {
   pump([gulp.src('build/dist/*.js'), uglify(), gulp.dest('build/dist')], cb);
 });
-gulp.task('watch', ['build-persistent'], function() {
+
+gulp.task('watch', gulp.series('build-persistent', function() {
   browserSync({
     server: {
       baseDir: './',
@@ -64,7 +65,7 @@ gulp.task('watch', ['build-persistent'], function() {
   getBundler().on('update', function() {
     gulp.start('build-persistent');
   });
-});
+}));
 
 // WEB SERVER
 gulp.task('serve', function() {

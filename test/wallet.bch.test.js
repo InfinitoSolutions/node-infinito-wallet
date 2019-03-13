@@ -1,5 +1,5 @@
 const { Wallet, CoinType, InfinitoApi } = require('../index');
-const ConfigTest = require('./config/config.test.staging.testnet');
+const ConfigTest = require('./config.test');
 const Assert = require('assert');
 const chai = require('chai');
 chai.should();
@@ -15,20 +15,20 @@ let walletConfig = {
   coinType: CoinType.BCH.symbol,
   isTestNet: true,
   privateKey: 'cNqemSkkxjtbe4VQp92TMrMdCz434RHcRtAADM8cRoC2nWnjY4Do'
-  // mssJexznaEypEfeLGf4v7J2WvKX6vFAjrs
+    // mssJexznaEypEfeLGf4v7J2WvKX6vFAjrs
 };
 
 var wallet = null;
 
-describe('wallet.btc', async () => {
-  beforeEach(async () => {
+describe('wallet.bch', async() => {
+  beforeEach(async() => {
     let api = new InfinitoApi(apiConfig);
     wallet = new Wallet(walletConfig);
     wallet.setApi(api);
   });
 
-  describe('#getBalance()', async () => {
-    it.only('Get balance', async () => {
+  describe('#getBalance()', async() => {
+    it('Get balance', async() => {
       let result = await wallet.getBalance();
       Assert.ok(result.balance !== undefined, 'balance must be exist');
       Assert.ok(
@@ -38,29 +38,29 @@ describe('wallet.btc', async () => {
     });
   });
 
-  describe('#getHistory()', async () => {
-    it('Get history', async () => {
+  describe('#getHistory()', async() => {
+    it('Get history', async() => {
       let result = await wallet.getHistory(0, 10);
       Assert.ok(result.txs !== undefined, 'history must be exist');
     });
   });
 
-  describe('#getAddress()', async () => {
+  describe('#getAddress()', async() => {
     it('Get address', () => {
       let result = wallet.getAddress();
       Assert.ok(result !== undefined, 'address must be exist');
     });
   });
 
-  describe('#getFeeRate()', async () => {
-    it('get FeeRate', async () => {
+  describe('#getFeeRate()', async() => {
+    it('get FeeRate', async() => {
       let result = await wallet.getDefaultFee();
       Assert.ok(result !== undefined, 'address must be exist');
     });
   });
 
-  describe('#send()', async () => {
-    it.only('Send', async () => {
+  describe('#send()', async() => {
+    it('Send', async() => {
       let result = await wallet.send({
         txParams: {
           to: 'mk1GTLuF89WtiNSHujpWXyHK579AcPc59D',

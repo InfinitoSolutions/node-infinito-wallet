@@ -1,75 +1,64 @@
-const { Wallet, CoinType } = require('../index');
-const ConfigTest = require('./config/config.test.staging.testnet');
-const InfinitoApi = require('node-infinito-api');
+const { Wallet } = require('../index');
 const Assert = require('assert');
-const chai = require('chai');
-chai.should();
 
-let apiConfig = {
-  apiKey: ConfigTest.API_KEY,
-  secret: ConfigTest.SECRECT,
-  baseUrl: ConfigTest.BASE_URL,
-  logLevel: ConfigTest.LOG_LEVEL
-};
+describe('wallet', async() => {
 
-let walletConfig = {
-  coinType: CoinType.BTC.symbol,
-  isTestNet: true,
-  privateKey: 'cVg2gYrsfHBf4iBWncrm86VHd1VqcUCFdJ9FJtLbdLfwvqc1eL6v'
-  // f170b01f106f1ba37d87a19a0e7a02de93bc9364d09d52cd04345bde9453937c
-};
+  describe('#constructor()', async() => {
+    it("default", async() => {
+      try {
+        let wallet = new Wallet();
+      } catch (err) {
+        Assert.equal(err.code, 'infinito.wallet.invalid_cointype', 'Must be error')
+      }
+    });
 
-var wallet = null;
+    it("Unknown", async() => {
+      try {
+        let wallet = new Wallet({ coinType: 'UNKNOWN' });
+      } catch (err) {
+        Assert.equal(err.code, 'infinito.wallet.invalid_cointype', 'Must be error')
+      }
+    });
 
-describe('wallet.btc', async () => {
-  beforeEach(async () => {
-    let api = new InfinitoApi(apiConfig);
-    wallet = new Wallet(walletConfig);
-    wallet.setApi(api);
-  });
+    it("BTC", async() => {
+      let wallet = new Wallet({ coinType: 'BTC' });
+      Assert.equal(wallet.constructor.name, 'BtcWallet', 'Must be right wallet class');
+    });
 
-  describe('#getBalance()', async () => {
-    it('Get balance', async () => {
-      let result = await wallet.getBalance();
-      Assert.ok(result.balance !== undefined, 'balance must be exist');
-      Assert.ok(
-        result.unconfirmed_balance !== undefined,
-        'unconfirmed_balance must be exist'
-      );
+    it("BCH", async() => {
+      let wallet = new Wallet({ coinType: 'BCH' });
+      Assert.equal(wallet.constructor.name, 'BchWallet', 'Must be right wallet class');
+    });
+
+    it("DOGE", async() => {
+      let wallet = new Wallet({ coinType: 'DOGE' });
+      Assert.equal(wallet.constructor.name, 'BtcWallet', 'Must be right wallet class');
+    });
+
+    it("LTC", async() => {
+      let wallet = new Wallet({ coinType: 'LTC' });
+      Assert.equal(wallet.constructor.name, 'BtcWallet', 'Must be right wallet class');
+    });
+
+    it("DASH", async() => {
+      let wallet = new Wallet({ coinType: 'DSH' });
+      Assert.equal(wallet.constructor.name, 'BtcWallet', 'Must be right wallet class');
+    });
+
+    it("ETH", async() => {
+      let wallet = new Wallet({ coinType: 'ETH' });
+      Assert.equal(wallet.constructor.name, 'EthWallet', 'Must be right wallet class');
+    });
+
+    it("ETC", async() => {
+      let wallet = new Wallet({ coinType: 'ETC' });
+      Assert.equal(wallet.constructor.name, 'EthWallet', 'Must be right wallet class');
+    });
+
+    it("NEO", async() => {
+      let wallet = new Wallet({ coinType: 'NEO' });
+      Assert.equal(wallet.constructor.name, 'NeoWallet', 'Must be right wallet class');
     });
   });
 
-  describe('#getHistory()', async () => {
-    it('Get history', async () => {
-      let result = await wallet.getHistory(0, 10);
-      Assert.ok(result.txs !== undefined, 'history must be exist');
-    });
-  });
-
-  describe('#getAddress()', async () => {
-    it('Get address', () => {
-      let result = wallet.getAddress();
-      Assert.ok(result !== undefined, 'address must be exist');
-    });
-  });
-
-  describe('#getFeeRate()', async () => {
-    it('get FeeRate', async () => {
-      let result = await wallet.getDefaultFee();
-      Assert.ok(result !== undefined, 'address must be exist');
-    });
-  });
-
-  describe('#send()', async () => {
-    it('Send', async () => {
-      let result = await wallet.send({
-        txParams: {
-          to: 'mssJexznaEypEfeLGf4v7J2WvKX6vFAjrs',
-          amount: 1000,
-          fee: 50
-        }
-      });
-      Assert.ok(result.raw !== undefined, 'raw must be exist');
-    });
-  });
 });
