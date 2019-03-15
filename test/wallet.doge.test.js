@@ -1,7 +1,7 @@
-const { Wallet, CoinType, InfinitoApi } = require('../index');
-const ConfigTest = require('./config.test');
 const Assert = require('assert');
 const chai = require('chai');
+const { Wallet, CoinType, InfinitoApi } = require('../index');
+const ConfigTest = require('./config.test');
 chai.should();
 
 let apiConfig = {

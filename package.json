@@ -10,8 +10,8 @@
     "build": "gulp build:dist",
     "eslint": "eslint .",
     "eslint:fix": "eslint --fix .",
-    "test": "mocha --timeout 10000 --reporter mochawesome --reporter-options reportDir=./build/test-report",
-    "test-nyc": "nyc mocha --timeout 10000 --reporter mochawesome --reporter-options reportDir=./build/test-report"
+    "test": "mocha --timeout 20000 --reporter mochawesome --reporter-options reportDir=./build/test-report",
+    "test:nyc": "nyc mocha --timeout 20000 --reporter mochawesome --reporter-options reportDir=./build/test-report"
   },
   "repository": {
     "type": "git",
@@ -30,12 +30,11 @@
   },
   "homepage": "https://platform.infinito.io/",
   "dependencies": {
-    "@cityofzion/neon-js": "^3.10.1",
+    "@cityofzion/neon-js": "^3.11.9",
     "bigi": "^1.4.2",
     "bignumber.js": "^7.2.1",
     "bip32": "^1.0.2",
     "bip39": "^2.5.0",
-    "bip44-constants": "^5.1.0",
     "bitcoincashjs": "^0.1.10",
     "bitcoinjs-lib": "^4.0.1",
     "coinselect": "^3.1.11",
