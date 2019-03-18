@@ -48,13 +48,15 @@ describe('hdnode', async() => {
       Assert.equal(hdnode.mnemonic, mnemonic);
       Assert.equal(hdnode.hdPathArr.length, 6);
     });
+
     it('BTC', async() => {
       let hdnode = new HDNode({ hdPath: "m/44'/0'/0'/0/0" });
       Assert.equal(hdnode.hdPath, "m/44'/0'/0'/0/0");
       Assert.equal(hdnode.mnemonic.split(" ").length, 12, "Must be 12 words passphrase");
       Assert.equal(hdnode.hdPathArr.length, 6);
     });
-    it.only('Invalid hdpath', async() => {
+
+    it('Invalid hdpath', async() => {
       try {
         new HDNode({ hdPath: "m/44'/0'/0'/0" });
       } catch (err) {
@@ -78,31 +80,64 @@ describe('hdnode', async() => {
     });
   });
 
-  // describe('#getCoinIndexBip44()', async() => {
-  //   it('Testnet', async() => {
-  //     hdNode = new HDNode();
-  //     let index = hdNode.getCoinIndexBip44('TESTNET');
-
-  //     Assert.equal(index, 1, 'Must be 1');
-  //   });
-
-  //   it('BTC', async() => {
-  //     hdNode = new HDNode();
-  //     let index = hdNode.getCoinIndexBip44('BTC');
-
-  //     Assert.equal(index, 0, 'Must be 0');
-  //   });
-
-  //   it('Unknown coin', async() => {
-  //     hdNode = new HDNode();
-  //     try {
-  //       hdNode.getCoinIndexBip44('NOT_EXIST_COIN_TYPE');
-  //     } catch (err) {
-  //       Assert.equal('infinito.wallet.invalid_cointype', err.code, 'Must be invalid coin type');
-  //     }
-  //   });
-
-  // });
+  describe('#getHdPathByCoinType', async => {
+    it('Invalid', async() => {
+      try {
+        HDNode.getHdPathByCoinType("Invalid");
+      } catch (err) {
+        Assert.equal(err.code, 'infinito.wallet.invalid_cointype');
+        Assert.equal(err.message, 'Invalid coin type INVALID');
+      }
+    });
+    it('Testnet', async() => {
+      let result = HDNode.getHdPathByCoinType("TESTNET");
+      Assert.equal(result, "m/44'/1'/0'/0/0");
+    });
+    it('BTC', async() => {
+      let result = HDNode.getHdPathByCoinType("BTC");
+      Assert.equal(result, "m/44'/0'/0'/0/0");
+    });
+    it('BCH', async() => {
+      let result = HDNode.getHdPathByCoinType("BCH");
+      Assert.equal(result, "m/44'/145'/0'/0/0");
+    });
+    it('LTC', async() => {
+      let result = HDNode.getHdPathByCoinType("LTC");
+      Assert.equal(result, "m/44'/2'/0'/0/0");
+    });
+    it('DOGE', async() => {
+      let result = HDNode.getHdPathByCoinType("DOGE");
+      Assert.equal(result, "m/44'/3'/0'/0/0");
+    });
+    it('DASH', async() => {
+      let result = HDNode.getHdPathByCoinType("DASH");
+      Assert.equal(result, "m/44'/5'/0'/0/0");
+    });
+    it('NEO', async() => {
+      let result = HDNode.getHdPathByCoinType("NEO");
+      Assert.equal(result, "m/44'/888'/0'/0/0");
+    });
+    it('ETH', async() => {
+      let result = HDNode.getHdPathByCoinType("ETH");
+      Assert.equal(result, "m/44'/60'/0'/0/0");
+    });
+    it('ETC', async() => {
+      let result = HDNode.getHdPathByCoinType("ETC");
+      Assert.equal(result, "m/44'/61'/0'/0/0");
+    });
+    it('ADA', async() => {
+      let result = HDNode.getHdPathByCoinType("ADA");
+      Assert.equal(result, "m/44'/1815'/0'/0/0");
+    });
+    it('EOS', async() => {
+      let result = HDNode.getHdPathByCoinType("EOS");
+      Assert.equal(result, "m/44'/194'/0'/0/0");
+    });
+    it('ONT', async() => {
+      let result = HDNode.getHdPathByCoinType("ONT");
+      Assert.equal(result, "m/44'/1024'/0'/0/0");
+    });
+  });
 
   describe('#generateKeyPair()', async() => {
     it('Generated passphase', async() => {
