@@ -1,6 +1,5 @@
 node_modules/
 \.vscode/
-test/
 .env
 build/test-report
 .nyc_output
