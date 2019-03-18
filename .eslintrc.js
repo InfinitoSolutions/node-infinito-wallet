@@ -10,7 +10,10 @@ module.exports = {
   },
   parserOptions: {
     sourceType: "module",
-    ecmaVersion: 8
+    ecmaVersion: 8,
+    ecmaFeatures: {
+      "experimentalObjectRestSpread": true
+    }
   },
   rules: {
     "object-curly-spacing": [2, "always"],
