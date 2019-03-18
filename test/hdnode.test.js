@@ -25,7 +25,7 @@ var hdNode;
 
 describe('hdnode', async() => {
 
-  describe('#constructor', async => {
+  describe('#constructor', async() => {
     it('no parameter', async() => {
       try {
         new HDNode();
@@ -37,8 +37,8 @@ describe('hdnode', async() => {
     });
     it('testnet', async() => {
       let hdnode = new HDNode({ isTestnet: true });
-      Assert.equal(hdnode.hdPath, "m/44'/1'/0'/0/0", "Must be hdpath of testnet");
-      Assert.equal(hdnode.mnemonic.split(" ").length, 12, "Must be 12 words passphrase");
+      Assert.equal(hdnode.hdPath, "m/44'/1'/0'/0/0", 'Must be hdpath of testnet');
+      Assert.equal(hdnode.mnemonic.split(' ').length, 12, 'Must be 12 words passphrase');
       Assert.equal(hdnode.hdPathArr.length, 6);
     });
     it('testnet with passphrase', async() => {
@@ -52,7 +52,7 @@ describe('hdnode', async() => {
     it('BTC', async() => {
       let hdnode = new HDNode({ hdPath: "m/44'/0'/0'/0/0" });
       Assert.equal(hdnode.hdPath, "m/44'/0'/0'/0/0");
-      Assert.equal(hdnode.mnemonic.split(" ").length, 12, "Must be 12 words passphrase");
+      Assert.equal(hdnode.mnemonic.split(' ').length, 12, 'Must be 12 words passphrase');
       Assert.equal(hdnode.hdPathArr.length, 6);
     });
 
@@ -61,80 +61,80 @@ describe('hdnode', async() => {
         new HDNode({ hdPath: "m/44'/0'/0'/0" });
       } catch (err) {
         Assert.equal(err.code, 'infinito.wallet.invalid_hdpath');
-        Assert.equal(err.message, `Invalid hdpath m/44'/0'/0'/0`);
+        Assert.equal(err.message, 'Invalid hdpath m/44\'/0\'/0\'/0');
       }
 
       try {
         new HDNode({ hdPath: "m/44'/0'/0'/0/0/1" });
       } catch (err) {
         Assert.equal(err.code, 'infinito.wallet.invalid_hdpath');
-        Assert.equal(err.message, `Invalid hdpath m/44'/0'/0'/0/0/1`);
+        Assert.equal(err.message, 'Invalid hdpath m/44\'/0\'/0\'/0/0/1');
       }
 
       try {
-        new HDNode({ hdPath: "Invalid" });
+        new HDNode({ hdPath: 'Invalid' });
       } catch (err) {
         Assert.equal(err.code, 'infinito.wallet.invalid_hdpath');
-        Assert.equal(err.message, `Invalid hdpath Invalid`);
+        Assert.equal(err.message, 'Invalid hdpath Invalid');
       }
     });
   });
 
-  describe('#getHdPathByCoinType', async => {
+  describe('#getHdPathByCoinType', async() => {
     it('Invalid', async() => {
       try {
-        HDNode.getHdPathByCoinType("Invalid");
+        HDNode.getHdPathByCoinType('Invalid');
       } catch (err) {
         Assert.equal(err.code, 'infinito.wallet.invalid_cointype');
         Assert.equal(err.message, 'Invalid coin type INVALID');
       }
     });
     it('Testnet', async() => {
-      let result = HDNode.getHdPathByCoinType("TESTNET");
+      let result = HDNode.getHdPathByCoinType('TESTNET');
       Assert.equal(result, "m/44'/1'/0'/0/0");
     });
     it('BTC', async() => {
-      let result = HDNode.getHdPathByCoinType("BTC");
+      let result = HDNode.getHdPathByCoinType('BTC');
       Assert.equal(result, "m/44'/0'/0'/0/0");
     });
     it('BCH', async() => {
-      let result = HDNode.getHdPathByCoinType("BCH");
+      let result = HDNode.getHdPathByCoinType('BCH');
       Assert.equal(result, "m/44'/145'/0'/0/0");
     });
     it('LTC', async() => {
-      let result = HDNode.getHdPathByCoinType("LTC");
+      let result = HDNode.getHdPathByCoinType('LTC');
       Assert.equal(result, "m/44'/2'/0'/0/0");
     });
     it('DOGE', async() => {
-      let result = HDNode.getHdPathByCoinType("DOGE");
+      let result = HDNode.getHdPathByCoinType('DOGE');
       Assert.equal(result, "m/44'/3'/0'/0/0");
     });
     it('DASH', async() => {
-      let result = HDNode.getHdPathByCoinType("DASH");
+      let result = HDNode.getHdPathByCoinType('DASH');
       Assert.equal(result, "m/44'/5'/0'/0/0");
     });
     it('NEO', async() => {
-      let result = HDNode.getHdPathByCoinType("NEO");
+      let result = HDNode.getHdPathByCoinType('NEO');
       Assert.equal(result, "m/44'/888'/0'/0/0");
     });
     it('ETH', async() => {
-      let result = HDNode.getHdPathByCoinType("ETH");
+      let result = HDNode.getHdPathByCoinType('ETH');
       Assert.equal(result, "m/44'/60'/0'/0/0");
     });
     it('ETC', async() => {
-      let result = HDNode.getHdPathByCoinType("ETC");
+      let result = HDNode.getHdPathByCoinType('ETC');
       Assert.equal(result, "m/44'/61'/0'/0/0");
     });
     it('ADA', async() => {
-      let result = HDNode.getHdPathByCoinType("ADA");
+      let result = HDNode.getHdPathByCoinType('ADA');
       Assert.equal(result, "m/44'/1815'/0'/0/0");
     });
     it('EOS', async() => {
-      let result = HDNode.getHdPathByCoinType("EOS");
+      let result = HDNode.getHdPathByCoinType('EOS');
       Assert.equal(result, "m/44'/194'/0'/0/0");
     });
     it('ONT', async() => {
-      let result = HDNode.getHdPathByCoinType("ONT");
+      let result = HDNode.getHdPathByCoinType('ONT');
       Assert.equal(result, "m/44'/1024'/0'/0/0");
     });
   });
