@@ -15,5 +15,7 @@ module.exports = {
   BASE_URL_TESTNET: process.env.BASE_URL_TESTNET,
   // KEY
   MNEMONIC: process.env.MNEMONIC,
-  PRIVATE_KEY_BTC: process.env.PRIVATE_KEY_BTC
+  PRIVATE_KEY_BTC: process.env.PRIVATE_KEY_BTC,
+  PRIVATE_KEY_BCH: process.env.PRIVATE_KEY_BCH,
+  PRIVATE_KEY_DASH: process.env.PRIVATE_KEY_DASH,
 };

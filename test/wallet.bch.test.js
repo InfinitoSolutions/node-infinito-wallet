@@ -105,118 +105,118 @@ describe('wallet.bch', async() => {
       });
     });
   });
-  //
-  // describe('#getBalance()', async() => {
-  //   it('Mnemonic.Mainnet', async() => {
-  //     let wallet = new BchWallet({
-  //       mnemonic: ConfigTest.MNEMONIC,
-  //       isTestNet: false
-  //     });
-  //     wallet.setApi(getApi(false));
-  //     let result = await wallet.getBalance();
-  //     Assert.ok(result.balance !== undefined, 'Balance must be exist');
-  //     Assert.ok(result.unconfirmed_balance !== undefined, 'Balance must be exist');
-  //   });
-  //   it('PrivateKey.Testnet', async() => {
-  //     let wallet = new BchWallet({
-  //       privateKey: ConfigTest.PRIVATE_KEY_BCH,
-  //       isTestNet: true
-  //     });
-  //
-  //     wallet.setApi(getApi(true));
-  //     let result = await wallet.getBalance();
-  //     Assert.ok(result.balance !== undefined, 'Balance must be exist');
-  //     Assert.ok(result.unconfirmed_balance !== undefined, 'Balance must be exist');
-  //   });
-  // });
-  //
-  // describe('#getHistory()', async() => {
-  //   it('default', async() => {
-  //     let wallet = new BchWallet({
-  //       privateKey: ConfigTest.PRIVATE_KEY_BCH,
-  //       isTestNet: false
-  //     });
-  //     wallet.setApi(getApi(false));
-  //     let result = await wallet.getHistory();
-  //     Assert.ok(result.txs.length >= 0, 'History must be exist');
-  //   });
-  //
-  //   it('offset.limit', async() => {
-  //     let wallet = new BchWallet({
-  //       privateKey: ConfigTest.PRIVATE_KEY_BCH,
-  //       isTestNet: false
-  //     });
-  //     wallet.setApi(getApi(false));
-  //     let result = await wallet.getHistory(0, 1);
-  //     Assert.ok(result.txs.length == 1, 'History must have one item');
-  //   });
-  //
-  //   it('offset = 50', async() => {
-  //     let wallet = new BchWallet({
-  //       privateKey: ConfigTest.PRIVATE_KEY_BCH,
-  //       isTestNet: false
-  //     });
-  //     wallet.setApi(getApi(false));
-  //     let result = await wallet.getHistory(0, 50);
-  //     Assert.ok(result.txs.length == 0, 'History must be empty');
-  //   });
-  // });
-  //
-  // describe('#getDefaultFee()', async() => {
-  //   it('default', async() => {
-  //     let wallet = new BchWallet({
-  //       privateKey: ConfigTest.PRIVATE_KEY_BCH,
-  //       isTestNet: false
-  //     });
-  //     wallet.setApi(getApi(false));
-  //     let result = await wallet.getDefaultFee();
-  //     Assert.ok(result > 0);
-  //   });
-  //   it('high', async() => {
-  //     let wallet = new BchWallet({
-  //       privateKey: ConfigTest.PRIVATE_KEY_BCH,
-  //       isTestNet: false
-  //     });
-  //     wallet.setApi(getApi(false));
-  //     let result = await wallet.getDefaultFee('high');
-  //     Assert.ok(result > 0);
-  //   });
-  //   it('medium', async() => {
-  //     let wallet = new BchWallet({
-  //       privateKey: ConfigTest.PRIVATE_KEY_BCH,
-  //       isTestNet: false
-  //     });
-  //     wallet.setApi(getApi(false));
-  //     let result = await wallet.getDefaultFee('medium');
-  //     Assert.ok(result > 0);
-  //   });
-  //   it('low', async() => {
-  //     let wallet = new BchWallet({
-  //       privateKey: ConfigTest.PRIVATE_KEY_BCH,
-  //       isTestNet: false
-  //     });
-  //     wallet.setApi(getApi(false));
-  //     let result = await wallet.getDefaultFee('low');
-  //     Assert.ok(result > 0);
-  //   });
-  //   it('error', async() => {
-  //     let wallet = new BchWallet({
-  //       privateKey: ConfigTest.PRIVATE_KEY_BCH,
-  //       isTestNet: false
-  //     });
-  //     wallet.setApi(getApi(false));
-  //     let api = wallet.getApi();
-  //     api.BCH.getFeeRate = function() {
-  //       return { cd: 1 };
-  //     };
-  //     try {
-  //       await wallet.getDefaultFee('low');
-  //       Assert.fail();
-  //     } catch (err) {
-  //       Assert.equal(err.code, 'infinito.wallet.internal_error');
-  //     }
-  //   });
-  // });
+
+  describe('#getBalance()', async() => {
+    it('Mnemonic.Mainnet', async() => {
+      let wallet = new BchWallet({
+        mnemonic: ConfigTest.MNEMONIC,
+        isTestNet: false
+      });
+      wallet.setApi(getApi(false));
+      let result = await wallet.getBalance();
+      Assert.ok(result.balance !== undefined, 'Balance must be exist');
+      Assert.ok(result.unconfirmed_balance !== undefined, 'Balance must be exist');
+    });
+    it('PrivateKey.Testnet', async() => {
+      let wallet = new BchWallet({
+        privateKey: ConfigTest.PRIVATE_KEY_BCH,
+        isTestNet: true
+      });
+
+      wallet.setApi(getApi(true));
+      let result = await wallet.getBalance();
+      Assert.ok(result.balance !== undefined, 'Balance must be exist');
+      Assert.ok(result.unconfirmed_balance !== undefined, 'Balance must be exist');
+    });
+  });
+
+  describe('#getHistory()', async() => {
+    it('default', async() => {
+      let wallet = new BchWallet({
+        privateKey: ConfigTest.PRIVATE_KEY_BCH,
+        isTestNet: false
+      });
+      wallet.setApi(getApi(false));
+      let result = await wallet.getHistory();
+      Assert.ok(result.txs.length >= 0, 'History must be exist');
+    });
+
+    it('offset.limit', async() => {
+      let wallet = new BchWallet({
+        privateKey: ConfigTest.PRIVATE_KEY_BCH,
+        isTestNet: false
+      });
+      wallet.setApi(getApi(false));
+      let result = await wallet.getHistory(0, 1);
+      Assert.ok(result.txs.length == 1, 'History must have one item');
+    });
+
+    it('offset = 50', async() => {
+      let wallet = new BchWallet({
+        privateKey: ConfigTest.PRIVATE_KEY_BCH,
+        isTestNet: false
+      });
+      wallet.setApi(getApi(false));
+      let result = await wallet.getHistory(50, 50);
+      Assert.ok(result.txs.length == 0, 'History must be empty');
+    });
+  });
+
+  describe('#getDefaultFee()', async() => {
+    it('default', async() => {
+      let wallet = new BchWallet({
+        privateKey: ConfigTest.PRIVATE_KEY_BCH,
+        isTestNet: false
+      });
+      wallet.setApi(getApi(false));
+      let result = await wallet.getDefaultFee();
+      Assert.ok(result > 0);
+    });
+    it('high', async() => {
+      let wallet = new BchWallet({
+        privateKey: ConfigTest.PRIVATE_KEY_BCH,
+        isTestNet: false
+      });
+      wallet.setApi(getApi(false));
+      let result = await wallet.getDefaultFee('high');
+      Assert.ok(result > 0);
+    });
+    it('medium', async() => {
+      let wallet = new BchWallet({
+        privateKey: ConfigTest.PRIVATE_KEY_BCH,
+        isTestNet: false
+      });
+      wallet.setApi(getApi(false));
+      let result = await wallet.getDefaultFee('medium');
+      Assert.ok(result > 0);
+    });
+    it('low', async() => {
+      let wallet = new BchWallet({
+        privateKey: ConfigTest.PRIVATE_KEY_BCH,
+        isTestNet: false
+      });
+      wallet.setApi(getApi(false));
+      let result = await wallet.getDefaultFee('low');
+      Assert.ok(result > 0);
+    });
+    it('error', async() => {
+      let wallet = new BchWallet({
+        privateKey: ConfigTest.PRIVATE_KEY_BCH,
+        isTestNet: false
+      });
+      wallet.setApi(getApi(false));
+      let api = wallet.getApi();
+      api.BCH.getFeeRate = function() {
+        return { cd: 1 };
+      };
+      try {
+        await wallet.getDefaultFee('low');
+        Assert.fail();
+      } catch (err) {
+        Assert.equal(err.code, 'infinito.wallet.internal_error');
+      }
+    });
+  });
 
   describe('#createRawTx()', async() => {
     it('Missing parameter to', async() => {
