@@ -18,4 +18,6 @@ module.exports = {
   PRIVATE_KEY_BTC: process.env.PRIVATE_KEY_BTC,
   PRIVATE_KEY_BCH: process.env.PRIVATE_KEY_BCH,
   PRIVATE_KEY_DASH: process.env.PRIVATE_KEY_DASH,
+  PRIVATE_KEY_LTC: process.env.PRIVATE_KEY_LTC,
+  PRIVATE_KEY_DOGE: process.env.PRIVATE_KEY_DOGE,
 };
