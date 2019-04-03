@@ -20,4 +20,6 @@ module.exports = {
   PRIVATE_KEY_DASH: process.env.PRIVATE_KEY_DASH,
   PRIVATE_KEY_LTC: process.env.PRIVATE_KEY_LTC,
   PRIVATE_KEY_DOGE: process.env.PRIVATE_KEY_DOGE,
+  PRIVATE_KEY_ETC: process.env.PRIVATE_KEY_ETC,
+  PRIVATE_KEY_ETH: process.env.PRIVATE_KEY_ETH,
 };
