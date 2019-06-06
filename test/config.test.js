@@ -1,10 +1,12 @@
-require('dotenv').config();
+var path = require('path');
+var envPath = path.resolve('../.env.test');
+require('dotenv').config({ path: envPath });
 
 module.exports = {
   LOG_LEVEL: process.env.LOG_LEVEL || 'NONE', // ALL, DEBUG, INFO, WARN, ERROR, NONE
-  API_KEY: process.env.API_KEY,
-  SECRECT: process.env.SECRET_KEY,
-  BASE_URL: process.env.BASE_URL,
+  API_KEY: process.env.API_KEY_MAINNET,
+  SECRECT: process.env.SECRET_KEY_MAINNET,
+  BASE_URL: process.env.BASE_URL_MAINNET,
   // Mainnet
   API_KEY_MAINNET: process.env.API_KEY_MAINNET,
   SECRECT_MAINNET: process.env.SECRET_KEY_MAINNET,
