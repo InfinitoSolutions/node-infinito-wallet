@@ -660,4 +660,45 @@ describe('wallet.btc', async() => {
     });
   });
 
+  describe('#createRawTxWithManyOutput()', async() => {
+    it.only('default', async() => {
+      let wallet = new BtcWallet({
+        mnemonic: "excess educate frost squirrel flip range marble burden piano regret cabin very",
+        isTestNet: true,
+      });
+      wallet.setApi(getApi(true));
+      let listUnspent = [{
+        "tx_id":"8c294813a97bf6401c16b89f6873c35fc936eae0f686431c0cce59d439656a2c",
+        "vout":0,
+        "scriptpubKey":"76a9141a174aff039e61c1bae6a29d616ab765a1b6ea5b88ac",
+        "amount":100000,
+        "confirmations":1},        
+        {"tx_id":"37c58e1ec5712c8e95dd7ec88172efbba567aedae83efddfdc1ca5a28aed3774",
+        "vout":1,
+        "scriptpubKey":"76a9141a174aff039e61c1bae6a29d616ab765a1b6ea5b88ac",
+        "amount":10000,
+        "confirmations":2},
+        {"tx_id":"d2d201f255dc7643303e9bd61a8fccfbc37b8f80a3988560b3260cf452960c1e",
+        "vout":1,
+        "scriptPubKey":"76a9141a174aff039e61c1bae6a29d616ab765a1b6ea5b88ac",
+        "amount":10000,
+        "confirmations":2}]
+      let createResult = await wallet.createRawTxWithManyOutput({
+        tos:[
+          {
+            to: 'mhtumTtXJXkKHeCgpMcqCeVi2VkHS7uQ3o',
+            amount: 1000,
+          },
+          {
+            to: 'mhtumTtXJXkKHeCgpMcqCeVi2VkHS7uQ3o',
+            amount: 2000,
+          },
+        ],
+        fee: 5,      
+        listUnspent
+      });
+      console.log('createResult', createResult)
+    })
+  })
+
 });
