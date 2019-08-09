@@ -4,13 +4,13 @@ const { Wallet, CoinType, InfinitoApi } = require('../index');
 const ConfigTest = require('./config.test');
 chai.should();
 
-let apiConfig = {
-  apiKey: ConfigTest.API_KEY,
-  secret: ConfigTest.SECRECT,
-  baseUrl: ConfigTest.BASE_URL,
+let apiConfigMainnet = {
+  apiKey: ConfigTest.API_KEY_MAINNET,
+  secret: ConfigTest.SECRECT_MAINNET,
+  baseUrl: ConfigTest.BASE_URL_MAINNET,
   logLevel: ConfigTest.LOG_LEVEL
 };
-
+console.log('apiConfigMainnet :', apiConfigMainnet);
 let walletConfig = {
   coinType: CoinType.BCH.symbol,
   isTestNet: false,
@@ -22,14 +22,15 @@ var wallet = null;
 
 describe('wallet.bch', async () => {
   beforeEach(async () => {
-    let api = new InfinitoApi(apiConfig);
+    let api = new InfinitoApi(apiConfigMainnet);
     wallet = new Wallet(walletConfig);
     wallet.setApi(api);
     console.log('account', wallet.account);
   });
 
   describe('#getBalance()', async () => {
-    it.only('Get balance', async () => {
+    it('Get balance', async () => {
+      console.log('wallet :', wallet);
       let result = await wallet.getBalance();
       Assert.ok(result.balance !== undefined, 'balance must be exist');
       Assert.ok(

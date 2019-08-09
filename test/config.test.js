@@ -1,6 +1,4 @@
-var path = require('path');
-var envPath = path.resolve('../.env.test');
-require('dotenv').config({ path: envPath });
+require('dotenv').config();
 
 module.exports = {
   LOG_LEVEL: process.env.LOG_LEVEL || 'NONE', // ALL, DEBUG, INFO, WARN, ERROR, NONE

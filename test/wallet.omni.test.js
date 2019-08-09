@@ -25,12 +25,12 @@ function getApi(isTestnet = true) {
   return new InfinitoApi(apiConfigMainnet);
 }
 
-describe('wallet.omni', async() => {
+describe.only('wallet.omni', async() => {
 
   describe('#constructor()', async() => {
     it('No Parameter', async() => {
       try {
-        new OmniWallet();
+        new OmniWallet({});
         Assert.fail();
       } catch (err) {
         Assert.equal(err.message, 'Missing required parameter options');
@@ -159,7 +159,7 @@ describe('wallet.omni', async() => {
         feeType: 'low'
       });
 
-      console.log(createResult)
+      console.log(createResult);
       Assert.equal(createResult.tx_id, 'd5611f062da9db21d19c5093bfc208be06e0150454c98d2dd0c208696e926222', 'TxId must be right');
       Assert.equal(createResult.raw,'020000000170109a0428b0d8ebe1122fa9cc087ca1bb5a2bae518bd082b7a2842a5b107259020000006a47304402205157105ab8c79fa84f73477551ecd57f136dbd56fa888a1ea81753542465e9360220153bd7438dba61ef2926c335aa0f59d0920b71c73b6644fe1fad263df80bb07c012103c6bac7b87c7492de09ce9fe018cdf83869edee75c3c094a48253fd561ff4ee11ffffffff0322020000000000001976a91436ae029666de9cdb898a0dc2021560202a40208788ac0000000000000000166a146f6d6e69000000000000001f00000000004c4b4062920000000000001976a91477ca3f8ac9ca59296db880b7bddf932b57b65f8c88ac00000000', 'Raw must be right');
     });
@@ -493,6 +493,7 @@ describe('wallet.omni', async() => {
           isBroadCast: true
         });
       } catch (err) {
+        console.log('err :', err);
         Assert.equal(err.code, 'infinito.wallet.send_transaction_fail');
         Assert.ok(err.message.indexOf('dust') >= 0);
       }
