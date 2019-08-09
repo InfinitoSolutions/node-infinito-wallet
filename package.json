@@ -26,7 +26,7 @@
   "author": "Infinito (https://platform.infinito.io/)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/InfinitoSolutions/node-infinito-api/issues"
+    "url": "https://github.com/InfinitoSolutions/node-infinito-wallet/issues"
   },
   "homepage": "https://platform.infinito.io/",
   "dependencies": {
