@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/infinityblockchainlabs/node-infinito-wallet.git"
+    "url": "git+https://github.com/InfinitoSolutions/node-infinito-wallet.git"
   },
   "keywords": [
     "infinito",
@@ -26,7 +26,7 @@
   "author": "Infinito (https://platform.infinito.io/)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/infinityblockchainlabs/node-infinito-wallet/issues"
+    "url": "https://github.com/InfinitoSolutions/node-infinito-api/issues"
   },
   "homepage": "https://platform.infinito.io/",
   "dependencies": {
