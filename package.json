@@ -1,43 +1,43 @@
 {
   "name": "node-infinito-wallet",
   "version": "1.0.0",
-  "description": "node-infinito wallet ",
+  "description": "Multi blockchain wallet api",
   "main": "./index.js",
   "directories": {
     "lib": "lib"
   },
   "scripts": {
-    "pretest": "eslint .",
-    "fix": "eslint --fix .",
-    "test": "mocha --timeout 10000",
-    "prettier": "prettier --write \"{,!(node_modules)/**/}*.js\"",
-    "build": "gulp build:dist"
+    "build": "gulp build:dist",
+    "eslint": "eslint .",
+    "eslint:fix": "eslint --fix .",
+    "test": "mocha --timeout 20000 --reporter mochawesome --reporter-options reportDir=./build/test-report",
+    "test:nyc": "nyc mocha --timeout 20000 --reporter mochawesome --reporter-options reportDir=./build/test-report"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://gitlab.blockchainlabs.asia/infinito-sdk/node-infinito-wallet.git"
+    "url": "git+https://github.com/InfinitoSolutions/node-infinito-wallet.git"
   },
   "keywords": [
     "infinito",
     "wallet",
-    "SDK",
-    "IBL"
+    "blockchain",
+    "SDK"
   ],
-  "author": "IBL",
+  "author": "Infinito (https://platform.infinito.io/)",
   "license": "MIT",
   "bugs": {
-    "url": "https://gitlab.blockchainlabs.asia/infinito-sdk/node-infinito-wallet/issues"
+    "url": "https://github.com/InfinitoSolutions/node-infinito-api/issues"
   },
-  "homepage": "https://gitlab.blockchainlabs.asia/infinito-sdk/node-infinito-wallet#readme",
+  "homepage": "https://platform.infinito.io/",
   "dependencies": {
-    "@cityofzion/neon-js": "^3.10.1",
+    "@cityofzion/neon-js": "^3.11.9",
+    "bchaddrjs": "^0.4.3",
     "bigi": "^1.4.2",
     "bignumber.js": "^7.2.1",
     "bip32": "^1.0.2",
     "bip39": "^2.5.0",
-    "bip44-constants": "^5.1.0",
-    "bitcoincashjs": "^0.1.10",
     "bitcoinjs-lib": "^4.0.1",
+    "bitcore-lib-cash": "^8.5.1",
     "coinselect": "^3.1.11",
     "commander": "^2.17.1",
     "ethereumjs-abi": "^0.6.5",
@@ -45,7 +45,6 @@
     "ethereumjs-util": "^5.2.0",
     "ethereumjs-wallet": "^0.6.2",
     "node-infinito-api": "git+https://gitlab.blockchainlabs.asia/infinito-sdk/node-infinito-api.git#develop",
-    "node-infinito-util": "git+https://gitlab.blockchainlabs.asia/infinito-sdk/node-infinito-util.git#develop",
     "secp256k1": "^3.5.2",
     "wif": "^2.0.6"
   },
@@ -56,21 +55,23 @@
     "babel-plugin-transform-async-to-generator": "^6.24.1",
     "babel-plugin-transform-regenerator": "^6.26.0",
     "babelify": "^10.0.0",
-    "browser-sync": "^2.26.3",
+    "browser-sync": "^2.26.7",
     "browserify": "^16.2.3",
     "chai": "^4.1.2",
+    "dotenv": "^6.2.0",
     "eslint": "^5.2.0",
     "eslint-plugin-prettier": "^3.0.0",
     "gulp": "^4.0.0",
     "gulp-rename": "^1.2.0",
     "gulp-uglify": "^3.0.1",
     "gulp-uglify-es": "^1.0.4",
+    "gulp4-run-sequence": "^0.2.1",
     "mocha": "^5.2.0",
-    "prettier": "^1.14.3",
+    "mochawesome": "^3.1.1",
+    "nyc": "^13.3.0",
     "pump": "^3.0.0",
     "rimraf": "~2.6.2",
-    "run-sequence": "^2.2.1",
     "vinyl-source-stream": "^2.0.0",
-    "watchify": "^3.11.0"
+    "watchify": "^3.11.1"
   }
 }

@@ -1,3 +1,6 @@
 node_modules/
 \.vscode/
-test/
+.env
+.env.test
+build/test-report
+.nyc_output
