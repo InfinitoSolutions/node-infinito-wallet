@@ -1,6 +1,7 @@
-node_modules/
-\.vscode/
-.env
-.env.test
-build/test-report
-.nyc_output
+**/dist
+**/build
+**/node_modules
+**/.vscode
+**/*.log
+**/.nyc_output
+**/.env
