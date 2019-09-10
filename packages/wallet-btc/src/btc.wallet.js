@@ -1,11 +1,7 @@
 const Bitcoinjs = require('bitcoinjs-lib');
-// const Wallet = require('../core/wallet');
-// const Networks = require('../core/networks');
-// const Keygen = require('../core/keygen');
-const Wallet = require('../../wallet-core/src/wallet');
-const Networks = require('../../wallet-core/src/networks');
-const Keygen = require('../../wallet-core/src/keygen');
+const {Wallet, Networks, Keygen, AppError} = require('infinito-wallet-core');
 const TransactionBuilder = require('./btc.tx_builder');
+const Messages = require('./messages');
 
 /**
  * Bitcoin wallet
@@ -52,15 +48,28 @@ class BtcWallet extends Wallet {
     this.publicKey = keyPair.publicKey;
     this.wif = wif;
     this.keyPair = keyPair;
-    
-    console.log('Init BTC wallet:', {
-      keyPair,
-      address: this.address,
-      privateKey : this.privateKey.toString('hex'),
-      publickey : this.publicKey.toString('hex'),
-      wif: this.wif.toString('hex')
-    });
+    console.log('this :', this);
   }
+
+  /**
+   * Get network
+   *
+   * @returns
+   * @memberof BtcWallet
+   */
+  getNetwork() {
+    return this.network;
+  }
+
+  /**
+   * Get keypair
+   *
+   * @returns
+   * @memberof BtcWallet
+   */
+  getKeyPair() {
+    return this.keyPair;
+  };
 
   /**
    * Create transaction builder instance
@@ -81,6 +90,7 @@ class BtcWallet extends Wallet {
    * @memberof BtcWallet
    */
   signMessage(msg) {
+    // TODO
     console.log('BTC.sendMessage');
   }
 
@@ -91,20 +101,29 @@ class BtcWallet extends Wallet {
    * @memberof BtcWallet
    */
   signTx(msg) {
-    console.log('BTC.signTx');
+    if (msg == null || msg === undefined) {
+      throw AppError.create(Messages.missing_parameter, 'msg');
+    }
+
+    let txBuilder = null;
+    if (typeof(msg) === 'object' && msg.constructor.name === 'TransactionBuilder') {
+      txBuilder = msg;
+    } else if (typeof(msg) === 'string') {
+      let tx = Bitcoinjs.Transaction.fromHex(msg);
+      txBuilder = Bitcoinjs.TransactionBuilder.fromTransaction(tx, this.network);
+    }
+
+    for( let i = 0; i < txBuilder.__inputs.length; i++){
+      txBuilder.sign(i, this.keyPair);
+    }
+
+    let tx = txBuilder.build();
+    return {
+      raw: tx.toHex(),
+      tx_id: tx.getId()
+    }
   }
 
-  // send(addr, amount) {
-  //   this.newTxBuilder()
-  //       .addOutput("aa", "1")
-  //       .addOutput("aa", "1")
-  //       .addOutput("aa", "1")
-  //       .createTx()
-  //       .sign()
-  //       .send()
-  // }
-
-  // send(raw | txBuilder)
 }
 
 module.exports = BtcWallet;

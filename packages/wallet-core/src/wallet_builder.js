@@ -1,8 +1,5 @@
-const Blockchains = require('./blockchains');
 const Keygen = require('./keygen');
 const Networks = require('./networks');
-// const BtcLib = require('../../wallet-btc/src');
-// const BtcLib = require('infinito-btc');
 
 /**
  * Wallet Builder Class
@@ -11,10 +8,20 @@ const Networks = require('./networks');
  */
 class WalletBuilder {
 
+  /**
+   * Creates an instance of WalletBuilder.
+   * @memberof WalletBuilder
+   */
   constructor() {
-
   }
 
+  /**
+   * Set config
+   *
+   * @param {*} [options={}]
+   * @returns
+   * @memberof WalletBuilder
+   */
   withConfig(options = {}) {
     return this
       .withPlatform(options.platform)
@@ -24,6 +31,13 @@ class WalletBuilder {
       .withHDPath(options.hdPath);
   }
 
+  /**
+   * Set platform. 
+   *
+   * @param {*} platform
+   * @returns
+   * @memberof WalletBuilder
+   */
   withPlatform(platform) {
     if ( typeof(platform) == 'string' && platform !== null && platform !== undefined) {
       platform = platform.toUpperCase();
@@ -32,59 +46,72 @@ class WalletBuilder {
     return this;
   }
 
+  /**
+   * Enable/Disable testnet
+   *
+   * @param {boolean} [isTestnet=true]
+   * @returns
+   * @memberof WalletBuilder
+   */
   useTestnet(isTestnet = true) {
     this.isTestnet = isTestnet;
     return this;
   }
 
+  /**
+   * Set private key
+   *
+   * @param {*} privateKey
+   * @returns
+   * @memberof WalletBuilder
+   */
   withPrivateKey(privateKey) {
     this.privateKey = privateKey;
     return this;
   }
 
+  /**
+   * Set wif
+   *
+   * @param {*} wif
+   * @memberof WalletBuilder
+   */
   withWif(wif) {
     this.wif = wif;
   }
 
+  /**
+   * Set mnemonic
+   *
+   * @param {*} mnemonic
+   * @param {*} [password=null]
+   * @returns
+   * @memberof WalletBuilder
+   */
   withMnemonic(mnemonic, password = null) {
     this.mnemonic = mnemonic;
     this.password = password;
     return this;
   }
 
+  /**
+   * Set HDPath
+   *
+   * @param {*} hdPath
+   * @returns
+   * @memberof WalletBuilder
+   */
   withHDPath(hdPath) {
     this.hdPath = hdPath;
     return this;
   }
 
   /**
-   * Build wallet by provided private key | wif or generated private key
+   * Create key from configuration.
    *
    * @returns
    * @memberof WalletBuilder
    */
-  // async build() {
-  //   let privateKey = this.privateKey || this.wif;
-
-  //   if (privateKey === null || privateKey === undefined) {
-  //     let keypair = await Keygen.createKeypair(this.platform, this.mnemonic, this.password, this.hdPath, this.isTestnet);
-  //     privateKey = keypair.privateKey;
-  //   }
-
-  //   let wallet = null;
-  //   let network = Networks.getNetwork(this.platform, this.isTestnet);
-  //   switch (this.platform) {
-  //     case Blockchains.BTC:
-  //       // wallet = new BtcLib.BtcWallet(privateKey, network);
-  //       // wallet = __createWallet(privateKey, network);
-  //       break;
-  //     default:
-  //       break;
-  //   }
-
-  //   return wallet;
-  // }
-
   async createKey() {
     // let privateKey = this.privateKey || this.wif;
     let privateKey = this.privateKey;
@@ -100,25 +127,12 @@ class WalletBuilder {
     }
 
     let wallet = null;
-    
-    // switch (this.platform) {
-    //   case Blockchains.BTC:
-    //     // wallet = new BtcLib.BtcWallet(privateKey, network);
-    //     // wallet = __createWallet(privateKey, network);
-    //     break;
-    //   default:
-    //     break;
-    // }
 
     return {
       privateKey,
       network
     };
   }
-
-  // __createWallet(privateKey, network) {
-  //   throw new Error("Must be implement");
-  // }
 }
 
 module.exports = WalletBuilder;

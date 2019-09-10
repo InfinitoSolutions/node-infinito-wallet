@@ -52,10 +52,22 @@ class Wallet {
     return this.address;
   }
 
+  /**
+   * Sign message
+   *
+   * @param {*} msg
+   * @memberof Wallet
+   */
   signMessage(msg) {
     throw new Error('Cannot call abstract method');
   }
 
+  /**
+   * Sign transaction
+   *
+   * @param {*} tx
+   * @memberof Wallet
+   */
   sign(tx) {
     throw new Error('Cannot call abstract method');
   }

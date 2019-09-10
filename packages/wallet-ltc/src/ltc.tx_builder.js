@@ -3,7 +3,8 @@ const coinSelectUtils = require('coinselect/utils');
 const Bitcoinjs = require('bitcoinjs-lib');
 const { AppError, TransactionBuilder } = require('infinito-wallet-core');
 const Messages = require('./messages');
-
+// const TransactionBuilder = require('../../wallet-core/src/transaction_builder');
+const { BtcTxBuilder } = require('infinito-wallet-btc');
 /**
  * Get default feerate from api
  *
@@ -67,99 +68,87 @@ function coinSelectSendMax(utxos, outputs, feeRate) {
   };
 }
 
-class BtcTxBuilder extends TransactionBuilder {
-  constructor(platform = 'BTC') {
+class LtcTxBuilder extends BtcTxBuilder {
+  constructor(platform = 'LTC') {
     super();
 
     this.platform = platform;
     this.outputs = [];
     this.useFeerateType('medium');
-    this.withSign(true);
   }
 
-  /**
-   * Set feerate
-   *
-   * @param {Number} satoshiPerByte Feerate in satoshi per byte
-   * @returns
-   * @memberof BtcTxBuilder
-   */
-  useFeerate(satoshiPerByte) {
-    this.feerate = satoshiPerByte;
-    return this;
-  }
+  // /**
+  //  * Set feerate
+  //  *
+  //  * @param {Number} satoshiPerByte Feerate in satoshi per byte
+  //  * @returns
+  //  * @memberof BtcTxBuilder
+  //  */
+  // useFeerate(satoshiPerByte) {
+  //   this.feerate = satoshiPerByte;
+  //   return this;
+  // }
 
-  /**
-   * Set feerate type. This setting will be used when feerate is not set.
-   * There are 3 types (high, medium, low)
-   *
-   * @param {string} [type='medium']
-   * @memberof BtcTxBuilder
-   */
-  useFeerateType(type = 'medium') {
-    this.feerateType = type;
-    return this;
-  }
+  // /**
+  //  * Set feerate type. This setting will be used when feerate is not set.
+  //  * There are 3 types (high, medium, low)
+  //  *
+  //  * @param {string} [type='medium']
+  //  * @memberof BtcTxBuilder
+  //  */
+  // useFeerateType(type = 'medium') {
+  //   this.feerateType = type;
+  //   return this;
+  // }
 
-  /**
-   * List utxo
-   *
-   * @param {Array} utxo Array of utxo object. {txid, value, output_no}
-   * @memberof BtcTxBuilder
-   */
-  useUtxo(utxos) {
-    this.utxos = utxos;
-    return this;
-  }
+  // /**
+  //  * List utxo
+  //  *
+  //  * @param {Array} utxo Array of utxo object. {txid, value, output_no}
+  //  * @memberof BtcTxBuilder
+  //  */
+  // useUtxo(utxos) {
+  //   this.utxos = utxos;
+  //   return this;
+  // }
 
-  /**
-   * Set sign flag.
-   *
-   * @param {boolean} [sign=true]
-   * @memberof BtcTxBuilder
-   */
-  withSign(sign = true) {
-    this.sign = sign;
-    return this;
-  }
+  // /**
+  //  * Add output
+  //  *
+  //  * @param {*} address Recipient address
+  //  * @param {*} value Amount in satoshi
+  //  * @memberof BtcTxBuilder
+  //  */
+  // sendTo(address, value){
+  //   this.outputs.push({
+  //     address: address,
+  //     value: value
+  //   });
+  //   return this;
+  // }
 
-  /**
-   * Add output
-   *
-   * @param {*} address Recipient address
-   * @param {*} value Amount in satoshi
-   * @memberof BtcTxBuilder
-   */
-  sendTo(address, value){
-    this.outputs.push({
-      address: address,
-      value: value
-    });
-    return this;
-  }
+  // /**
+  //  * Add many output
+  //  *
+  //  * @param {Array} repicients Array {address, value}
+  //  * @memberof BtcTxBuilder
+  //  */
+  // sendToMany(repicients) {
+  //   this.outputs.push(...repicients);
+  //   return this;
+  // }
 
-  /**
-   * Add many output
-   *
-   * @param {Array} repicients Array {address, value}
-   * @memberof BtcTxBuilder
-   */
-  sendToMany(repicients) {
-    this.outputs.push(...repicients);
-    return this;
-  }
-
-  /**
-   * Send max to address. 
-   * All addresses which are set in sendTo and sendToMany function will be ignore.
-   *
-   * @param {*} address
-   * @memberof BtcTxBuilder
-   */
-  sendMaxTo(address) {
-    this.outputMaxAddress = address;
-    return this;
-  }
+  // /**
+  //  * Send max to address. 
+  //  * All addresses which are set in sendTo and sendToMany function will be ignore.
+  //  *
+  //  * @param {*} address
+  //  * @memberof BtcTxBuilder
+  //  */
+  // sendMaxTo(address) {
+  //   this.outputMaxAddress = address;
+  //   return this;
+  // }
 
   /**
    * Build transaction
@@ -214,14 +203,10 @@ class BtcTxBuilder extends TransactionBuilder {
     });
 
     // Sign
-    if (this.sign === true) {
-      // let keyPair = this.wallet.getKeyPair();
-      // for (let i = 0; i < selectResult.inputs.length; i++) {
-      //   transaction.sign(i, keyPair);
-      // }
-      return this.wallet.signTx(transaction);
-    } 
-
+    let keyPair = this.wallet.getKeyPair();
+    for (let i = 0; i < selectResult.inputs.length; i++) {
+      transaction.sign(i, keyPair);
+    }
     let tx = transaction.build();
 
     return {
@@ -241,31 +226,31 @@ class BtcTxBuilder extends TransactionBuilder {
     return this.broadcast(buildResult.raw);
   }
 
-  /**
-   * Broadcast raw transaction
-   *
-   * @param {*} rawTx
-   * @returns
-   * @memberof BtcTxBuilder
-   */
-  async broadcast(rawTx) {
-    let result = this.api.sendTransaction({
-      rawtx: rawTx
-    });
+  // /**
+  //  * Broadcast raw transaction
+  //  *
+  //  * @param {*} rawTx
+  //  * @returns
+  //  * @memberof BtcTxBuilder
+  //  */
+  // async broadcast(rawTx) {
+  //   let result = this.api.sendTransaction({
+  //     rawtx: rawTx
+  //   });
     
-    if (result.cd === 0 || result.cd === '0') {
-      return {
-        tx_id: result.data.txid,
-        raw: response.raw
-      };
-    } else {
-      throw new AppError(
-        result.msg,
-        Messages.send_transaction_fail.code
-      );
-    }
-  }
+  //   if (result.cd === 0 || result.cd === '0') {
+  //     return {
+  //       tx_id: result.data.txid,
+  //       raw: response.raw
+  //     };
+  //   } else {
+  //     throw new AppError(
+  //       result.msg,
+  //       Messages.send_transaction_fail.code
+  //     );
+  //   }
+  // }
 }
 
 
-module.exports = BtcTxBuilder;
+module.exports = LtcTxBuilder;

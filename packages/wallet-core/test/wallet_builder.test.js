@@ -25,12 +25,11 @@ describe('wallet_builder', async() => {
       let builder = new WalletBuilder();
       let wallet = await builder
         .withPlatform('BTC')
-        // .useTestnet(true)
+        .useTestnet(true)
         .withMnemonic('goddess cradle need donkey fog add opinion ensure spoil shrimp honey rude')
         .createKey();
       console.log('wallet :', wallet);
       // let txBuilder = wallet.newTransactionBuilder();
-      
       // console.log('newTransactionBuilder :', txBuilder.build());
     });
   });

@@ -1,6 +1,6 @@
 {
-  "name": "infinito-wallet-btc",
-  "module": "infinito-wallet-btc",
+  "name": "infinito-wallet-ltc",
+  "module": "infinito-wallet-ltc",
   "version": "1.0.0",
   "description": "",
   "main": "src/index.js",
@@ -13,6 +13,7 @@
     "bitcoinjs-lib": "^4.0.1",
     "coinselect": "^3.1.11",
     "infinito-wallet-core": "^1.0.0",
+    "infinito-wallet-btc": "^1.0.0",
     "node-infinito-api": "git+https://gitlab.blockchainlabs.asia/infinito-sdk/node-infinito-api.git#develop"
   },
   "devDependencies": {

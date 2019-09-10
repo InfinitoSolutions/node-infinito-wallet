@@ -24,8 +24,12 @@ const BIP44 = {
  * @returns
  */
 function getCoinIndex(platform) {
+  if (typeof(platform) === 'string') {
+    platform = platform.toLocaleUpperCase();
+  }
+
   if (BIP44[platform] === undefined || BIP44[platform] < 0) {
-    throw AppError.create(Messages.invalid_cointype, 'platform');
+    throw AppError.create(Messages.invalid_parameter, 'platform');
   }
   return BIP44[platform] - BIP44['BTC'];
 }
@@ -39,7 +43,7 @@ function getCoinIndex(platform) {
  */
 function getHDPath(platform, account = 0, chain = 0, address = 0) {
   let coinIndex = platform;
-  if (typeof(platform) == 'string')
+  if (typeof(platform) === 'string')
     coinIndex = getCoinIndex(platform);
     
   return `m/44'/${coinIndex}'/${account}'/${chain}/${address}`;

@@ -2,12 +2,18 @@ const Bip44 = require('./bip44');
 const Keygen = require('./keygen');
 const Networks = require('./networks');
 const WalletBuilder = require('./wallet_builder');
+const Wallet = require('./wallet');
+const TransactionBuilder = require('./transaction_builder');
+const AppError = require('./app_error');
 
 console.log('infinito-core');
 
 module.exports = {
+  AppError,
   Bip44,
   Keygen,
   Networks,
-  WalletBuilder
+  Wallet,
+  WalletBuilder,
+  TransactionBuilder
 };
