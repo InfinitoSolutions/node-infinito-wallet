@@ -13,17 +13,13 @@ class BtcWallet extends Wallet {
 
   /**
    * Creates an instance of BtcWallet.
-   * @param {Buffer|String} privateKey
+   * @param {Buffer|String} privateKey Private key: 64 characters hex string or 32 bytes buffer. Wif is 52 characters
    * @param {Network} network
    * @memberof BtcWallet
    */
   constructor(privateKey, network) {
     super(privateKey);
-    if (network == null || network == undefined) {
-      this.network = Networks.getNetwork('BTC');
-    } else {
-      this.network = network;
-    }
+    this.network = (network === null || network === undefined) ? Networks.getNetwork('BTC') : network;
     this.__init(this.privateKey, this.network);
   }
 
@@ -36,7 +32,6 @@ class BtcWallet extends Wallet {
    */
   __init(privateKey, network) {
     let wif = Keygen.getWif(privateKey, network.wif);
-
     let keyPair = Bitcoinjs.ECPair.fromWIF(wif.toString('hex'), network);
     let { address } = Bitcoinjs.payments.p2pkh({
       pubkey: keyPair.publicKey,
@@ -48,7 +43,14 @@ class BtcWallet extends Wallet {
     this.publicKey = keyPair.publicKey;
     this.wif = wif;
     this.keyPair = keyPair;
-    console.log('this :', this);
+
+    // console.log('      =============================== Wallet');
+    // console.log('      this.address :', this.address);
+    // console.log('      this.wif :', this.wif);
+    // console.log('      this.privateKey :', this.privateKey.toString("hex"));
+    // console.log('      this.publicKey :', this.publicKey.toString("hex"));
+    // console.log('      this.network :', JSON.stringify(this.network));
+    // console.log('      ===============================');
   }
 
   /**
@@ -90,6 +92,9 @@ class BtcWallet extends Wallet {
    * @memberof BtcWallet
    */
   signMessage(msg) {
+    if (msg == null || msg === undefined) {
+      throw AppError.create(Messages.missing_parameter, 'msg');
+    }
     // TODO
     console.log('BTC.sendMessage');
   }

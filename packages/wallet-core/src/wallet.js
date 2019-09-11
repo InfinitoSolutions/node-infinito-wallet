@@ -14,8 +14,18 @@ class Wallet {
     }
 
     if (typeof(privateKey) === 'string') {
-      this.privateKey = Buffer.from(privateKey, 'hex');
+      if (privateKey.length == 64) {
+        // Private key hex string
+        this.privateKey = Buffer.from(privateKey, 'hex');
+      } else {
+        // Wif string
+        this.privateKey = privateKey;
+      }
     } else if (Buffer.isBuffer(privateKey)) {
+      // Private key with 32 bytes
+      if (privateKey.length != 32) {
+        throw AppError.create(Messages.invalid_parameter, 'privateKey');
+      }
       this.privateKey = privateKey;
     } else {
       throw AppError.create(Messages.invalid_parameter, 'privateKey');

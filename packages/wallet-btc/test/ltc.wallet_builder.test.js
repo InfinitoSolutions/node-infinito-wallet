@@ -15,16 +15,16 @@ let apiConfigMainnet = {
 
 let apiMainnet = new InfinitoApi(apiConfigMainnet);
 
-describe.only('LtcWalletBuilder', async() => {
+describe('LtcWalletBuilder', async() => {
 
   describe('builder()', async() => {
 
-    it.only('default', async() => {
+    it('default', async() => {
       let builder = new WalletBuilder();
       console.log('builder :', builder, builder.constructor.name);
     });
 
-    it.only('case 1', async() => {
+    it('case 1', async() => {
       let builder = new WalletBuilder();
       let wallet = await builder
         .withPlatform('LTC')

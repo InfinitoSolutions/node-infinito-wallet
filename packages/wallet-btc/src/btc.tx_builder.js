@@ -199,7 +199,7 @@ class BtcTxBuilder extends TransactionBuilder {
       }
     }
 
-    const network = this.wallet.getNetwork();
+    const network = this.wallet.network;
     const transaction = new Bitcoinjs.TransactionBuilder(network);
     selectResult.inputs.forEach(input => {
       transaction.addInput(input.txid, input.output_no);

@@ -25,8 +25,9 @@ class WalletBuilder {
   withConfig(options = {}) {
     return this
       .withPlatform(options.platform)
-      .withPrivateKey(options.privateKey)
-      .withWif(options.wif)
+      .withPrivateKey(options.privateKey || null)
+      .withWif(options.wif || null)
+      .useTestnet(options.testnet || false)
       .withMnemonic(options.mnemonic, options.password)
       .withHDPath(options.hdPath);
   }

@@ -97,7 +97,7 @@ const networks = {
  * @param {Boolean} isTestnet True|False
  * @returns
  */
-function getNetwork(platform, isTestnet) {
+function getNetwork(platform, isTestnet = false) {
   let network = null;
   switch (platform) {
     case Blockchains.BTC:
