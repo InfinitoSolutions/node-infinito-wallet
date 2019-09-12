@@ -3,6 +3,7 @@ const chai = require('chai');
 const InfinitoApi = require('node-infinito-api');
 chai.should();
 const WalletBuilder = require('../src/btc.wallet_builder');
+require('dotenv').config();
 const ConfigTest = require('./config.test');
 
 let apiConfigMainnet = {
@@ -14,43 +15,35 @@ let apiConfigMainnet = {
 
 let apiMainnet = new InfinitoApi(apiConfigMainnet);
 
-describe('BtcWalletBuilder', async() => {
-
-  describe('builder()', async() => {
-
-    it('default', async() => {
+describe('BtcWalletBuilder', async () => {
+  describe('builder()', async () => {
+    it('default', async () => {
       let builder = new WalletBuilder();
-      console.log('builder :', builder, builder.constructor.name);
+      builder.constructor.name.should.equal('BtcWalletBuilder')
+      builder.platform.should.equal('BTC')
     });
 
-    it('case 1', async() => {
+    it('wallet for LTC', async () => {
+      let builder = new WalletBuilder();
+      let wallet = await builder
+        .withPlatform('LTC')
+        .withMnemonic('goddess cradle need donkey fog add opinion ensure spoil shrimp honey rude')
+        .build();
+      builder.platform.should.equal('LTC')
+      wallet.getKeyPair().should.be.a('object')
+    });
+
+    it('case 2', async () => {
       let builder = new WalletBuilder();
       let wallet = await builder
         .withPlatform('BTC')
         .withMnemonic('goddess cradle need donkey fog add opinion ensure spoil shrimp honey rude')
         .build();
-      console.log('wallet :', wallet);
-    });
-
-    it('case 2', async() => {
-      let builder = new WalletBuilder();
-      let wallet = await builder
-        .withPlatform('BTC')
-        // .useTestnet(true)
-        .withMnemonic('goddess cradle need donkey fog add opinion ensure spoil shrimp honey rude')
-        .build();
-      console.log('wallet :', wallet);
       let txBuilder = wallet.newTxBuilder();
 
       txBuilder.useApi(apiMainnet.getChainService().BTC);
       txBuilder.sendTo('39XpoaixBAbUZzaq7g73tmvogBw6rGv8JP', 10000)
-
-      // txBuilder
-      //   .addOutput("aa", "1")
-      //   .createTx()
-      //   .sign()
-      //   .send()
-      try{
+      try {
 
         console.log('txBuilder :', await txBuilder.build());
       } catch (err) {
@@ -58,7 +51,7 @@ describe('BtcWalletBuilder', async() => {
       }
     });
 
-    it('case 3 send max', async() => {
+    it('case 3 send max', async () => {
       let builder = new WalletBuilder();
       let wallet = await builder
         .withPlatform('BTC')
@@ -77,7 +70,7 @@ describe('BtcWalletBuilder', async() => {
       //   .createTx()
       //   .sign()
       //   .send()
-      try{
+      try {
 
         console.log('txBuilder :', await txBuilder.build());
       } catch (err) {

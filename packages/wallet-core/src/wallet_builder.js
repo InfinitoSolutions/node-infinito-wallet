@@ -128,6 +128,16 @@ class WalletBuilder {
       network
     };
   }
+
+  /**
+   * Build wallet by provided private key | wif or generated private key
+   *
+   * @returns
+   * @memberof WalletBuilder
+   */
+  async build() {
+    throw new Error('Cannot call abstract method');
+  }
 }
 
 module.exports = WalletBuilder;

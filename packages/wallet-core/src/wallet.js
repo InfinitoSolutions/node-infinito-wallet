@@ -64,6 +64,16 @@ class Wallet {
   }
 
   /**
+   * Get keypair
+   *
+   * @returns
+   * @memberof BtcWallet
+   */
+  getKeyPair() {
+    throw new Error('Cannot call abstract method');
+  };
+
+  /**
    * Sign message
    *
    * @param {*} msg

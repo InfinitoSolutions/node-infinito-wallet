@@ -56,6 +56,26 @@ class BtcWallet extends Wallet {
   }
 
   /**
+   * Get public key
+   *
+   * @returns
+   * @memberof Wallet
+   */
+  getPublicKey() {
+    return this.publicKey;
+  }
+
+  /**
+   * Get address
+   *
+   * @returns
+   * @memberof Wallet
+   */
+  getAddress() {
+    return this.address;
+  }
+
+  /**
    * Get keypair
    *
    * @returns

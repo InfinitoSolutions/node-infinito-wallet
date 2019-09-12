@@ -1,6 +1,5 @@
 class Transaction {
   constructor() {
-
   }
 
   toString() {

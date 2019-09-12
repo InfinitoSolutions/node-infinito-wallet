@@ -33,10 +33,8 @@ function getPlatformIndexMap() {
   return data;
 }
 
-describe('bip44', async() => {
-
-  describe('#getCoinIndex', async() => {
-
+describe('bip44', async () => {
+  describe('#getCoinIndex', async () => {
     it('should be error when null', async () => {
       expect(() => Bip44.getCoinIndex(null))
         .to.throw(AppError.create(Messages.invalid_parameter, 'platform').message);
@@ -63,8 +61,7 @@ describe('bip44', async() => {
 
   });
 
-  describe('#getHDPath', async() => {
-
+  describe('#getHDPath', async () => {
     it('get by platform name and default paramenters', async () => {
       let data = getPlatformIndexMap();
 
@@ -100,7 +97,5 @@ describe('bip44', async() => {
         expect(hdPath).to.equal(`m/44'/${item}'/4'/5/6`, `HdPath ${item} shoud be equal.`)
       });
     });
-
   });
-
 });
