@@ -25,23 +25,23 @@ async function createKeypair(platform, mnemonic, password, hdPath, isTestnet) {
     throw AppError.create(Messages.missing_parameter, 'mnemonic');
   }
 
-  if (typeof(platform) == 'string' && platform !== null && platform !== undefined) {
+  if (typeof (platform) === 'string' && platform !== null && platform !== undefined) {
     platform = platform.toUpperCase();
   }
 
   if (hdPath === null || hdPath === undefined) {
-    if ( isTestnet === true ) {
+    if (isTestnet === true) {
       hdPath = Bip44.getHDPath('TESTNET');
     } else {
       hdPath = Bip44.getHDPath(platform);
     }
   }
 
-  // Generate sheet
+  // Generate seed
   let seed = null;
   if (!password)
     seed = await Bip39.mnemonicToSeed(mnemonic, password);
-  else 
+  else
     seed = await Bip39.mnemonicToSeed(mnemonic);
 
   let network = Networks.getNetwork(platform);
@@ -58,27 +58,34 @@ async function createKeypair(platform, mnemonic, password, hdPath, isTestnet) {
  * @param {boolean} [compressed=true]
  * @returns
  */
-function getWif(value, version, compressed = true) {
+function privateKeytoWif(value, version, compressed = true) {
   let isBuffer = Buffer.isBuffer(value);
   try {
-    if (isBuffer) 
+    if (isBuffer)
       wif.decodeRaw(value, version);
-    else 
+    else
       wif.decode(value, version);
     return value;
   } catch (err) {
-    let result = isBuffer ? 
+    let result = isBuffer ?
       wif.encode(version, value, compressed) :
       wif.encode(version, Buffer.from(value), compressed);
     return result;
   }
 }
 
-function wifToPrivateKey() {
-  
+/**
+ * Get private key from wif
+ * 
+ * @param {*} wifKey 
+ */
+function wifToPrivateKey(wifKey) {
+  let decode = wif.decodeRaw(wifKey)
+  return decode.privateKey
 }
 
 module.exports = {
   createKeypair,
-  getWif
+  privateKeytoWif,
+  wifToPrivateKey
 };

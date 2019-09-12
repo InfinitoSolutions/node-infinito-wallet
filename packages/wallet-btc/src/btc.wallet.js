@@ -1,5 +1,5 @@
 const Bitcoinjs = require('bitcoinjs-lib');
-const {Wallet, Networks, Keygen, AppError} = require('infinito-wallet-core');
+const { Wallet, Networks, Keygen, AppError } = require('infinito-wallet-core');
 const TransactionBuilder = require('./btc.tx_builder');
 const Messages = require('./messages');
 
@@ -31,7 +31,7 @@ class BtcWallet extends Wallet {
    * @memberof BtcWallet
    */
   __init(privateKey, network) {
-    let wif = Keygen.getWif(privateKey, network.wif);
+    let wif = Keygen.privateKeytoWif(privateKey, network.wif);
     let keyPair = Bitcoinjs.ECPair.fromWIF(wif.toString('hex'), network);
     let { address } = Bitcoinjs.payments.p2pkh({
       pubkey: keyPair.publicKey,
@@ -43,14 +43,6 @@ class BtcWallet extends Wallet {
     this.publicKey = keyPair.publicKey;
     this.wif = wif;
     this.keyPair = keyPair;
-
-    // console.log('      =============================== Wallet');
-    // console.log('      this.address :', this.address);
-    // console.log('      this.wif :', this.wif);
-    // console.log('      this.privateKey :', this.privateKey.toString("hex"));
-    // console.log('      this.publicKey :', this.publicKey.toString("hex"));
-    // console.log('      this.network :', JSON.stringify(this.network));
-    // console.log('      ===============================');
   }
 
   /**
@@ -79,7 +71,6 @@ class BtcWallet extends Wallet {
    * @returns
    * @memberof BtcWallet
    */
-  // newTransactionBuilder() {
   newTxBuilder() {
     return new TransactionBuilder()
       .useWallet(this);
@@ -111,14 +102,14 @@ class BtcWallet extends Wallet {
     }
 
     let txBuilder = null;
-    if (typeof(msg) === 'object' && msg.constructor.name === 'TransactionBuilder') {
+    if (typeof (msg) === 'object' && msg.constructor.name === 'TransactionBuilder') {
       txBuilder = msg;
-    } else if (typeof(msg) === 'string') {
+    } else if (typeof (msg) === 'string') {
       let tx = Bitcoinjs.Transaction.fromHex(msg);
       txBuilder = Bitcoinjs.TransactionBuilder.fromTransaction(tx, this.network);
     }
 
-    for( let i = 0; i < txBuilder.__inputs.length; i++){
+    for (let i = 0; i < txBuilder.__inputs.length; i++) {
       txBuilder.sign(i, this.keyPair);
     }
 

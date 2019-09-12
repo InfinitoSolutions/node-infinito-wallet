@@ -1,5 +1,6 @@
 const Messages = require('./messages');
 const AppError = require('./app_error');
+const Keygen = require('./keygen')
 
 class Wallet {
 
@@ -13,13 +14,13 @@ class Wallet {
       throw AppError.create(Messages.missing_parameter, 'privateKey');
     }
 
-    if (typeof(privateKey) === 'string') {
+    if (typeof (privateKey) === 'string') {
       if (privateKey.length == 64) {
         // Private key hex string
         this.privateKey = Buffer.from(privateKey, 'hex');
       } else {
         // Wif string
-        this.privateKey = privateKey;
+        this.privateKey = Keygen.wifToPrivateKey(privateKey);
       }
     } else if (Buffer.isBuffer(privateKey)) {
       // Private key with 32 bytes
@@ -49,7 +50,7 @@ class Wallet {
    * @memberof Wallet
    */
   getPublicKey() {
-    return this.privateKey;
+    throw new Error('Cannot call abstract method');
   }
 
   /**
@@ -59,7 +60,7 @@ class Wallet {
    * @memberof Wallet
    */
   getAddress() {
-    return this.address;
+    throw new Error('Cannot call abstract method');
   }
 
   /**
@@ -73,12 +74,21 @@ class Wallet {
   }
 
   /**
+   * Verify signature
+   * 
+   * @param {*} signature 
+   */
+  verifySignature(signature) {
+    throw new Error('Cannot call abstract method');
+  }
+
+  /**
    * Sign transaction
    *
    * @param {*} tx
    * @memberof Wallet
    */
-  sign(tx) {
+  signTx(tx) {
     throw new Error('Cannot call abstract method');
   }
 }
