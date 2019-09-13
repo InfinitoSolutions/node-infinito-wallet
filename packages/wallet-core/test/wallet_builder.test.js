@@ -6,28 +6,26 @@ describe('wallet_builder', async () => {
   describe('builder()', async () => {
     it('default', async () => {
       let builder = new WalletBuilder();
-      console.log('builder :', builder, builder.constructor.name);
+      builder.constructor.name.should.equal('WalletBuilder');
     });
 
-    it('case 1', async () => {
+    it('add mnemonic', async () => {
       let builder = new WalletBuilder();
-      let wallet = await builder
+      let keys = await builder
         .withPlatform('BTC')
         .withMnemonic('goddess cradle need donkey fog add opinion ensure spoil shrimp honey rude')
         .createKey();
-      console.log('wallet :', wallet);
+      keys.privateKey.should.be.instanceof(Buffer);
     });
 
-    it('case 2', async () => {
+    it('use testnet', async () => {
       let builder = new WalletBuilder();
-      let wallet = await builder
+      let keys = await builder
         .withPlatform('BTC')
         .useTestnet(true)
         .withMnemonic('goddess cradle need donkey fog add opinion ensure spoil shrimp honey rude')
         .createKey();
-      console.log('wallet :', wallet);
-      // let txBuilder = wallet.newTransactionBuilder();
-      // console.log('newTransactionBuilder :', txBuilder.build());
+      keys.network.bech32.should.equal('tb');
     });
   });
 });
