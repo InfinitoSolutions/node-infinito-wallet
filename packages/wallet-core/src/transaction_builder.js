@@ -4,7 +4,6 @@ class TransactionBuilder {
    * constructor
    */
   constructor() {
-    console.log('TransactionBuilder');
   }
 
   /**

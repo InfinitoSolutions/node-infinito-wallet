@@ -27,5 +27,15 @@ describe('wallet', async () => {
       expect(() => new Wallet(10))
         .to.throw(AppError.create(Messages.invalid_parameter, 'privateKey').message);
     });
+
+    it('private key is wif', async () => {
+      let wallet = new Wallet('KxhmCKqpXjPnazBsrtx2a3spTrBY5X3MR2agYdT2CZFdtD2vmCGX');
+      wallet.privateKey.should.be.instanceof(Buffer);
+    })
+
+    it('private key is string', async () => {
+      let wallet = new Wallet('2c44b3c344b882f6744fcd6cc1cace4cf078145ffd98e25723dcb24cf0f27556');
+      wallet.privateKey.should.be.instanceof(Buffer);
+    })
   });
 });

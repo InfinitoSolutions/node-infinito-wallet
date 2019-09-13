@@ -61,16 +61,25 @@ async function createKeypair(platform, mnemonic, password, hdPath, isTestnet) {
 function privateKeytoWif(value, version, compressed = true) {
   let isBuffer = Buffer.isBuffer(value);
   try {
-    if (isBuffer)
-      wif.decodeRaw(value, version);
-    else
-      wif.decode(value, version);
-    return value;
+    if (isBuffer) {
+      if (value.length === 64) {
+        return wif.encode(version, value, compressed)
+      } else {
+        wif.decodeRaw(value, version);
+        return value;
+      }
+    } else {
+      // private key
+      if (value.length === 64) {
+        return wif.encode(version, Buffer.from(value), compressed);
+      }
+      else {
+        wif.decode(value, version);
+        return value;
+      }
+    }
   } catch (err) {
-    let result = isBuffer ?
-      wif.encode(version, value, compressed) :
-      wif.encode(version, Buffer.from(value), compressed);
-    return result;
+    throw err
   }
 }
 
@@ -80,7 +89,7 @@ function privateKeytoWif(value, version, compressed = true) {
  * @param {*} wifKey 
  */
 function wifToPrivateKey(wifKey) {
-  let decode = wif.decodeRaw(wifKey)
+  let decode = wif.decode(wifKey)
   return decode.privateKey
 }
 

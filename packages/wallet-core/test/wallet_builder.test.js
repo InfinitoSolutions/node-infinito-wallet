@@ -3,7 +3,7 @@ chai.should();
 const WalletBuilder = require('../src/wallet_builder');
 
 describe('wallet_builder', async () => {
-  describe('builder()', async () => {
+  describe('#builder', async () => {
     it('default', async () => {
       let builder = new WalletBuilder();
       builder.constructor.name.should.equal('WalletBuilder');

@@ -1,6 +1,7 @@
 const Messages = require('./messages');
 const AppError = require('./app_error');
 const Keygen = require('./keygen')
+let ecc = require('tiny-secp256k1')
 
 class Wallet {
 
@@ -74,13 +75,13 @@ class Wallet {
   };
 
   /**
-   * Sign message
+   * Sign message hash
    *
-   * @param {*} msg
+   * @param {*} hash
    * @memberof Wallet
    */
-  signMessage(msg) {
-    throw new Error('Cannot call abstract method');
+  signMessageHash(hash) {
+    return ecc.sign(hash, this.privateKey)
   }
 
   /**
@@ -88,8 +89,8 @@ class Wallet {
    * 
    * @param {*} signature 
    */
-  verifySignature(signature) {
-    throw new Error('Cannot call abstract method');
+  verifySignature(hash, publicKey, signature) {
+    return ecc.verify(hash, publicKey, signature)
   }
 
   /**

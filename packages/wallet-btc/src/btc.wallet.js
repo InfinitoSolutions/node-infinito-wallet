@@ -76,6 +76,16 @@ class BtcWallet extends Wallet {
   }
 
   /**
+   * Get address
+   *
+   * @returns
+   * @memberof Wallet
+   */
+  getWif() {
+    return this.wif;
+  }
+
+  /**
    * Get keypair
    *
    * @returns

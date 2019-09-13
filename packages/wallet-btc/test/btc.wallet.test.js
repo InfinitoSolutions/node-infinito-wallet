@@ -10,31 +10,19 @@ const { AppError, Networks } = require('infinito-wallet-core');
 chai.should();
 const expect = chai.expect;
 
-// let apiConfigMainnet = {
-//   apiKey: ConfigTest.API_KEY_MAINNET,
-//   secret: ConfigTest.SECRECT_MAINNET,
-//   baseUrl: ConfigTest.BASE_URL_MAINNET,
-//   logLevel: ConfigTest.LOG_LEVEL
-// };
-
-// let apiMainnet = new InfinitoApi(apiConfigMainnet);
-// const PLATFORM = 'BTC';
-
-describe.only('BtcWallet', async() => {
-
-  describe('constructor()', async() => {
-
-    it('no paramenter', async() => {
+describe('BtcWallet', async () => {
+  describe('constructor()', async () => {
+    it('no paramenter', async () => {
       expect(() => new Wallet())
         .to.throw(AppError.create(Messages.missing_parameter, 'privateKey').message);
     })
 
-    it('private key is null', async() => {
+    it('private key is null', async () => {
       expect(() => new Wallet(null))
         .to.throw(AppError.create(Messages.missing_parameter, 'privateKey').message);
     })
 
-    it('private key, default network', async() => {
+    it('private key, default network', async () => {
       // Hex string with 64 characters
       let wallet = new Wallet('2c44b3c344b882f6744fcd6cc1cace4cf078145ffd98e25723dcb24cf0f27556');
 
@@ -47,7 +35,7 @@ describe.only('BtcWallet', async() => {
       Assert.equal('141BZSiwSttMPpyj4dttQuML8x2GcCqVva', wallet.address, 'wallet.wif must be equal');
     })
 
-    it('private key, testnet network', async() => {
+    it('private key, testnet network', async () => {
       let wallet = new Wallet('4e1719ca38920a00e9ec9c163ab1162f1710471a0efb032fd684b9edbe594529', Networks.getNetwork("BTC", true));
 
       Assert.equal('cQCVtQhYEATb7d7XgZ1nffDETJXEAxUpQkeTYPsFMShu9mQ1gxSB', wallet.wif, 'wallet.wif must be equal');
@@ -59,7 +47,7 @@ describe.only('BtcWallet', async() => {
       Assert.equal('moK9QHugQAVVnUkgVApNqWHcFaoJ9Acops', wallet.address, 'wallet.wif must be equal');
     })
 
-    it('wif, default network', async() => {
+    it.only('wif, default network', async () => {
       // Wif length is 52
       let wallet = new Wallet('KxhmCKqpXjPnazBsrtx2a3spTrBY5X3MR2agYdT2CZFdtD2vmCGX');
 
@@ -72,7 +60,7 @@ describe.only('BtcWallet', async() => {
       Assert.equal('141BZSiwSttMPpyj4dttQuML8x2GcCqVva', wallet.address, 'wallet.wif must be equal');
     })
 
-    it('private key (buffer), default network', async() => {
+    it('private key (buffer), default network', async () => {
       // Buffer length is 32
       let wallet = new Wallet(Buffer.from('2c44b3c344b882f6744fcd6cc1cace4cf078145ffd98e25723dcb24cf0f27556', 'hex'));
 
@@ -85,7 +73,7 @@ describe.only('BtcWallet', async() => {
       Assert.equal('141BZSiwSttMPpyj4dttQuML8x2GcCqVva', wallet.address, 'wallet.wif must be equal');
     })
 
-    it('private key (buffer), testnet network', async() => {
+    it('private key (buffer), testnet network', async () => {
       let wallet = new Wallet(Buffer.from('4e1719ca38920a00e9ec9c163ab1162f1710471a0efb032fd684b9edbe594529', 'hex'), Networks.getNetwork("BTC", true));
 
       Assert.equal('cQCVtQhYEATb7d7XgZ1nffDETJXEAxUpQkeTYPsFMShu9mQ1gxSB', wallet.wif, 'wallet.wif must be equal');
@@ -97,15 +85,15 @@ describe.only('BtcWallet', async() => {
       Assert.equal('moK9QHugQAVVnUkgVApNqWHcFaoJ9Acops', wallet.address, 'wallet.wif must be equal');
     })
 
-    it('wif (buffer), default network', async() => {
+    it('wif (buffer), default network', async () => {
       expect(() => new Wallet(Buffer.from('KxhmCKqpXjPnazBsrtx2a3spTrBY5X3MR2agYdT2CZFdtD2vmCGX')))
         .to.throw(AppError.create(Messages.invalid_parameter, 'privateKey').message);
     })
 
   });
 
-  describe('getNetwork()', async() => {
-    it('default network', async() => {
+  describe('getNetwork()', async () => {
+    it('default network', async () => {
       // Hex string with 64 characters
       let wallet = new Wallet('2c44b3c344b882f6744fcd6cc1cace4cf078145ffd98e25723dcb24cf0f27556');
       Assert.equal('141BZSiwSttMPpyj4dttQuML8x2GcCqVva', wallet.address, 'wallet.wif must be equal');
@@ -116,14 +104,14 @@ describe.only('BtcWallet', async() => {
       Assert.equal(JSON.stringify(Networks.getNetwork('BTC')), JSON.stringify(wallet.getNetwork()), 'wallet.network mus be equal');
     })
 
-    it('mainnet network', async() => {
+    it('mainnet network', async () => {
       // Hex string with 64 characters
       let wallet = new Wallet('2c44b3c344b882f6744fcd6cc1cace4cf078145ffd98e25723dcb24cf0f27556', Networks.getNetwork('BTC'));
 
       Assert.equal(JSON.stringify(Networks.getNetwork('BTC')), JSON.stringify(wallet.getNetwork()), 'wallet.network mus be equal');
     })
 
-    it('testnet network', async() => {
+    it('testnet network', async () => {
       // Hex string with 64 characters
       let wallet = new Wallet('2c44b3c344b882f6744fcd6cc1cace4cf078145ffd98e25723dcb24cf0f27556', Networks.getNetwork('BTC', true));
 
@@ -131,9 +119,9 @@ describe.only('BtcWallet', async() => {
     })
   });
 
-  describe('signMessage()', async() => {
+  describe('signMessage()', async () => {
 
-    it('msg is null', async() => {
+    it('msg is null', async () => {
       expect(() => {
         let wallet = new Wallet('L2ToBGXnzRrqkFfaWWDr69R22XbmRXzS3TsCVrgxZvxBXkqGgVXQ');
         Assert.equal('1PxXacVFhr7qDemSQEPyo44xPmhf27WyKk', wallet.address, 'wallet.wif must be equal');
@@ -142,7 +130,7 @@ describe.only('BtcWallet', async() => {
         .to.throw(AppError.create(Messages.missing_parameter, 'msg').message);
     })
 
-    it('msg is undefined', async() => {
+    it('msg is undefined', async () => {
       expect(() => {
         let wallet = new Wallet('Kzn4JLDkpgoFWCPemwPucvCZ8cE5E23zyA2pXhTsxaqLsfEkZbLS');
         Assert.equal('1HQPpMThMqX7Hn7rgcgkQ6d8oZeGZEzrPT', wallet.address, 'wallet.wif must be equal');
@@ -152,9 +140,9 @@ describe.only('BtcWallet', async() => {
     })
 
   });
-  
-  describe('signTx()', async() => {
+
+  describe('signTx()', async () => {
 
   });
-  
+
 });
