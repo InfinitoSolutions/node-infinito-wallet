@@ -75,25 +75,6 @@ class Wallet {
   };
 
   /**
-   * Sign message hash
-   *
-   * @param {*} hash
-   * @memberof Wallet
-   */
-  signMessageHash(hash) {
-    return ecc.sign(hash, this.privateKey)
-  }
-
-  /**
-   * Verify signature
-   * 
-   * @param {*} signature 
-   */
-  verifySignature(hash, publicKey, signature) {
-    return ecc.verify(hash, publicKey, signature)
-  }
-
-  /**
    * Sign transaction
    *
    * @param {*} tx

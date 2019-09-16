@@ -107,20 +107,6 @@ class BtcWallet extends Wallet {
   }
 
   /**
-   * Sign message
-   *
-   * @param {*} msg
-   * @memberof BtcWallet
-   */
-  signMessage(msg) {
-    if (msg == null || msg === undefined) {
-      throw AppError.create(Messages.missing_parameter, 'msg');
-    }
-    // TODO
-    console.log('BTC.sendMessage');
-  }
-
-  /**
    * Sign transaction
    *
    * @param {*} msg

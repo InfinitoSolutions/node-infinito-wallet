@@ -62,7 +62,7 @@ function privateKeytoWif(value, version, compressed = true) {
   let isBuffer = Buffer.isBuffer(value);
   try {
     if (isBuffer) {
-      if (value.length === 64) {
+      if (value.length === 32) {
         return wif.encode(version, value, compressed)
       } else {
         wif.decodeRaw(value, version);

@@ -11,7 +11,7 @@ chai.should();
 const expect = chai.expect;
 
 describe('BtcWallet', async () => {
-  describe('constructor()', async () => {
+  describe('#constructor', async () => {
     it('no paramenter', async () => {
       expect(() => new Wallet())
         .to.throw(AppError.create(Messages.missing_parameter, 'privateKey').message);
@@ -47,7 +47,7 @@ describe('BtcWallet', async () => {
       Assert.equal('moK9QHugQAVVnUkgVApNqWHcFaoJ9Acops', wallet.address, 'wallet.wif must be equal');
     })
 
-    it.only('wif, default network', async () => {
+    it('wif, default network', async () => {
       // Wif length is 52
       let wallet = new Wallet('KxhmCKqpXjPnazBsrtx2a3spTrBY5X3MR2agYdT2CZFdtD2vmCGX');
 
@@ -92,7 +92,7 @@ describe('BtcWallet', async () => {
 
   });
 
-  describe('getNetwork()', async () => {
+  describe('#getNetwork', async () => {
     it('default network', async () => {
       // Hex string with 64 characters
       let wallet = new Wallet('2c44b3c344b882f6744fcd6cc1cace4cf078145ffd98e25723dcb24cf0f27556');
@@ -117,28 +117,6 @@ describe('BtcWallet', async () => {
 
       Assert.equal(JSON.stringify(Networks.getNetwork('BTC', true)), JSON.stringify(wallet.getNetwork()), 'wallet.network mus be equal');
     })
-  });
-
-  describe('signMessage()', async () => {
-
-    it('msg is null', async () => {
-      expect(() => {
-        let wallet = new Wallet('L2ToBGXnzRrqkFfaWWDr69R22XbmRXzS3TsCVrgxZvxBXkqGgVXQ');
-        Assert.equal('1PxXacVFhr7qDemSQEPyo44xPmhf27WyKk', wallet.address, 'wallet.wif must be equal');
-        wallet.signMessage(null);
-      })
-        .to.throw(AppError.create(Messages.missing_parameter, 'msg').message);
-    })
-
-    it('msg is undefined', async () => {
-      expect(() => {
-        let wallet = new Wallet('Kzn4JLDkpgoFWCPemwPucvCZ8cE5E23zyA2pXhTsxaqLsfEkZbLS');
-        Assert.equal('1HQPpMThMqX7Hn7rgcgkQ6d8oZeGZEzrPT', wallet.address, 'wallet.wif must be equal');
-        wallet.signMessage();
-      })
-        .to.throw(AppError.create(Messages.missing_parameter, 'msg').message);
-    })
-
   });
 
   describe('signTx()', async () => {
