@@ -48,7 +48,7 @@ async function getUtxo(api, address) {
  * @returns
  */
 function coinSelectSendMax(utxos, outputs, feeRate) {
-  if (!isFinite(coinSelectUtils.uintOrNaN(feeRate))) 
+  if (!isFinite(coinSelectUtils.uintOrNaN(feeRate)))
     return {};
   var sumInput = coinSelectUtils.sumOrNaN(utxos);
   outputs[0].value = sumInput;
@@ -130,7 +130,7 @@ class BtcTxBuilder extends TransactionBuilder {
    * @param {*} value Amount in satoshi
    * @memberof BtcTxBuilder
    */
-  sendTo(address, value){
+  sendTo(address, value) {
     this.outputs.push({
       address: address,
       value: value
@@ -177,8 +177,6 @@ class BtcTxBuilder extends TransactionBuilder {
     // Get utxo
     let utxos = this.utxos;
     let address = this.wallet.getAddress();
-    // TODO: for test
-    address = '1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL';
     if (utxos === null || utxos === undefined || utxos.length == 0) {
       utxos = await getUtxo(this.api, address);
     }
@@ -190,10 +188,11 @@ class BtcTxBuilder extends TransactionBuilder {
     let selectResult = {};
     if (this.outputMaxAddress !== null && this.outputMaxAddress !== undefined) {
       // Process send max to 1 address
-      outputs = [{ address: this.outputMaxAddress}];
+      outputs = [{ address: this.outputMaxAddress }];
       selectResult = coinSelectSendMax(utxos, outputs, feerate);
     } else {
-      selectResult = coinSelect(utxos, outputs, feerate); // {inputs, outputs, fee}
+      // {inputs, outputs, fee}
+      selectResult = coinSelect(utxos, outputs, feerate);
       if (!selectResult.inputs || !selectResult.outputs) {
         throw AppError.create(Messages.over_balance)
       }
@@ -215,13 +214,8 @@ class BtcTxBuilder extends TransactionBuilder {
 
     // Sign
     if (this.sign === true) {
-      // let keyPair = this.wallet.getKeyPair();
-      // for (let i = 0; i < selectResult.inputs.length; i++) {
-      //   transaction.sign(i, keyPair);
-      // }
       return this.wallet.signTx(transaction);
-    } 
-
+    }
     let tx = transaction.build();
 
     return {
@@ -238,7 +232,7 @@ class BtcTxBuilder extends TransactionBuilder {
    */
   async buildAndBroadcast() {
     let buildResult = await this.build();
-    return this.broadcast(buildResult.raw);
+    return await this.broadcast(buildResult.raw);
   }
 
   /**
@@ -249,10 +243,10 @@ class BtcTxBuilder extends TransactionBuilder {
    * @memberof BtcTxBuilder
    */
   async broadcast(rawTx) {
-    let result = this.api.sendTransaction({
+    let result = await this.api.sendTransaction({
       rawtx: rawTx
     });
-    
+
     if (result.cd === 0 || result.cd === '0') {
       return {
         tx_id: result.data.txid,

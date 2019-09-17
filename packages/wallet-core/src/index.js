@@ -6,8 +6,6 @@ const Wallet = require('./wallet');
 const TransactionBuilder = require('./transaction_builder');
 const AppError = require('./app_error');
 
-console.log('infinito-core');
-
 module.exports = {
   AppError,
   Bip44,

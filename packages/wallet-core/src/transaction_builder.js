@@ -1,6 +1,9 @@
 class TransactionBuilder {
+
+  /**
+   * constructor
+   */
   constructor() {
-    console.log('TransactionBuilder');
   }
 
   /**
@@ -26,11 +29,12 @@ class TransactionBuilder {
     return this;
   }
 
+  /**
+   * Build a transaction with specific type
+   * 
+   */
   build() {
-    // Return raw transaction
-    // console.log('this.wallet :', this.wallet);
-    // console.log('TransactionBuilder.build', this.wallet.getAddress());
-    return this.wallet.getAddress();
+    throw new Error('Cannot call abstract method');
   }
 }
 

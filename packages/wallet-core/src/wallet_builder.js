@@ -40,7 +40,7 @@ class WalletBuilder {
    * @memberof WalletBuilder
    */
   withPlatform(platform) {
-    if ( typeof(platform) == 'string' && platform !== null && platform !== undefined) {
+    if (typeof (platform) === 'string' && platform !== null && platform !== undefined) {
       platform = platform.toUpperCase();
     }
     this.platform = platform;
@@ -79,6 +79,7 @@ class WalletBuilder {
    */
   withWif(wif) {
     this.wif = wif;
+    this.privateKey = Keygen.privateKeytoWif(wif)
   }
 
   /**
@@ -114,25 +115,28 @@ class WalletBuilder {
    * @memberof WalletBuilder
    */
   async createKey() {
-    // let privateKey = this.privateKey || this.wif;
     let privateKey = this.privateKey;
     let network = Networks.getNetwork(this.platform, this.isTestnet);
 
     if (privateKey === null || privateKey === undefined) {
-      if(this.wif == null || this.wif === undefined) {
-        let keypair = await Keygen.createKeypair(this.platform, this.mnemonic, this.password, this.hdPath, this.isTestnet);
-        privateKey = keypair.privateKey;
-      } else {
-        // TODO: convert wif to private key
-      }
+      let keypair = await Keygen.createKeypair(this.platform, this.mnemonic, this.password, this.hdPath, this.isTestnet);
+      privateKey = keypair.privateKey;
     }
-
-    let wallet = null;
 
     return {
       privateKey,
       network
     };
+  }
+
+  /**
+   * Build wallet by provided private key | wif or generated private key
+   *
+   * @returns
+   * @memberof WalletBuilder
+   */
+  async build() {
+    throw new Error('Cannot call abstract method');
   }
 }
 
