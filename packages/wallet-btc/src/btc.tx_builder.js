@@ -223,42 +223,6 @@ class BtcTxBuilder extends TransactionBuilder {
       tx_id: tx.getId()
     }
   }
-
-  /**
-   * Build transaction and broadcast to server.
-   *
-   * @returns
-   * @memberof BtcTxBuilder
-   */
-  async buildAndBroadcast() {
-    let buildResult = await this.build();
-    return await this.broadcast(buildResult.raw);
-  }
-
-  /**
-   * Broadcast raw transaction
-   *
-   * @param {*} rawTx
-   * @returns
-   * @memberof BtcTxBuilder
-   */
-  async broadcast(rawTx) {
-    let result = await this.api.sendTransaction({
-      rawtx: rawTx
-    });
-
-    if (result.cd === 0 || result.cd === '0') {
-      return {
-        tx_id: result.data.txid,
-        raw: response.raw
-      };
-    } else {
-      throw new AppError(
-        result.msg,
-        Messages.send_transaction_fail.code
-      );
-    }
-  }
 }
 
 

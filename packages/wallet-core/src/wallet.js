@@ -1,7 +1,6 @@
 const Messages = require('./messages');
 const AppError = require('./app_error');
 const Keygen = require('./keygen')
-let ecc = require('tiny-secp256k1')
 
 class Wallet {
 
