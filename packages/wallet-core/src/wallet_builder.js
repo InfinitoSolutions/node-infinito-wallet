@@ -13,6 +13,8 @@ class WalletBuilder {
    * @memberof WalletBuilder
    */
   constructor() {
+    // this.isTestnet = false;
+    this.useTestnet(false);
   }
 
   /**
@@ -79,7 +81,7 @@ class WalletBuilder {
    */
   withWif(wif) {
     this.wif = wif;
-    this.privateKey = Keygen.privateKeytoWif(wif)
+    return this;
   }
 
   /**
@@ -117,6 +119,10 @@ class WalletBuilder {
   async createKey() {
     let privateKey = this.privateKey;
     let network = Networks.getNetwork(this.platform, this.isTestnet);
+
+    // if (platform === null || privateKey === platform) {
+    //   throw AppError.create(Messages.missing_parameter, 'privateKey');
+    // }
 
     if (privateKey === null || privateKey === undefined) {
       let keypair = await Keygen.createKeypair(this.platform, this.mnemonic, this.password, this.hdPath, this.isTestnet);

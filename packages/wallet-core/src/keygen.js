@@ -17,6 +17,7 @@ const Networks = require('./networks');
  * @returns
  */
 async function createKeypair(platform, mnemonic, password, hdPath, isTestnet) {
+  console.log('createKeypair :', platform, mnemonic, password, hdPath, isTestnet);
   if (platform === null || platform === undefined) {
     throw AppError.create(Messages.missing_parameter, 'platform');
   }
@@ -36,6 +37,7 @@ async function createKeypair(platform, mnemonic, password, hdPath, isTestnet) {
       hdPath = Bip44.getHDPath(platform);
     }
   }
+  console.log('hdPath :', hdPath);
 
   // Generate seed
   let seed = null;
@@ -44,7 +46,8 @@ async function createKeypair(platform, mnemonic, password, hdPath, isTestnet) {
   else
     seed = await Bip39.mnemonicToSeed(mnemonic);
 
-  let network = Networks.getNetwork(platform);
+  let network = Networks.getNetwork(platform, isTestnet === true ? true : false);
+  console.log('network :', network);
   let masterKeyPair = Bip32.fromSeed(seed, network);
   let keypair = masterKeyPair.derivePath(hdPath);
   return keypair;

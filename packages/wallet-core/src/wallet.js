@@ -51,7 +51,7 @@ class Wallet {
    * @memberof Wallet
    */
   getPublicKey() {
-    throw new Error('Cannot call abstract method');
+    return this.publicKey;
   }
 
   /**

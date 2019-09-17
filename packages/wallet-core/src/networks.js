@@ -98,6 +98,7 @@ const networks = {
  * @returns
  */
 function getNetwork(platform, isTestnet = false) {
+  console.log('getNetwork :', platform, isTestnet);
   let network = null;
   switch (platform) {
     case Blockchains.BTC:
