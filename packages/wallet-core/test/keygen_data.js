@@ -1,166 +1,40 @@
-const Networks = require('../src/networks')
+const Networks = require('../src/networks');
 
 const NETWORK_BTC_MAINNET = Networks.getNetwork('BTC', false);
 const NETWORK_BTC_TESTNET = Networks.getNetwork('BTC', true);
-const HDPATH_MAINNET = "m/44'/0'/0'/0/0";
-const HDPATH_TESTNET = "m/44'/1'/0'/0/0";
 
-// platform	privateKey wif mnemonic password hdPath testnet
+// platform mnemonic password hdPath testnet
 module.exports = [
-  {
-    name: "case 65",
-    config: {
-      platform: "BTC",
-      testnet: false
-    },
-    expected: {
-      exception: "Missing required parameter mnemonic"
-    }
-  },
-  {
-    name: "case 66",
-    config: {
-      platform: "BTC",
-      testnet: true
-    },
-    expected: {
-      exception: "Missing required parameter mnemonic"
-    }
-  },
-  {
-    name: "case 67",
-    config: {
-      platform: "BTC",
-      hdPath: HDPATH_MAINNET,
-      testnet: false
-    },
-    expected: {
-      exception: "Missing required parameter mnemonic"
-    }
-  },
-  {
-    name: "case 68",
-    config: {
-      platform: "BTC",
-      hdPath: HDPATH_MAINNET,
-      testnet: true
-    },
-    expected: {
-      exception: "Missing required parameter mnemonic"
-    }
-  },
-  {
-    name: "case 69",
-    config: {
-      platform: "BTC",
-      password: "123456",
-      testnet: false
-    },
-    expected: {
-      exception: "Missing required parameter mnemonic"
-    }
-  },
-  {
-    name: "case 70",
-    config: {
-      platform: "BTC",
-      password: "123456",
-      testnet: true
-    },
-    expected: {
-      exception: "Missing required parameter mnemonic"
-    }
-  },
-  {
-    name: "case 71",
-    config: {
-      platform: "BTC",
-      password: "123456",
-      hdPath: HDPATH_MAINNET,
-      testnet: false
-    },
-    expected: {
-      exception: "Missing required parameter mnemonic"
-    }
-  },
-  {
-    name: "case 72",
-    config: {
-      platform: "BTC",
-      password: "123456",
-      hdPath: HDPATH_MAINNET,
-      testnet: true
-    },
-    expected: {
-      exception: "Missing required parameter mnemonic"
-    }
-  },
-  {
-    name: "case 73",
-    config: {
-      platform: "BTC",
-      mnemonic: "festival danger night twice shy neither blur describe once pretty bird scale",
-      testnet: false
-    },
-    expected: {
-      privateKey: "db95008e70c0f681db0b400c1a21cecbb9189413f46ee4232b9057bc1ccce85d",
-      publicKey: "02c7f2713dd4f82419ba0caa13e44a88b59e215826facc9a02d177917f0d7778a6",
-      network: NETWORK_BTC_MAINNET
-    }
-  },
-  {
-    name: "case 74",
-    config: {
-      platform: "BTC",
-      mnemonic: "festival danger night twice shy neither blur describe once pretty bird scale",
-      testnet: true
-    },
-    expected: {
-      privateKey: "4679533d1dbee532c6d26c4134db8e5a8cd3bb10549977141e162590f1264e83",
-      publicKey: "030bc4a696c00e6a4871410a23fc9815d088badd71ba747c56ceca71ed64ad8e67",
-      network: NETWORK_BTC_TESTNET
-    }
-  },
-  {
-    name: "case 75",
-    config: {
-      platform: "BTC",
-      mnemonic: "festival danger night twice shy neither blur describe once pretty bird scale",
-      testnet: false,
-      hdPath: HDPATH_MAINNET,
-    },
-    expected: {
-      privateKey: "db95008e70c0f681db0b400c1a21cecbb9189413f46ee4232b9057bc1ccce85d",
-      publicKey: "02c7f2713dd4f82419ba0caa13e44a88b59e215826facc9a02d177917f0d7778a6",
-      network: NETWORK_BTC_MAINNET
-    }
-  },
-  {
-    name: "case 76",
-    config: {
-      platform: "BTC",
-      mnemonic: "festival danger night twice shy neither blur describe once pretty bird scale",
-      testnet: true,
-      hdPath: HDPATH_TESTNET,
-    },
-    expected: {
-      privateKey: "4679533d1dbee532c6d26c4134db8e5a8cd3bb10549977141e162590f1264e83",
-      publicKey: "030bc4a696c00e6a4871410a23fc9815d088badd71ba747c56ceca71ed64ad8e67",
-      network: NETWORK_BTC_TESTNET
-    }
-  },
-  {
-    name: "case 76",
-    config: {
-      platform: "BTC",
-      mnemonic: "festival danger night twice shy neither blur describe once pretty bird scale",
-      password: "123abc!@#",
-      testnet: false
-    },
-    expected: {
-      privateKey: "db95008e70c0f681db0b400c1a21cecbb9189413f46ee4232b9057bc1ccce85d",
-      publicKey: "02c7f2713dd4f82419ba0caa13e44a88b59e215826facc9a02d177917f0d7778a6",
-      network: NETWORK_BTC_MAINNET
-    }
-  },
+  { name: 'Case 1:', config: { platform: null, mnemonic: null, password: null, hdPath: null, testnet: false }, expected: { exception: 'Missing required parameter platform', } },
+  { name: 'Case 2:', config: { platform: null, mnemonic: null, password: null, hdPath: null, testnet: true }, expected: { exception: 'Missing required parameter platform', } },
+  { name: 'Case 3:', config: { platform: null, mnemonic: null, password: null, hdPath: "m/44'/0'/0'/0/0", testnet: false }, expected: { exception: 'Missing required parameter platform', } },
+  { name: 'Case 4:', config: { platform: null, mnemonic: null, password: null, hdPath: "m/44'/1'/0'/0/0", testnet: true }, expected: { exception: 'Missing required parameter platform', } },
+  { name: 'Case 5:', config: { platform: null, mnemonic: null, password: 'abc123!@#', hdPath: null, testnet: false }, expected: { exception: 'Missing required parameter platform', } },
+  { name: 'Case 6:', config: { platform: null, mnemonic: null, password: 'abc123!@#', hdPath: null, testnet: true }, expected: { exception: 'Missing required parameter platform', } },
+  { name: 'Case 7:', config: { platform: null, mnemonic: null, password: 'abc123!@#', hdPath: "m/44'/0'/0'/0/0", testnet: false }, expected: { exception: 'Missing required parameter platform', } },
+  { name: 'Case 8:', config: { platform: null, mnemonic: null, password: 'abc123!@#', hdPath: "m/44'/1'/0'/0/0", testnet: true }, expected: { exception: 'Missing required parameter platform', } },
+  { name: 'Case 9:', config: { platform: null, mnemonic: 'festival danger night twice shy neither blur describe once pretty bird scale', password: null, hdPath: null, testnet: false }, expected: { exception: 'Missing required parameter platform', } },
+  { name: 'Case 10:', config: { platform: null, mnemonic: 'festival danger night twice shy neither blur describe once pretty bird scale', password: null, hdPath: null, testnet: true }, expected: { exception: 'Missing required parameter platform', } },
+  { name: 'Case 11:', config: { platform: null, mnemonic: 'festival danger night twice shy neither blur describe once pretty bird scale', password: null, hdPath: "m/44'/0'/0'/0/0", testnet: false }, expected: { exception: 'Missing required parameter platform', } },
+  { name: 'Case 12:', config: { platform: null, mnemonic: 'festival danger night twice shy neither blur describe once pretty bird scale', password: null, hdPath: "m/44'/1'/0'/0/0", testnet: true }, expected: { exception: 'Missing required parameter platform', } },
+  { name: 'Case 13:', config: { platform: null, mnemonic: 'festival danger night twice shy neither blur describe once pretty bird scale', password: 'abc123!@#', hdPath: null, testnet: false }, expected: { exception: 'Missing required parameter platform', } },
+  { name: 'Case 14:', config: { platform: null, mnemonic: 'festival danger night twice shy neither blur describe once pretty bird scale', password: 'abc123!@#', hdPath: null, testnet: true }, expected: { exception: 'Missing required parameter platform', } },
+  { name: 'Case 15:', config: { platform: null, mnemonic: 'festival danger night twice shy neither blur describe once pretty bird scale', password: 'abc123!@#', hdPath: "m/44'/0'/0'/0/0", testnet: false }, expected: { exception: 'Missing required parameter platform', } },
+  { name: 'Case 16:', config: { platform: null, mnemonic: 'festival danger night twice shy neither blur describe once pretty bird scale', password: 'abc123!@#', hdPath: "m/44'/1'/0'/0/0", testnet: true }, expected: { exception: 'Missing required parameter platform', } },
+  { name: 'Case 17:', config: { platform: 'BTC', mnemonic: null, password: null, hdPath: null, testnet: false }, expected: { exception: 'Missing required parameter mnemonic', } },
+  { name: 'Case 18:', config: { platform: 'BTC', mnemonic: null, password: null, hdPath: null, testnet: true }, expected: { exception: 'Missing required parameter mnemonic', } },
+  { name: 'Case 19:', config: { platform: 'BTC', mnemonic: null, password: null, hdPath: "m/44'/0'/0'/0/0", testnet: false }, expected: { exception: 'Missing required parameter mnemonic', } },
+  { name: 'Case 20:', config: { platform: 'BTC', mnemonic: null, password: null, hdPath: "m/44'/1'/0'/0/0", testnet: true }, expected: { exception: 'Missing required parameter mnemonic', } },
+  { name: 'Case 21:', config: { platform: 'BTC', mnemonic: null, password: 'abc123!@#', hdPath: null, testnet: false }, expected: { exception: 'Missing required parameter mnemonic', } },
+  { name: 'Case 22:', config: { platform: 'BTC', mnemonic: null, password: 'abc123!@#', hdPath: null, testnet: true }, expected: { exception: 'Missing required parameter mnemonic', } },
+  { name: 'Case 23:', config: { platform: 'BTC', mnemonic: null, password: 'abc123!@#', hdPath: "m/44'/0'/0'/0/0", testnet: false }, expected: { exception: 'Missing required parameter mnemonic', } },
+  { name: 'Case 24:', config: { platform: 'BTC', mnemonic: null, password: 'abc123!@#', hdPath: "m/44'/1'/0'/0/0", testnet: true }, expected: { exception: 'Missing required parameter mnemonic', } },
+  { name: 'Case 25:', config: { platform: 'BTC', mnemonic: 'festival danger night twice shy neither blur describe once pretty bird scale', password: null, hdPath: null, testnet: false }, expected: { privateKey: 'db95008e70c0f681db0b400c1a21cecbb9189413f46ee4232b9057bc1ccce85d', publicKey: '02c7f2713dd4f82419ba0caa13e44a88b59e215826facc9a02d177917f0d7778a6', network: NETWORK_BTC_MAINNET } },
+  { name: 'Case 26:', config: { platform: 'BTC', mnemonic: 'festival danger night twice shy neither blur describe once pretty bird scale', password: null, hdPath: null, testnet: true }, expected: { privateKey: '4679533d1dbee532c6d26c4134db8e5a8cd3bb10549977141e162590f1264e83', publicKey: '030bc4a696c00e6a4871410a23fc9815d088badd71ba747c56ceca71ed64ad8e67', network: NETWORK_BTC_TESTNET } },
+  { name: 'Case 27:', config: { platform: 'BTC', mnemonic: 'festival danger night twice shy neither blur describe once pretty bird scale', password: null, hdPath: "m/44'/0'/0'/0/0", testnet: false }, expected: { privateKey: 'db95008e70c0f681db0b400c1a21cecbb9189413f46ee4232b9057bc1ccce85d', publicKey: '02c7f2713dd4f82419ba0caa13e44a88b59e215826facc9a02d177917f0d7778a6', network: NETWORK_BTC_MAINNET } },
+  { name: 'Case 28:', config: { platform: 'BTC', mnemonic: 'festival danger night twice shy neither blur describe once pretty bird scale', password: null, hdPath: "m/44'/1'/0'/0/0", testnet: true }, expected: { privateKey: '4679533d1dbee532c6d26c4134db8e5a8cd3bb10549977141e162590f1264e83', publicKey: '030bc4a696c00e6a4871410a23fc9815d088badd71ba747c56ceca71ed64ad8e67', network: NETWORK_BTC_TESTNET } },
+  { name: 'Case 29:', config: { platform: 'BTC', mnemonic: 'festival danger night twice shy neither blur describe once pretty bird scale', password: 'abc123!@#', hdPath: null, testnet: false }, expected: { privateKey: 'b8945c1769de499c8b0f926cec061d6283d59ca09a1b894e9ababb07f680498d', publicKey: '035843816e717057444535f641f0713a3100413003169dab9997aa27e4ea19979d', network: NETWORK_BTC_MAINNET } },
+  { name: 'Case 30:', config: { platform: 'BTC', mnemonic: 'festival danger night twice shy neither blur describe once pretty bird scale', password: 'abc123!@#', hdPath: null, testnet: true }, expected: { privateKey: 'ccd4c061007e7f684b3d794374bcf66255cbb838d2df4b451062b9d1fa3b76fa', publicKey: '02eb21c3cf2c9ca3e1600ba9446e0d6e19b38bb5c8fe662487d627b18dbb73c1af', network: NETWORK_BTC_TESTNET } },
+  { name: 'Case 31:', config: { platform: 'BTC', mnemonic: 'festival danger night twice shy neither blur describe once pretty bird scale', password: 'abc123!@#', hdPath: "m/44'/0'/0'/0/0", testnet: false }, expected: { privateKey: 'b8945c1769de499c8b0f926cec061d6283d59ca09a1b894e9ababb07f680498d', publicKey: '035843816e717057444535f641f0713a3100413003169dab9997aa27e4ea19979d', network: NETWORK_BTC_MAINNET } },
+  { name: 'Case 32:', config: { platform: 'BTC', mnemonic: 'festival danger night twice shy neither blur describe once pretty bird scale', password: 'abc123!@#', hdPath: "m/44'/1'/0'/0/0", testnet: true }, expected: { privateKey: 'ccd4c061007e7f684b3d794374bcf66255cbb838d2df4b451062b9d1fa3b76fa', publicKey: '02eb21c3cf2c9ca3e1600ba9446e0d6e19b38bb5c8fe662487d627b18dbb73c1af', network: NETWORK_BTC_TESTNET } },
 ];

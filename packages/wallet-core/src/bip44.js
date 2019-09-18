@@ -28,7 +28,7 @@ function getCoinIndex(platform) {
     platform = platform.toUpperCase();
   }
 
-  if (BIP44[platform] === undefined || BIP44[platform] < 0) {
+  if (BIP44[platform] === undefined) {
     throw AppError.create(Messages.invalid_parameter, 'platform');
   }
   return BIP44[platform] - BIP44['BTC'];

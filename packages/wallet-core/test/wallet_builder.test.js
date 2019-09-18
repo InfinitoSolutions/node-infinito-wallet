@@ -1,5 +1,7 @@
+const Assert = require('assert');
 const chai = require('chai');
 const WalletBuilder = require('../src/wallet_builder');
+const Networks = require('../src/networks');
 
 chai.should();
 const expect = chai.expect;
@@ -34,6 +36,47 @@ describe('wallet_builder', async() => {
     });
   });
 
+  describe('build', async() => {
+    it('Cannot call abstract method', async() => {
+      let builder = new WalletBuilder();
+      builder = builder
+        .withPlatform('BTC')
+        .withMnemonic('goddess cradle need donkey fog add opinion ensure spoil shrimp honey rude');
+      
+      try {
+        await builder.build();
+        Assert.fail();
+      } catch (err) {
+        Assert.equal('Cannot call abstract method', err.message);
+      }
+    });
+  });
+
+  describe('createKey', async() => {
+    it('private key, mainnet', async() => {
+      let builder = new WalletBuilder();
+      builder = builder
+        .withPlatform('BTC')
+        .withPrivateKey('d23e531de1144cfa01c092b43e201dab1f8c2d3997dc8e185d5d503bfe7a1913');
+
+      let result = await builder.createKey();
+      expect(result.privateKey).to.equal('d23e531de1144cfa01c092b43e201dab1f8c2d3997dc8e185d5d503bfe7a1913');
+      expect(JSON.stringify(result.network)).to.equal(JSON.stringify(Networks.getNetwork('BTC', false)));
+    });
+
+    it('private key, testnet', async() => {
+      let builder = new WalletBuilder();
+      builder = builder
+        .withPlatform('BTC')
+        .useTestnet(true)
+        .withPrivateKey('d23e531de1144cfa01c092b43e201dab1f8c2d3997dc8e185d5d503bfe7a1913');
+
+      let result = await builder.createKey();
+      expect(result.privateKey).to.equal('d23e531de1144cfa01c092b43e201dab1f8c2d3997dc8e185d5d503bfe7a1913');
+      expect(JSON.stringify(result.network)).to.equal(JSON.stringify(Networks.getNetwork('BTC', true)));
+    });
+  });
+
   describe('Sample Data - withConfig', async() => {
 
     let listCase = require('./wallet_builder_data');
@@ -47,20 +90,20 @@ describe('wallet_builder', async() => {
 
         console.log('curCase.expected.exception :', curCase.expected.exception);
         
-        if( curCase.expected.exception !== undefined ) {
+        if ( curCase.expected.exception !== undefined ) {
           try {
             await waletBuilder.createKey();
             Assert.fail('Should be error', curCase);
-          } catch(err) {
+          } catch (err) {
             Assert.equal(err.message, curCase.expected.exception);
           }
         } else {
           let result = await waletBuilder.createKey();
 
-          Assert.equal(result.privateKey.toString("hex"), curCase.expected.privateKey);
+          Assert.equal(result.privateKey.toString('hex'), curCase.expected.privateKey);
           Assert.equal(JSON.stringify(result.network), JSON.stringify(curCase.expected.network));
         }
-      })
+      });
     });
   }),
 
@@ -84,20 +127,20 @@ describe('wallet_builder', async() => {
 
         console.log('curCase.expected.exception :', curCase.expected.exception);
         
-        if( curCase.expected.exception !== undefined ) {
+        if ( curCase.expected.exception !== undefined ) {
           try {
             await waletBuilder.createKey();
             Assert.fail('Should be error', curCase);
-          } catch(err) {
+          } catch (err) {
             Assert.equal(err.message, curCase.expected.exception);
           }
         } else {
           let result = await waletBuilder.createKey();
 
-          Assert.equal(result.privateKey.toString("hex"), curCase.expected.privateKey);
+          Assert.equal(result.privateKey.toString('hex'), curCase.expected.privateKey);
           Assert.equal(JSON.stringify(result.network), JSON.stringify(curCase.expected.network));
         }
-      })
+      });
     });
-  })
+  });
 });

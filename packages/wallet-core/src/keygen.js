@@ -17,7 +17,6 @@ const Networks = require('./networks');
  * @returns
  */
 async function createKeypair(platform, mnemonic, password, hdPath, isTestnet) {
-  console.log('createKeypair :', platform, mnemonic, password, hdPath, isTestnet);
   if (platform === null || platform === undefined) {
     throw AppError.create(Messages.missing_parameter, 'platform');
   }
@@ -26,10 +25,7 @@ async function createKeypair(platform, mnemonic, password, hdPath, isTestnet) {
     throw AppError.create(Messages.missing_parameter, 'mnemonic');
   }
 
-  if (typeof (platform) === 'string' && platform !== null && platform !== undefined) {
-    platform = platform.toUpperCase();
-  }
-
+  platform = platform.toUpperCase();
   if (hdPath === null || hdPath === undefined) {
     if (isTestnet === true) {
       hdPath = Bip44.getHDPath('TESTNET');
@@ -37,17 +33,15 @@ async function createKeypair(platform, mnemonic, password, hdPath, isTestnet) {
       hdPath = Bip44.getHDPath(platform);
     }
   }
-  console.log('hdPath :', hdPath);
 
   // Generate seed
   let seed = null;
-  if (!password)
+  if (password !== null && password !== undefined && password.length > 0)
     seed = await Bip39.mnemonicToSeed(mnemonic, password);
   else
     seed = await Bip39.mnemonicToSeed(mnemonic);
 
   let network = Networks.getNetwork(platform, isTestnet === true ? true : false);
-  console.log('network :', network);
   let masterKeyPair = Bip32.fromSeed(seed, network);
   let keypair = masterKeyPair.derivePath(hdPath);
   return keypair;
@@ -61,28 +55,31 @@ async function createKeypair(platform, mnemonic, password, hdPath, isTestnet) {
  * @param {boolean} [compressed=true]
  * @returns
  */
-function privateKeytoWif(value, version, compressed = true) {
-  let isBuffer = Buffer.isBuffer(value);
+function privateKeytoWif(privateKey, version, compressed = true) {
+  if (privateKey === null || privateKey === undefined) {
+    throw AppError.create(Messages.invalid_parameter, 'privateKey');
+  }
+
+  let isBuffer = Buffer.isBuffer(privateKey);
   try {
     if (isBuffer) {
-      if (value.length === 32) {
-        return wif.encode(version, value, compressed)
+      if (privateKey.length === 32) {
+        return wif.encode(version, privateKey, compressed);
       } else {
-        wif.decodeRaw(value, version);
-        return value;
+        throw AppError.create(Messages.invalid_parameter, 'privateKey');
       }
     } else {
       // private key
-      if (value.length === 64) {
-        return wif.encode(version, Buffer.from(value), compressed);
+      if (privateKey.length === 64) {
+        return wif.encode(version, Buffer.from(privateKey, 'hex'), compressed);
       }
       else {
-        wif.decode(value, version);
-        return value;
+        wif.decode(privateKey, version);
+        return privateKey;
       }
     }
   } catch (err) {
-    throw err
+    throw err;
   }
 }
 
@@ -92,8 +89,8 @@ function privateKeytoWif(value, version, compressed = true) {
  * @param {*} wifKey 
  */
 function wifToPrivateKey(wifKey) {
-  let decode = wif.decode(wifKey)
-  return decode.privateKey
+  let decode = wif.decode(wifKey);
+  return decode.privateKey;
 }
 
 module.exports = {

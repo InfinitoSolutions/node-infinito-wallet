@@ -98,7 +98,6 @@ const networks = {
  * @returns
  */
 function getNetwork(platform, isTestnet = false) {
-  console.log('getNetwork :', platform, isTestnet);
   let network = null;
   switch (platform) {
     case Blockchains.BTC:
@@ -111,10 +110,10 @@ function getNetwork(platform, isTestnet = false) {
       network = isTestnet ? networks.litecoinTestnet : networks.litecoin;
       break;
     case Blockchains.DOGE:
-      network = isTestnet ? networks.dogecoinTestnet : network.dogecoin;
+      network = isTestnet ? networks.dogecoinTestnet : networks.dogecoin;
       break;
     case Blockchains.DASH:
-      network = isTestnet ? networks.dashTestnet : network.dashTestnet;
+      network = isTestnet ? networks.dashTestnet : networks.dash;
       break;
     default:
       network = null;

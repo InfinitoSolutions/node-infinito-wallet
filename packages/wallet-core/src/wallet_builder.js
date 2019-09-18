@@ -29,7 +29,7 @@ class WalletBuilder {
       .withPlatform(options.platform)
       .withPrivateKey(options.privateKey || null)
       .withWif(options.wif || null)
-      .useTestnet(options.testnet || false)
+      .useTestnet(options.testnet === true ? true : false)
       .withMnemonic(options.mnemonic, options.password)
       .withHDPath(options.hdPath);
   }
@@ -119,10 +119,6 @@ class WalletBuilder {
   async createKey() {
     let privateKey = this.privateKey;
     let network = Networks.getNetwork(this.platform, this.isTestnet);
-
-    // if (platform === null || privateKey === platform) {
-    //   throw AppError.create(Messages.missing_parameter, 'privateKey');
-    // }
 
     if (privateKey === null || privateKey === undefined) {
       let keypair = await Keygen.createKeypair(this.platform, this.mnemonic, this.password, this.hdPath, this.isTestnet);

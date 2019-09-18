@@ -1,8 +1,7 @@
 const chai = require('chai');
 const AppError = require('../src/app_error.js');
 const Messages = require('../src/messages');
-const Wallet = require('../src/wallet');
-const Bip44 = require('../src/bip44')
+const Bip44 = require('../src/bip44');
 
 chai.should();
 const expect = chai.expect;
@@ -45,13 +44,18 @@ describe('bip44', async () => {
         .to.throw(AppError.create(Messages.invalid_parameter, 'platform').message);
     });
 
+    it('should be error when unsupported', async () => {
+      expect(() => Bip44.getCoinIndex('INVALID'))
+        .to.throw(AppError.create(Messages.invalid_parameter, 'platform').message);
+    });
+
     it('should be success when get coin index', async () => {
       let data = getPlatformIndexMap();
 
       // Get & check coin type
       Object.keys(data).forEach(item => {
         let coinIndex = Bip44.getCoinIndex(item);
-        expect(coinIndex).to.equal(data[item], `Coin type ${item} shoud be equal.`)
+        expect(coinIndex).to.equal(data[item], `Coin type ${item} shoud be equal.`);
       });
 
       // Check number of platform
@@ -68,7 +72,7 @@ describe('bip44', async () => {
       // Get & check hd path
       Object.keys(data).forEach(item => {
         let hdPath = Bip44.getHDPath(item);
-        expect(hdPath).to.equal(`m/44'/${data[item]}'/0'/0/0`, `HdPath ${item} shoud be equal.`)
+        expect(hdPath).to.equal(`m/44'/${data[item]}'/0'/0/0`, `HdPath ${item} shoud be equal.`);
       });
     });
 
@@ -78,7 +82,7 @@ describe('bip44', async () => {
       // Get & check hd path
       Object.keys(data).forEach(item => {
         let hdPath = Bip44.getHDPath(item, 1, 2, 3);
-        expect(hdPath).to.equal(`m/44'/${data[item]}'/1'/2/3`, `HdPath ${item} shoud be equal.`)
+        expect(hdPath).to.equal(`m/44'/${data[item]}'/1'/2/3`, `HdPath ${item} shoud be equal.`);
       });
     });
 
@@ -86,7 +90,7 @@ describe('bip44', async () => {
       let data = [100, 2019, 9999];
       data.forEach(item => {
         let hdPath = Bip44.getHDPath(item);
-        expect(hdPath).to.equal(`m/44'/${item}'/0'/0/0`, `HdPath ${item} shoud be equal.`)
+        expect(hdPath).to.equal(`m/44'/${item}'/0'/0/0`, `HdPath ${item} shoud be equal.`);
       });
     });
 
@@ -94,7 +98,7 @@ describe('bip44', async () => {
       let data = [100, 2019, 9999];
       data.forEach(item => {
         let hdPath = Bip44.getHDPath(item, 4, 5, 6);
-        expect(hdPath).to.equal(`m/44'/${item}'/4'/5/6`, `HdPath ${item} shoud be equal.`)
+        expect(hdPath).to.equal(`m/44'/${item}'/4'/5/6`, `HdPath ${item} shoud be equal.`);
       });
     });
   });

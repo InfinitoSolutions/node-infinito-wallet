@@ -1,7 +1,6 @@
 const Messages = require('./messages');
 const AppError = require('./app_error');
-const Keygen = require('./keygen')
-let ecc = require('tiny-secp256k1')
+const Keygen = require('./keygen');
 
 class Wallet {
 
@@ -32,6 +31,10 @@ class Wallet {
     } else {
       throw AppError.create(Messages.invalid_parameter, 'privateKey');
     }
+
+    this.publicKey = null;
+    this.keyPair = null;
+    this.address = null;
   }
 
   /**
@@ -61,19 +64,19 @@ class Wallet {
    * @memberof Wallet
    */
   getAddress() {
-    throw new Error('Cannot call abstract method');
+    return this.address;
   }
 
   /**
    * Get keypair
    *
    * @returns
-   * @memberof BtcWallet
+   * @memberof Wallet
    */
   getKeyPair() {
-    throw new Error('Cannot call abstract method');
-  };
-
+    return this.keyPair;
+  }
+  
   /**
    * Sign transaction
    *
