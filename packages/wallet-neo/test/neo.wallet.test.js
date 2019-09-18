@@ -73,14 +73,29 @@ describe('NeoWallet', async () => {
         .to.throw(AppError.create(Messages.invalid_parameter, 'privateKey').message);
     })
 
+    it('private key (buffer), default network', async () => {
+      // Buffer length is 32
+      let wallet = new Wallet(Buffer.from('2c44b3c344b882f6744fcd7cc1cace4cf078145ffd98e25723dcb24cf0f27556', 'hex'));
+      Assert.equal('AWjWXxL2jgpVKvEKnvg8SRfwCWwm3oJfLQ', wallet.address, 'wallet.wif must be equal');
+    })
+
   });
 
   describe('#create transaction', async () => {
-    it.only('create claim transaction', async () => {
+    it('create claim transaction', async () => {
       let wallet = new Wallet('2c44b3c344b882f6744fcd6cc1cace4cf078145ffd98e25723dcb24cf0f27556');
       let transationBuilder = wallet.newTxBuilder();
       transationBuilder.useApi(apiTestnet);
       transationBuilder.useType('CLAIM');
+      let tx = await transationBuilder.build();
+    });
+
+    it.only('create contract transaction', async () => {
+      let wallet = new Wallet('2c44b3c344b882f6744fcd6cc1cace4cf078145ffd98e25723dcb24cf0f27556');
+      let transationBuilder = wallet.newTxBuilder();
+      transationBuilder.useApi(apiTestnet);
+      transationBuilder.sendTo('NEO', 1, 'AWjWXxL2jgpVKvEKnvg8SRfwCWwm3oJfLQ')
+      transationBuilder.useType('CONTRACT');
       let tx = await transationBuilder.build();
     });
   });

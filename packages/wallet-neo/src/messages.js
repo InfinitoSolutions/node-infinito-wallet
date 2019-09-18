@@ -19,4 +19,8 @@ module.exports = {
     code: 'infinito.wallet-neo.claimable_list_empty',
     message: 'Claimable list is empty',
   },
+  utxos_empty: {
+    code: 'infinito.wallet-neo.utxos_empty',
+    message: 'Unspent outputs are empty',
+  },
 };

@@ -51,7 +51,7 @@ class TransactionBuilder {
       rawtx: rawTx
     });
 
-    let response = _getReponse(result, Messages.send_transaction_fail.code);
+    let response = this.__getReponse(result, Messages.send_transaction_fail.code);
     return {
       tx_id: response.txid,
       raw: response.raw
@@ -75,7 +75,7 @@ class TransactionBuilder {
    * @param {*} response
    * @param {*} code Error code 
    */
-  _getReponse(response, code) {
+  __getReponse(response, code) {
     if (response.cd !== 0 && response.cd !== '0') {
       throw new AppError(response.msg, code);
     }
