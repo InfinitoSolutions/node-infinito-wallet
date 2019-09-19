@@ -6,6 +6,8 @@ const Wallet = require('../src/neo.wallet');
 const ConfigTest = require('./config.test');
 const Messages = require('../src/messages');
 const { AppError } = require('infinito-wallet-core');
+const { default: Neon, api, wallet } = require("@cityofzion/neon-js");
+
 
 chai.should();
 const expect = chai.expect;
@@ -83,33 +85,59 @@ describe('NeoWallet', async function () {
   });
 
   describe('#create transaction', async () => {
-    it('create claim transaction', async () => {
-      let wallet = new Wallet('2c44b3c344b882f6744fcd6cc1cace4cf078145ffd98e25723dcb24cf0f27556');
-      let transationBuilder = wallet.newTxBuilder();
+    it.only('create claim transaction', async () => {
+      // let mywallet = new Wallet('2c44b3c344b882f6744fcd6cc1cace4cf078145ffd98e25723dcb24cf0f27556');
+      let mywallet = new Wallet('2c44b3c344b882f6744fcd7cc1cace4cf078145ffd98e25723dcb24cf0f27556');
+      let transationBuilder = mywallet.newTxBuilder();
       transationBuilder.useApi(apiTestnet);
       transationBuilder.useType('CLAIM');
-      let tx = await transationBuilder.build();
+      let txraw = await transationBuilder.build();
+      let tx = mywallet.signTx(txraw)
+      try {
+        console.log(await transationBuilder.broadcast(tx.raw))
+      }
+      catch (e) {
+        console.log('current error', e)
+        const claimingPrivateKey = mywallet.privateKey.toString('hex')
+        const apiProvider = new api.neoscan.instance("TestNet");
+        const account = new wallet.Account(claimingPrivateKey);
+        const config = {
+          api: apiProvider, // The API Provider that we rely on for balance and rpc information
+          account: account // The claiming Account
+        };
+
+        Neon.claimGas(config)
+          .then(config => {
+            // console.log("\n\n--- Response ---");
+            console.log(config.response);
+            if (tx.tx_id == config.response.txid) {
+              console.log('tx_id', tx.tx_id)
+              Assert.equal(1, 1, "can not send raw")
+            }
+          })
+          .catch(config => {
+            console.log(config);
+          });
+      }
     });
 
-    it.only('create contract transaction', async () => {
+    it('create contract transaction', async () => {
       const receivingAddress = "AGC2oevLK1Y5YbPAk2aCNbwxhuAVirMRZK";
-      // const receivingAddress = "AWjWXxL2jgpVKvEKnvg8SRfwCWwm3oJfLQ";
       let mywallet = new Wallet('2c44b3c344b882f6744fcd7cc1cace4cf078145ffd98e25723dcb24cf0f27556');
-      // let wallet = new Wallet('2c44b3c344b882f6744fcd6cc1cace4cf078145ffd98e25723dcb24cf0f27556');
+      // const receivingAddress = "AWjWXxL2jgpVKvEKnvg8SRfwCWwm3oJfLQ";
+      // let mywallet = new Wallet('2c44b3c344b882f6744fcd6cc1cace4cf078145ffd98e25723dcb24cf0f27556');
       let transationBuilder = mywallet.newTxBuilder();
       transationBuilder.useApi(apiTestnet);
       transationBuilder.sendTo('NEO', 1, receivingAddress)
       transationBuilder.useType('CONTRACT');
       let txraw = await transationBuilder.build();
-      // let tx = wallet.signTx(txraw)
-      console.log('txraw', txraw)
+      let tx = mywallet.signTx(txraw)
+
       try {
-        console.log(await transationBuilder.broadcast(txraw))
+        console.log(await transationBuilder.broadcast(tx.raw))
       }
       catch (e) {
         console.log('current error', e)
-        const { default: Neon, api, wallet } = require("@cityofzion/neon-js");
-
         const sendingKey = mywallet.privateKey.toString('hex')
 
         const network = "TestNet";
@@ -136,10 +164,11 @@ describe('NeoWallet', async function () {
 
         Neon.sendAsset(config)
           .then(config => {
-            // console.log("\n\n--- Response ---");
-            // console.log(JSON.stringify(config), config.tx.serialize());
-            if (txraw == config.tx.serialize())
+            console.log(config.response);
+            if (tx.tx_id == config.response.txid) {
+              console.log('tx_id', tx.tx_id)
               Assert.equal(1, 1, "can not send raw")
+            }
           })
           .catch(config => {
             console.log(config);

@@ -146,8 +146,7 @@ class NeoTxBuilder extends TransactionBuilder {
     }
 
     tx.calculate(balance)
-    tx.sign(this.wallet.keyPair.privateKey.toString('hex'))
-    return tx.serialize()
+    return tx.serialize(false)
   }
 
   /**
@@ -193,7 +192,7 @@ class NeoTxBuilder extends TransactionBuilder {
       this.claimableList = claimableListData.transactions
     }
 
-    if (claimableList.length == 0)
+    if (this.claimableList.length == 0)
       throw new AppError(Messages.claimable_list_empty.message, Messages.claimable_list_empty.code);
 
     this.claimableList.forEach(element => {
@@ -204,11 +203,12 @@ class NeoTxBuilder extends TransactionBuilder {
       });
     });
     var claimData = {
+      address: this.wallet.address,
       claims: inputTxs
     };
-    let tx = Neon.tx.default.create.claimTx(this.wallet.address, claimData);
-    let result = Neon.tx.serializeTransaction(tx);
-    return result;
+    let tx = Neon.default.create.claimTx();
+    tx.addClaims(claimData);
+    return tx.serialize(false);
   }
 }
 
