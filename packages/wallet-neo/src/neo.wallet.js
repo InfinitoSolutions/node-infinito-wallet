@@ -102,7 +102,7 @@ class NeoWallet extends Wallet {
     let result = transaction.serialize(true)
     return {
       raw: result,
-      tx_id: transaction.hash()
+      tx_id: transaction.hash
     }
   }
 

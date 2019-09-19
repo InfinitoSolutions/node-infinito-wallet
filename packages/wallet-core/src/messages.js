@@ -6,5 +6,9 @@ module.exports = {
   invalid_parameter: {
     code: 'infinito.wallet.invalid_parameter',
     message: 'Invalid parameter %s',
+  },
+  send_transaction_fail: {
+    code: 'infinito.wallet.send_transaction_fail',
+    message: 'Send transaction fail',
   }
 };

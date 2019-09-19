@@ -113,21 +113,25 @@ class NeoTxBuilder extends TransactionBuilder {
   }
 
   async __createContractTx() {
+    let tx = Neon.default.create.contractTx()
+
     let balance = new Neon.wallet.Balance();
     balance.address = this.wallet.address;
+
     let assetIdSet = new Set();
     this.outputs.forEach(element => {
       assetIdSet.add(element.assetId)
+      tx.addOutput(element)
     })
 
-    assetIdSet.forEach(value => {
+    for (let value of assetIdSet) {
       // get balance
       let balanceAsset = await this.__getBalance(value)
       let utxos = await this.__getUTXOs(value);
       if (utxos.length == 0) {
         throw new AppError(Messages.utxos_empty.message, Messages.utxos_empty.code)
       }
-      let assetBalance = Neon.wallet.AssetBalance({
+      let assetBalance = new Neon.wallet.AssetBalance({
         balance: balanceAsset.assets[0].balance,
         unspent: utxos,
         spent: [],
@@ -139,11 +143,10 @@ class NeoTxBuilder extends TransactionBuilder {
         balance.addAsset('GAS', assetBalance)
       else
         balance.addAsset(value, assetBalance)
-    })
+    }
 
-    let tx = Neon.default.create.contractTx()
-    tx.addOutput(this.outputs)
     tx.calculate(balance)
+    tx.sign(this.wallet.keyPair.privateKey.toString('hex'))
     return tx.serialize()
   }
 
@@ -153,7 +156,7 @@ class NeoTxBuilder extends TransactionBuilder {
    * @param  {String} assetId                 (required)  Asset Id
    */
   async __getBalance(assetId) {
-    let result = await this.api.getBalance(this.account.address, assetId);
+    let result = await this.api.getBalance(this.wallet.address, assetId);
     return this.__getReponse(result);
   }
 
@@ -164,17 +167,17 @@ class NeoTxBuilder extends TransactionBuilder {
    */
   async __getUTXOs(assetId) {
     let inputTxs = [];
-    let result = await this.coinApi.getUtxo(this.account.address, assetId);
+    let result = await this.api.getUtxo(this.wallet.address, assetId);
     let data = this.__getReponse(result);
     let listUnspent = data.transactions;
 
-    for (let i = 0; i < listUnspent.length; i++) {
+    for (let utxo of listUnspent) {
       let unspent = {
-        value: listUnspent[i].amount,
-        txid: listUnspent[i].tx_id.slice(0, 2) === '0x' ? listUnspent[i].tx_id.slice(2) : listUnspent[i].tx_id,
-        index: listUnspent[i].vout
+        value: utxo.amount,
+        txid: utxo.tx_id.slice(0, 2) === '0x' ? utxo.tx_id.slice(2) : utxo.tx_id,
+        index: utxo.vout
       };
-      inputTxs.push(Neon.wallet.Coin(unspent));
+      inputTxs.push(new Neon.wallet.Coin(unspent));
     }
 
     return inputTxs;

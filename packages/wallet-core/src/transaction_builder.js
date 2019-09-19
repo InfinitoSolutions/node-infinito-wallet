@@ -1,4 +1,5 @@
 const AppError = require('./app_error');
+const Messages = require('./messages');
 
 class TransactionBuilder {
 

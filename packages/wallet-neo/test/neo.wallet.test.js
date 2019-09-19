@@ -20,7 +20,8 @@ let apiConfigTestnet = {
 let apiTestnet = new InfinitoApi(apiConfigTestnet).getChainService().NEO;
 console.log(apiTestnet)
 
-describe('NeoWallet', async () => {
+describe('NeoWallet', async function () {
+  this.timeout(15000);
   describe('#constructor', async () => {
     it('no parameter', async () => {
       expect(() => new Wallet())
@@ -91,12 +92,59 @@ describe('NeoWallet', async () => {
     });
 
     it.only('create contract transaction', async () => {
-      let wallet = new Wallet('2c44b3c344b882f6744fcd6cc1cace4cf078145ffd98e25723dcb24cf0f27556');
-      let transationBuilder = wallet.newTxBuilder();
+      const receivingAddress = "AGC2oevLK1Y5YbPAk2aCNbwxhuAVirMRZK";
+      // const receivingAddress = "AWjWXxL2jgpVKvEKnvg8SRfwCWwm3oJfLQ";
+      let mywallet = new Wallet('2c44b3c344b882f6744fcd7cc1cace4cf078145ffd98e25723dcb24cf0f27556');
+      // let wallet = new Wallet('2c44b3c344b882f6744fcd6cc1cace4cf078145ffd98e25723dcb24cf0f27556');
+      let transationBuilder = mywallet.newTxBuilder();
       transationBuilder.useApi(apiTestnet);
-      transationBuilder.sendTo('NEO', 1, 'AWjWXxL2jgpVKvEKnvg8SRfwCWwm3oJfLQ')
+      transationBuilder.sendTo('NEO', 1, receivingAddress)
       transationBuilder.useType('CONTRACT');
-      let tx = await transationBuilder.build();
+      let txraw = await transationBuilder.build();
+      // let tx = wallet.signTx(txraw)
+      console.log('txraw', txraw)
+      try {
+        console.log(await transationBuilder.broadcast(txraw))
+      }
+      catch (e) {
+        console.log('current error', e)
+        const { default: Neon, api, wallet } = require("@cityofzion/neon-js");
+
+        const sendingKey = mywallet.privateKey.toString('hex')
+
+        const network = "TestNet";
+        // console.log("\n\n--- Intents ---");
+
+        const intent = api.makeIntent({ NEO: 1 }, receivingAddress);
+        // intent.forEach(i => console.log(i));
+
+        const apiProvider = new api.neoscan.instance(network);
+
+        // console.log("\n\n--- API Provider ---");
+        // console.log(apiProvider);
+
+        const account = new wallet.Account(sendingKey);
+
+        // console.log("\n\n--- Sending Address ---");
+        // console.log(account);
+
+        const config = {
+          api: apiProvider, // The API Provider that we rely on for balance and rpc information
+          account: account, // The sending Account
+          intents: intent // Our sending intents
+        };
+
+        Neon.sendAsset(config)
+          .then(config => {
+            // console.log("\n\n--- Response ---");
+            // console.log(JSON.stringify(config), config.tx.serialize());
+            if (txraw == config.tx.serialize())
+              Assert.equal(1, 1, "can not send raw")
+          })
+          .catch(config => {
+            console.log(config);
+          });
+      }
     });
   });
 
