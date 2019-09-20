@@ -93,6 +93,16 @@ class NeoTxBuilder extends TransactionBuilder {
   }
 
   /**
+   * Balance of account
+   * 
+   * @param {*} balance  instance of Neon.wallet.Balance
+   */
+  useBalance(balance) {
+    this.balance = balance;
+    return this;
+  }
+
+  /**
    * Build transaction
    *
    * @returns
@@ -104,6 +114,10 @@ class NeoTxBuilder extends TransactionBuilder {
         return await this.__createClaimTx();
       case 'CONTRACT':
         return await this.__createContractTx();
+      case 'TRANSFER':
+        return await this.__createTransferTx();
+      default:
+        throw AppError.create(Messages.missing_parameter, 'type of transaction');
     }
   }
 
@@ -124,25 +138,27 @@ class NeoTxBuilder extends TransactionBuilder {
       tx.addOutput(element)
     })
 
-    for (let value of assetIdSet) {
-      // get balance
-      let balanceAsset = await this.__getBalance(value)
-      let utxos = await this.__getUTXOs(value);
-      if (utxos.length == 0) {
-        throw new AppError(Messages.utxos_empty.message, Messages.utxos_empty.code)
+    if (!this.balance.assetSymbols.length) {
+      for (let value of assetIdSet) {
+        // get balance
+        let balanceAsset = await this.__getBalance(value)
+        let utxos = await this.__getUTXOs(value);
+        if (utxos.length == 0) {
+          throw new AppError(Messages.utxos_empty.message, Messages.utxos_empty.code)
+        }
+        let assetBalance = new Neon.wallet.AssetBalance({
+          balance: balanceAsset.assets[0].balance,
+          unspent: utxos,
+          spent: [],
+          unconfirmed: []
+        });
+        if (value == Neon.CONST.ASSET_ID.NEO)
+          balance.addAsset('NEO', assetBalance);
+        else if (value == Neon.CONST.ASSET_ID.GAS)
+          balance.addAsset('GAS', assetBalance)
+        else
+          balance.addAsset(value, assetBalance)
       }
-      let assetBalance = new Neon.wallet.AssetBalance({
-        balance: balanceAsset.assets[0].balance,
-        unspent: utxos,
-        spent: [],
-        unconfirmed: []
-      });
-      if (value == Neon.CONST.ASSET_ID.NEO)
-        balance.addAsset('NEO', assetBalance);
-      else if (value == Neon.CONST.ASSET_ID.GAS)
-        balance.addAsset('GAS', assetBalance)
-      else
-        balance.addAsset(value, assetBalance)
     }
 
     tx.calculate(balance)

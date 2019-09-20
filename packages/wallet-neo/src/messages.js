@@ -22,5 +22,5 @@ module.exports = {
   utxos_empty: {
     code: 'infinito.wallet-neo.utxos_empty',
     message: 'Unspent outputs are empty',
-  },
+  }
 };
