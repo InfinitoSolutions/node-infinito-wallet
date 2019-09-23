@@ -59,6 +59,27 @@ class NeoTxBuilder extends TransactionBuilder {
     return this;
   }
 
+  useContract(contract) {
+    this.smartcontract = contract;
+    return this;
+  }
+
+  /**
+   * transfer
+   *
+   * @param {String} assetSymbol NEO | GAS 
+   * @param {*} value Amount in smallest unit
+   * @param {String} address Recipient address
+   * @memberof NeoTxBuilder
+   */
+  transferTo(to, amount, decimal = 8) {
+    this.transferToAddress = to;
+    this.transferAmount = amount;
+    this.transferDecimal = decimal;
+    return this;
+  }
+
+
   /**
    * Add many output
    *
@@ -129,8 +150,10 @@ class NeoTxBuilder extends TransactionBuilder {
   async __createContractTx() {
     let tx = Neon.default.create.contractTx()
 
-    let balance = new Neon.wallet.Balance();
-    balance.address = this.wallet.address;
+    if (!this.balance) {
+      this.balance = new Neon.wallet.Balance();
+      this.balance.address = this.wallet.address;
+    }
 
     let assetIdSet = new Set();
     this.outputs.forEach(element => {
@@ -153,15 +176,15 @@ class NeoTxBuilder extends TransactionBuilder {
           unconfirmed: []
         });
         if (value == Neon.CONST.ASSET_ID.NEO)
-          balance.addAsset('NEO', assetBalance);
+          this.balance.addAsset('NEO', assetBalance);
         else if (value == Neon.CONST.ASSET_ID.GAS)
-          balance.addAsset('GAS', assetBalance)
+          this.balance.addAsset('GAS', assetBalance)
         else
-          balance.addAsset(value, assetBalance)
+          this.balance.addAsset(value, assetBalance)
       }
     }
 
-    tx.calculate(balance)
+    tx.calculate(this.balance)
     return tx.serialize(false)
   }
 
@@ -224,6 +247,45 @@ class NeoTxBuilder extends TransactionBuilder {
     };
     let tx = Neon.default.create.claimTx();
     tx.addClaims(claimData);
+    return tx.serialize(false);
+  }
+
+
+  async __createTransferTx() {
+    if (!this.balance) {
+      this.balance = new Neon.wallet.Balance();
+      this.balance.address = this.wallet.address;
+    }
+
+    if (!this.balance.assetSymbols.length) {
+      let balanceAsset = await this.__getBalance(Neon.CONST.ASSET_ID.GAS);
+      let balanceGAS = balanceAsset.assets[0].balance;
+      let gasListUnspend = await this.__getUTXOs(Neon.CONST.ASSET_ID.GAS);
+
+      this.balance.addAsset('GAS', {
+        balance: balanceGAS,
+        unspent: gasListUnspend
+      });
+    }
+
+    let tx = Neon.default.create.invocationTx();
+    if (!this.smartcontract || this.smartcontract == '') {
+      throw AppError.create(Messages.missing_parameter.message, 'smart contract address')
+    }
+    let scriptHash = this.smartcontract.length === 40 ? this.smartcontract : this.smartcontract.slice(2, this.smartcontract.length);
+    const generator = Neon.nep5.abi.transfer(
+      scriptHash,
+      this.wallet.address,
+      this.transferToAddress,
+      new Neon.u.Fixed8(this.transferAmount).div(Math.pow(10, 8 - this.transferDecimal))
+    );
+    const builder = generator();
+    const script = builder.str;
+
+    tx.script = script
+    tx.gas = new Neon.u.Fixed8(1);
+    tx.calculate(this.balance)
+    console.log('tx', tx)
     return tx.serialize(false);
   }
 }
