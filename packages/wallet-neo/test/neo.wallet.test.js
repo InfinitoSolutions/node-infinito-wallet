@@ -94,7 +94,7 @@ describe('NeoWallet', async function () {
     it('private key (buffer), default network', async () => {
       // Buffer length is 32
       let wallet = new Wallet('L2CmHCqgeNHL1i9XFhTLzUXsdr5LGjag4d56YY98FqEi4j5d83Mv');
-      Assert.equal('AWjWXxL2jgpVKvEKnvg8SRfwCWwm3oJfLQ', wallet.address, 'wallet.wif must be equal');
+      Assert.equal('AdsNmzKPPG7HfmQpacZ4ixbv9XJHJs2ACz', wallet.address, 'wallet.wif must be equal');
     })
 
   });
@@ -248,66 +248,6 @@ describe('NeoWallet', async function () {
     });
 
     it.only('create transfer transaction', async () => {
-      // const receivingAddress = "AGC2oevLK1Y5YbPAk2aCNbwxhuAVirMRZK";
-      // let mywallet = new Wallet('2c44b3c344b882f6744fcd7cc1cace4cf078145ffd98e25723dcb24cf0f27556');
-      // const additionalInvocationGas = 1;
-      // const additionalIntents = [];
-      // const receivingAddress = "AWjWXxL2jgpVKvEKnvg8SRfwCWwm3oJfLQ";
-      // let mywallet = new Wallet('L2CmHCqgeNHL1i9XFhTLzUXsdr5LGjag4d56YY98FqEi4j5d83Mv');
-      // let mywallet = new Wallet('2c44b3c344b882f6744fcd6cc1cace4cf078145ffd98e25723dcb24cf0f27556');
-      // let transationBuilder = mywallet.newTxBuilder();
-      // transationBuilder.useApi(apiTestnet);
-      // transationBuilder.useType('TRANSFER');
-      // transationBuilder.useContract('ac116d4b8d4ca55e6b6d4ecce2192039b51cccc5');
-      // transationBuilder.transferTo(receivingAddress, 0.02)
-      // let txraw = await transationBuilder.build();
-      // let tx = mywallet.signTx(txraw)
-      // try {
-      //   console.log(await transationBuilder.broadcast(tx.raw))
-      // }
-      // catch (e) {
-      // console.log('current error', e)
-      // const sendingKey = mywallet.privateKey.toString('hex')
-
-      // const network = "TestNet";
-      // const apiProvider = new api.neoscan.instance(network);
-      // const account = new wallet.Account(sendingKey);
-
-      // const generator = nep5.abi.transfer(
-      //   '025c91e6f6792e087feebb30fd4761f4fbcb4e82',
-      //   'AdsNmzKPPG7HfmQpacZ4ixbv9XJHJs2ACz',
-      //   'AGC2oevLK1Y5YbPAk2aCNbwxhuAVirMRZK',
-      //   new u.Fixed8(1).div(Math.pow(10, 8 - 8))
-      // );
-      // const builder = generator();
-      // const script = builder.str;
-
-      // console.log("\n\n--- Invocation Script ---");
-      // console.log(script);
-      // const gas = additionalInvocationGas;
-      // const intent = additionalIntents;
-      // const config = {
-      //   api: apiProvider, // The API Provider that we rely on for balance and rpc information
-      //   account: account, // The sending Account
-      //   script: script,
-      //   intents: intent,
-      //   gas: gas
-      // };
-
-      // apiProvider.getRPCEndpoint
-
-      // Neon.sendAsset(config)
-      //   .then(config => {
-      //     console.log(config.response);
-      //     // if (tx.tx_id == config.response.txid) {
-      //     //   console.log('tx_id', tx.tx_id)
-      //     //   Assert.equal(1, 1, "can not send raw")
-      //     // }
-      //   })
-      //   .catch(e => {
-      //     console.log(e, config);
-      //   });
-      // }
       let mywallet = new Wallet('L2CmHCqgeNHL1i9XFhTLzUXsdr5LGjag4d56YY98FqEi4j5d83Mv');
       const sendingKey = mywallet.privateKey.toString('hex')
       const receivingAddress = "AGC2oevLK1Y5YbPAk2aCNbwxhuAVirMRZK";
@@ -317,59 +257,53 @@ describe('NeoWallet', async function () {
       const network = "TestNet";
       const additionalInvocationGas = 0;
       const additionalIntents = [];
-
-      let transationBuilder = mywallet.newTxBuilder();
-      transationBuilder.useApi(apiTestnet);
-      transationBuilder.useType('TRANSFER');
-      transationBuilder.useContract(contractScriptHash);
-      transationBuilder.transferTo(receivingAddress, amtToSend)
-      let txraw = await transationBuilder.build();
-      let tx = mywallet.signTx(txraw)
-
-      // await transationBuilder.broadcast(tx.raw)
-      console.log('tx', tx, await Neonjs.rpc.Query.sendRawTransaction(tx.raw).execute('https://test2.cityofzion.io'))
-      // try {
-      //   console.log(tx.raw)
-      //   console.log(await transationBuilder.broadcast(tx.raw))
-      // }
-      // catch (e) {
-      //   console.log('current error', e)
-
-      //   const apiProvider = new api.neoscan.instance(network);
-      //   const account = new wallet.Account(sendingKey);
-      //   const generator = nep5.abi.transfer(
-      //     contractScriptHash,
-      //     account.address,
-      //     receivingAddress,
-      //     new u.Fixed8(amtToSend).div(Math.pow(10, 8 - numOfDecimals))
-      //   );
-      //   const builder = generator();
-      //   const script = builder.str;
-      //   const gas = additionalInvocationGas;
-      //   const intent = additionalIntents;
-      //   const config = {
-      //     api: apiProvider, // The API Provider that we rely on for balance and rpc information
-      //     account: account, // The sending Account
-      //     intents: intent, // Additional intents to move assets
-      //     script: script, // The Smart Contract invocation script
-      //     gas: gas // Additional GAS for invocation.
-      //   };
-
-      //   let neoscan = new api.neoscan.instance('https://test2.cityofzion.io')
-      //   Neonjs.rpc.Query.sendRawTransaction(txraw)
-      //   // Neon.doInvoke(config)
-      //   //   .then(config => {
-      //   //     console.log("\n\n--- Response ---");
-      //   //     console.log(config.tx)
-      //   //     if (tx.tx_id == config.response.txid) {
-      //   //       console.log('tx_id', tx.tx_id)
-      //   //       Assert.equal(1, 1, "can not send raw")
-      //   //     }
-      //   //   })
-      //   //   .catch(config => {
-      //   //     console.log(config);
-      //   //   });
-      // }
+      let my = 1
+      if (my) {
+        let transationBuilder = mywallet.newTxBuilder();
+        transationBuilder.useApi(apiTestnet);
+        transationBuilder.useType('TRANSFER');
+        transationBuilder.useContract(contractScriptHash);
+        transationBuilder.transferTo(receivingAddress, amtToSend)
+        transationBuilder.withSign(true)
+        let txraw = await transationBuilder.build();
+        // let tx = mywallet.signTx(txraw)
+        // txraw = tx.raw
+        let txSign = await Neonjs.rpc.Query.sendRawTransaction(txraw)
+        txSign.execute('https://test3.cityofzion.io')
+      }
+      else {
+        const apiProvider = new api.neoscan.instance(network);
+        const account = new wallet.Account(sendingKey);
+        const generator = nep5.abi.transfer(
+          contractScriptHash,
+          account.address,
+          receivingAddress,
+          new u.Fixed8(amtToSend).div(Math.pow(10, 8 - numOfDecimals))
+        );
+        const builder = generator();
+        const script = builder.str;
+        const gas = additionalInvocationGas;
+        const intent = additionalIntents;
+        const config = {
+          api: apiProvider, // The API Provider that we rely on for balance and rpc information
+          account: account, // The sending Account
+          intents: intent, // Additional intents to move assets
+          script: script, // The Smart Contract invocation script
+          gas: gas, // Additional GAS for invocation.
+        };
+        let sign = await Neonjs.api.fillSigningFunction(config);
+        let url = await Neonjs.api.fillUrl(sign);
+        let balance = await api.fillBalance(url);
+        let tx = await api.createInvocationTx(balance);
+        let addAttributeIfExecutingAsSmartContract = await api.addAttributeIfExecutingAsSmartContract(tx)
+        let addAttributeForMintToken = await api.addAttributeForMintToken(addAttributeIfExecutingAsSmartContract)
+        let modifyTransactionForEmptyTransaction = await api.modifyTransactionForEmptyTransaction(addAttributeForMintToken)
+        let signTx = await api.signTx(modifyTransactionForEmptyTransaction)
+        let addSignatureIfExecutingAsSmartContract = await api.addSignatureIfExecutingAsSmartContract(signTx)
+        let addSignatureForMintToken = await api.addSignatureForMintToken(addSignatureIfExecutingAsSmartContract)
+        let txSign = await Neonjs.rpc.Query.sendRawTransaction(addSignatureForMintToken.tx)
+        txSign.execute('https://test3.cityofzion.io')
+      }
     });
   });
 

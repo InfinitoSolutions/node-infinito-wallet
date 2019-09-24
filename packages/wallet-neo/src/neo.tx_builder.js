@@ -185,6 +185,9 @@ class NeoTxBuilder extends TransactionBuilder {
     }
 
     tx.calculate(this.balance)
+    if (this.sign) {
+      tx.sign(this.wallet.getPrivateKey().toString('hex'))
+    }
     return tx.serialize(false)
   }
 
@@ -247,6 +250,9 @@ class NeoTxBuilder extends TransactionBuilder {
     };
     let tx = Neon.default.create.claimTx();
     tx.addClaims(claimData);
+    if (this.sign) {
+      tx.sign(this.wallet.getPrivateKey().toString('hex'))
+    }
     return tx.serialize(false);
   }
 
@@ -268,10 +274,10 @@ class NeoTxBuilder extends TransactionBuilder {
       });
     }
 
-    let tx = Neon.default.create.invocationTx();
     if (!this.smartcontract || this.smartcontract == '') {
       throw AppError.create(Messages.missing_parameter.message, 'smart contract address')
     }
+
     let scriptHash = this.smartcontract.length === 40 ? this.smartcontract : this.smartcontract.slice(2, this.smartcontract.length);
     const generator = Neon.nep5.abi.transfer(
       scriptHash,
@@ -282,11 +288,28 @@ class NeoTxBuilder extends TransactionBuilder {
     const builder = generator();
     const script = builder.str;
 
-    tx.script = script
-    tx.gas = new Neon.u.Fixed8(1);
-    tx.calculate(this.balance)
-    console.log('tx', tx)
-    return tx.serialize(false);
+    const account = new Neon.wallet.Account(this.wallet.getPrivateKey().toString('hex'));
+    const config = {
+      account: account, // The sending Account
+      intents: null, // Additional intents to move assets
+      script: script, // The Smart Contract invocation script
+      gas: 0, // Additional GAS for invocation.
+      balance: this.balance
+    };
+
+    let result = await Neon.api.fillSigningFunction(config)
+      .then(Neon.api.createInvocationTx)
+      .then(Neon.api.addAttributeIfExecutingAsSmartContract)
+      .then(Neon.api.addAttributeForMintToken)
+      .then(Neon.api.modifyTransactionForEmptyTransaction)
+      .then(Neon.api.addSignatureIfExecutingAsSmartContract)
+      .then(Neon.api.addSignatureForMintToken)
+
+    if (this.sign) {
+      result.tx.sign(this.wallet.getPrivateKey().toString('hex'))
+    }
+
+    return result.tx.serialize();
   }
 }
 

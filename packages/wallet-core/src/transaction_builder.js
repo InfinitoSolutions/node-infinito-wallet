@@ -54,8 +54,8 @@ class TransactionBuilder {
 
     let response = this.__getReponse(result, Messages.send_transaction_fail.code);
     return {
-      tx_id: response.txid,
-      raw: response.raw
+      tx_id: response.tx_id,
+      raw: rawTx
     };
   }
 
