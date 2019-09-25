@@ -265,8 +265,8 @@ class NeoTxBuilder extends TransactionBuilder {
 
     if (!this.balance.assetSymbols.length) {
       let balanceAsset = await this.__getBalance(Neon.CONST.ASSET_ID.GAS);
-      let balanceGAS = balanceAsset.assets[0].balance;
-      let gasListUnspend = await this.__getUTXOs(Neon.CONST.ASSET_ID.GAS);
+      let balanceGAS = balanceAsset.assets.length > 0 ? balanceAsset.assets[0].balance : 0
+      let gasListUnspend = balanceGAS > 0 ? await this.__getUTXOs(Neon.CONST.ASSET_ID.GAS) : []
 
       this.balance.addAsset('GAS', {
         balance: balanceGAS,

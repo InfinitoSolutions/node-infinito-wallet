@@ -306,9 +306,25 @@ describe('NeoWallet', async function () {
       }
     });
 
-    it.only('create transfer transaction on mainnet', async () => {
+    it('create transfer transaction on mainnet', async () => {
       let mywallet = new Wallet('2c44b3c344b882f6744fcd6cc1cace4cf078145ffd98e25723dcb24cf0f27556');
       const receivingAddress = "AWjWXxL2jgpVKvEKnvg8SRfwCWwm3oJfLQ";
+      const contractScriptHash = "ac116d4b8d4ca55e6b6d4ecce2192039b51cccc5";
+      const amtToSend = 0.001;
+
+      let transationBuilder = mywallet.newTxBuilder();
+      transationBuilder.useApi(apiMainnet);
+      transationBuilder.useType('TRANSFER');
+      transationBuilder.useContract(contractScriptHash);
+      transationBuilder.transferTo(receivingAddress, amtToSend)
+      transationBuilder.withSign(true)
+      let txraw = await transationBuilder.build();
+      await transationBuilder.broadcast(txraw)
+    });
+
+    it.only('create transfer transaction on mainnet', async () => {
+      let mywallet = new Wallet('2c44b3c344b882f6744fcd7cc1cace4cf078145ffd98e25723dcb24cf0f27556');
+      const receivingAddress = "AGC2oevLK1Y5YbPAk2aCNbwxhuAVirMRZK";
       const contractScriptHash = "ac116d4b8d4ca55e6b6d4ecce2192039b51cccc5";
       const amtToSend = 0.001;
 
