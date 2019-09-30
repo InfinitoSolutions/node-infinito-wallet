@@ -13,10 +13,11 @@ class AppError extends Error {
    * @param {*} code
    * @memberof AppError
    */
-  constructor(message, code) {
+  constructor(message, code, innerError) {
     super();
     this.message = message;
     this.code = code;
+    this.inner = innerError;
   }
 
   /**

@@ -84,11 +84,11 @@ describe('wallet_builder', async() => {
     listCase.forEach( curCase => {
       index++;
       it(`case ${index}: ${curCase.name}`, async() => {
-        console.log('test :', curCase);
+        // console.log('test :', curCase);
         let waletBuilder = new WalletBuilder();
         waletBuilder.withConfig(curCase.config);
 
-        console.log('curCase.expected.exception :', curCase.expected.exception);
+        // console.log('curCase.expected.exception :', curCase.expected.exception);
         
         if ( curCase.expected.exception !== undefined ) {
           try {
@@ -114,7 +114,7 @@ describe('wallet_builder', async() => {
     listCase.forEach( curCase => {
       index++;
       it(`case ${index}: ${curCase.name}`, async() => {
-        console.log('test :', curCase);
+        // console.log('test :', curCase);
         let waletBuilder = new WalletBuilder();
         waletBuilder = 
           waletBuilder
@@ -125,7 +125,7 @@ describe('wallet_builder', async() => {
             .withHDPath(curCase.config.hdPath)
             .useTestnet(curCase.config.testnet);
 
-        console.log('curCase.expected.exception :', curCase.expected.exception);
+        // console.log('curCase.expected.exception :', curCase.expected.exception);
         
         if ( curCase.expected.exception !== undefined ) {
           try {
