@@ -10,10 +10,7 @@
   },
   "author": "",
   "dependencies": {
-    "bitcoinjs-lib": "^4.0.1",
-    "coinselect": "^3.1.11",
-    "infinito-wallet-core": "^1.0.0",
-    "node-infinito-api": "git+https://gitlab.blockchainlabs.asia/infinito-sdk/node-infinito-api.git#develop"
+    "conseiljs": "^0.3.0"
   },
   "devDependencies": {
     "assert": "^1.4.1",
