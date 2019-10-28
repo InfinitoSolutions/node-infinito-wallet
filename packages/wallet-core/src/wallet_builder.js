@@ -117,7 +117,7 @@ class WalletBuilder {
    * @memberof WalletBuilder
    */
   async createKey() {
-    let privateKey = this.privateKey;
+    let privateKey = this.privateKey || this.wif;
     let network = Networks.getNetwork(this.platform, this.isTestnet);
 
     if (privateKey === null || privateKey === undefined) {
