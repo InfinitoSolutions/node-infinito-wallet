@@ -74,6 +74,18 @@ class WalletBuilder {
   }
 
   /**
+   * Set address
+   *
+   * @param {*} address
+   * @returns
+   * @memberof WalletBuilder
+   */
+  withAddress(address) {
+    this.address = address;
+    return this;
+  }
+
+  /**
    * Set wif
    *
    * @param {*} wif
@@ -108,6 +120,16 @@ class WalletBuilder {
   withHDPath(hdPath) {
     this.hdPath = hdPath;
     return this;
+  }
+
+  /**
+  * get network
+  *
+  * @returns
+  * @memberof WalletBuilder
+  */
+  getNetwork() {
+    return Networks.getNetwork(this.platform, this.isTestnet);
   }
 
   /**

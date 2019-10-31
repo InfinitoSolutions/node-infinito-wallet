@@ -216,7 +216,7 @@ class BtcTxBuilder extends TransactionBuilder {
     if (this.sign === true) {
       return this.wallet.signTx(transaction);
     }
-    let tx = transaction.build();
+    let tx = transaction.buildIncomplete();
 
     return {
       raw: tx.toHex(),
