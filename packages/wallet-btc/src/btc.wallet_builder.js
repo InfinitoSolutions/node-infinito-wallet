@@ -23,10 +23,10 @@ class BtcWalletBuilder extends WalletBuilder {
   async build() {
     if (!this.address) {
       let keyInfo = await this.createKey();
-      return new BtcWallet(keyInfo.privateKey, null, keyInfo.network);
+      return new BtcWallet(keyInfo.privateKey, keyInfo.network);
     }
     else {
-      return new BtcWallet(null, this.address, this.getNetwork());
+      return new BtcWallet(null, this.getNetwork(), this.address);
     }
   }
 

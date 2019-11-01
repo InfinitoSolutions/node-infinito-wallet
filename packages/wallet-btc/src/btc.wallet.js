@@ -17,11 +17,11 @@ class BtcWallet extends Wallet {
    * @param {Network} network
    * @memberof BtcWallet
    */
-  constructor(privateKey, address, network) {
+  constructor(privateKey, network, address) {
     super(privateKey);
     this.network = (network === null || network === undefined) ? Networks.getNetwork('BTC') : network;
     this.address = address
-    this.__init(this.privateKey, this.address, this.network);
+    this.__init(this.privateKey, this.network, this.address);
   }
 
   /**
@@ -31,7 +31,7 @@ class BtcWallet extends Wallet {
    * @param {Network} network
    * @memberof BtcWallet
    */
-  __init(privateKey, address, network) {
+  __init(privateKey, network, address) {
     if (privateKey) {
       let wif = Keygen.privateKeytoWif(privateKey, network.wif);
       let keyPair = Bitcoinjs.ECPair.fromWIF(wif.toString('hex'), network);
