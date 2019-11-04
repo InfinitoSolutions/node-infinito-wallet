@@ -142,6 +142,40 @@ class BtcWallet extends Wallet {
     }
   }
 
+  /**
+   * Sign multisig transaction
+   *
+   * @param {*} msg
+   * @memberof BtcWallet
+   */
+  signMultisignTx(msg, redeemScript, isFinalize = false) {
+    if (msg == null || msg === undefined) {
+      throw AppError.create(Messages.missing_parameter, 'msg');
+    }
+
+    if (redeemScript == null || redeemScript === undefined) {
+      throw AppError.create(Messages.missing_parameter, 'redeemScript');
+    }
+
+    let txBuilder = null;
+    if (typeof (msg) === 'object' && msg.constructor.name === 'TransactionBuilder') {
+      txBuilder = msg;
+    } else if (typeof (msg) === 'string') {
+      let tx = Bitcoinjs.Transaction.fromHex(msg);
+      txBuilder = Bitcoinjs.TransactionBuilder.fromTransaction(tx, this.network);
+    }
+
+    for (let i = 0; i < txBuilder.__inputs.length; i++) {
+      txBuilder.sign(i, this.keyPair, redeemScript);
+    }
+
+    let tx = isFinalize ? txBuilder.build() : txBuilder.buildIncomplete();
+    return {
+      raw: tx.toHex(),
+      tx_id: tx.getId()
+    }
+  }
+
 }
 
 module.exports = BtcWallet;

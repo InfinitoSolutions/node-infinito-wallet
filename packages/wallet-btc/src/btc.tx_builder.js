@@ -223,6 +223,90 @@ class BtcTxBuilder extends TransactionBuilder {
       tx_id: tx.getId()
     }
   }
+
+  /**
+   * Build multisig transaction
+   *
+   * @param {String} redeemScriptHex
+   * @returns
+   * @memberof BtcTxBuilder
+   */
+  async multisigBuild(redeemScriptHex, isFinalize = false) {
+    // get redeemScript
+    let redeemScript = new Buffer(redeemScriptHex, 'hex')
+    // Get feerate
+    let feerate = this.feerate;
+    if (feerate === null || feerate === undefined) {
+      feerate = await getDefaultFee(this.api, this.platform, this.feerateType);
+    }
+
+    // Get utxo
+    let utxos = this.utxos;
+    let address = this.wallet.getAddress();
+    if (utxos === null || utxos === undefined || utxos.length == 0) {
+      utxos = await getUtxo(this.api, address);
+    }
+
+    // Output
+    let outputs = [...this.outputs];
+
+    // Create transaction
+    let selectResult = {};
+    if (this.outputMaxAddress !== null && this.outputMaxAddress !== undefined) {
+      // Process send max to 1 address
+      outputs = [{ address: this.outputMaxAddress }];
+      selectResult = coinSelectSendMax(utxos, outputs, feerate);
+    } else {
+      // {inputs, outputs, fee}
+      selectResult = coinSelect(utxos, outputs, feerate);
+      if (!selectResult.inputs || !selectResult.outputs) {
+        throw AppError.create(Messages.over_balance)
+      }
+    }
+
+    const network = this.wallet.network;
+    const transaction = new Bitcoinjs.TransactionBuilder(network);
+    selectResult.inputs.forEach(input => {
+      transaction.addInput(input.txid, input.output_no);
+    });
+
+    selectResult.outputs.forEach(output => {
+      if (output.address !== null && output.address !== undefined && output.address.length > 0) {
+        transaction.addOutput(output.address, output.value);
+      } else {
+        transaction.addOutput(address, output.value);
+      }
+    });
+
+    // Sign
+    if (this.sign === true) {
+      return this.wallet.signMultisignTx(transaction, redeemScript, isFinalize);
+    }
+    let tx = transaction.buildIncomplete();
+
+    return {
+      raw: tx.toHex(),
+      tx_id: tx.getId()
+    }
+  }
+
+  /**
+   * Build redeem script
+   *
+   * @param {Number} m
+   * @param {ArrayBuffer} publicKeys
+   * @returns
+   * @memberof BtcTxBuilder
+   */
+  async multisigBuild(m, publicKeys) {
+    const p2ms = Bitcoinjs.payments.p2ms({
+      m: m,
+      pubkeys: publicKeys,
+      network: this.wallet.network
+    })
+    const p2sh = Bitcoinjs.payments.p2sh({ redeem: p2ms, network: this.wallet.network })
+    return p2sh.redeem.output.toString('hex')
+  }
 }
 
 
