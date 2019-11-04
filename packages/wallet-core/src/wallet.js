@@ -10,10 +10,6 @@ class Wallet {
    * @memberof Wallet
    */
   constructor(privateKey) {
-    if (!privateKey) {
-      throw AppError.create(Messages.missing_parameter, 'privateKey');
-    }
-
     if (typeof (privateKey) === 'string') {
       if (privateKey.length == 64) {
         // Private key hex string
@@ -28,8 +24,10 @@ class Wallet {
         throw AppError.create(Messages.invalid_parameter, 'privateKey');
       }
       this.privateKey = privateKey;
-    } else {
-      throw AppError.create(Messages.invalid_parameter, 'privateKey');
+    }
+    else {
+      if (privateKey)
+        throw AppError.create(Messages.invalid_parameter, 'privateKey');
     }
 
     this.publicKey = null;
@@ -76,7 +74,7 @@ class Wallet {
   getKeyPair() {
     return this.keyPair;
   }
-  
+
   /**
    * Sign transaction
    *
