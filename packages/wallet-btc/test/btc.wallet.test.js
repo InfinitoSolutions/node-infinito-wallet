@@ -1,9 +1,6 @@
 const Assert = require('assert');
 const chai = require('chai');
-const InfinitoApi = require('node-infinito-api');
-const WalletBuilder = require('../src/btc.wallet_builder');
 const Wallet = require('../src/btc.wallet');
-const ConfigTest = require('./config.test');
 const Messages = require('../src/messages');
 const { AppError, Networks } = require('infinito-wallet-core');
 

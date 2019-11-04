@@ -1,4 +1,3 @@
-const Assert = require('assert');
 const chai = require('chai');
 const InfinitoApi = require('node-infinito-api');
 chai.should();
@@ -63,11 +62,6 @@ describe('BtcWalletBuilder', async () => {
       // txBuilder.sendTo('39XpoaixBAbUZzaq7g73tmvogBw6rGv8JP', 10000)
       txBuilder.sendMaxTo('39XpoaixBAbUZzaq7g73tmvogBw6rGv8JP')
 
-      // txBuilder
-      //   .addOutput("aa", "1")
-      //   .createTx()
-      //   .sign()
-      //   .send()
       try {
         console.log('txBuilder :', await txBuilder.build());
       } catch (err) {
@@ -75,20 +69,19 @@ describe('BtcWalletBuilder', async () => {
       }
     });
 
-    it.only('case 3 send max', async () => {
+    it('case 4 send max', async () => {
       let apiConfigMainnet = {
         apiKey: ConfigTest.API_KEY_TESTNET,
         secret: ConfigTest.SECRECT_TESTNET,
         baseUrl: ConfigTest.BASE_URL_TESTNET,
         logLevel: ConfigTest.LOG_LEVEL
       };
-      console.log(apiConfigMainnet)
       let apiMainnet = new InfinitoApi(apiConfigMainnet);
       let builder = new WalletBuilder();
       let wallet = await builder
         .withPlatform('BTC')
         .useTestnet(true)
-        .withAddress('2N6aHknArYj4PLx7QjrUcFW3DhSpArwf65F')
+        .withAddress('mnypRg2HivFEU8cFeVfwcYrwrz7CfcZfmF')
         // .withMnemonic('goddess cradle need donkey fog add opinion ensure spoil shrimp honey rude')
         .build();
       console.log('wallet :', wallet);
@@ -96,16 +89,56 @@ describe('BtcWalletBuilder', async () => {
       txBuilder.withSign(false)
 
       txBuilder.useApi(apiMainnet.getChainService().BTC);
-      txBuilder.sendTo('moK9QHugQAVVnUkgVApNqWHcFaoJ9Acops', 10000)
-      // txBuilder.sendMaxTo('39XpoaixBAbUZzaq7g73tmvogBw6rGv8JP')
-
-      // // txBuilder
-      // //   .addOutput("aa", "1")
-      // //   .createTx()
-      // //   .sign()
-      // //   .send()
+      txBuilder.sendTo('msdTjBqt3Q69fioxgJQbndBh1GDem9r5td', 100000)
       try {
         console.log('txBuilder :', await txBuilder.build());
+      } catch (err) {
+        console.log('err :', err);
+      }
+    });
+
+    it.only('case 5 multisig', async () => {
+      let apiConfigMainnet = {
+        apiKey: ConfigTest.API_KEY_TESTNET,
+        secret: ConfigTest.SECRECT_TESTNET,
+        baseUrl: ConfigTest.BASE_URL_TESTNET,
+        logLevel: ConfigTest.LOG_LEVEL
+      };
+      let apiMainnet = new InfinitoApi(apiConfigMainnet);
+      let builder = new WalletBuilder();
+      let wallet = await builder
+        .withPlatform('BTC')
+        .useTestnet(true)
+        .withMnemonic('goddess cradle need donkey fog add opinion ensure spoil shrimp honey rude')
+        .build();
+
+      let wallet1 = await builder
+        .withPlatform('BTC')
+        .useTestnet(true)
+        .withMnemonic('goddess cradle donkey need fog add opinion ensure spoil shrimp honey rude')
+        .build();
+
+      let wallet2 = await builder
+        .withPlatform('BTC')
+        .useTestnet(true)
+        .withMnemonic('goddess cradle need donkey fog add ensure opinion spoil shrimp honey rude')
+        .build();
+
+      // console.log('publickey', wallet.getPublicKey().toString('hex'))
+      let publicKeys = [
+        wallet.getPublicKey().toString('hex'),
+        wallet1.getPublicKey().toString('hex'),
+        wallet2.getPublicKey().toString('hex')
+      ]
+      let txBuilder = wallet.newTxBuilder();
+      txBuilder.withSign(true)
+
+      txBuilder.useApi(apiMainnet.getChainService().BTC);
+      txBuilder.sendTo('msdTjBqt3Q69fioxgJQbndBh1GDem9r5td', 100000)
+      let redeem = txBuilder.redeemBuild(2, publicKeys)
+
+      try {
+        console.log('txBuilder :', await txBuilder.multisigBuild(redeem, false));
       } catch (err) {
         console.log('err :', err);
       }
