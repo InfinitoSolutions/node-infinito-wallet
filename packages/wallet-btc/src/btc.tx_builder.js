@@ -294,14 +294,18 @@ class BtcTxBuilder extends TransactionBuilder {
    * Build redeem script
    *
    * @param {Number} m
-   * @param {ArrayBuffer} publicKeys
+   * @param {ArrayHex} publicKeys
    * @returns
    * @memberof BtcTxBuilder
    */
-  async multisigBuild(m, publicKeys) {
+  redeemBuild(m, publicKeys) {
+    let keyBuffers = []
+    for (let pubKey of publicKeys) {
+      keyBuffers.push(new Buffer(pubKey, 'hex'))
+    }
     const p2ms = Bitcoinjs.payments.p2ms({
       m: m,
-      pubkeys: publicKeys,
+      pubkeys: keyBuffers,
       network: this.wallet.network
     })
     const p2sh = Bitcoinjs.payments.p2sh({ redeem: p2ms, network: this.wallet.network })
