@@ -3,7 +3,7 @@ const BtcWallet = require('./btc.wallet');
 
 /**
  * Blockchain 1.0 Wallet Builder Class
- * (Compatible with BTC,BTC,LTC,DOGE,DASH)
+ * (Compatible with BTC,BTC,LTC,DOGE,DASH,EOS)
  *
  * @class WalletBuilder
  */

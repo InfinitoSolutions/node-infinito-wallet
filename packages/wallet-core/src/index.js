@@ -5,6 +5,7 @@ const WalletBuilder = require('./wallet_builder');
 const Wallet = require('./wallet');
 const TransactionBuilder = require('./transaction_builder');
 const AppError = require('./app_error');
+const EthereumFunction = require('./ethereumFunction')
 
 module.exports = {
   AppError,
@@ -13,5 +14,6 @@ module.exports = {
   Networks,
   Wallet,
   WalletBuilder,
-  TransactionBuilder
+  TransactionBuilder,
+  EthereumFunction
 };

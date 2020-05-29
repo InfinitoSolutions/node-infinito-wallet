@@ -1,6 +1,7 @@
 const Messages = require('./messages');
 const AppError = require('./app_error');
 const Keygen = require('./keygen');
+global.Buffer = global.Buffer || require('buffer').Buffer;
 
 class Wallet {
 

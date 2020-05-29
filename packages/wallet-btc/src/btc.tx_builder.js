@@ -3,6 +3,7 @@ const coinSelectUtils = require('coinselect/utils');
 const Bitcoinjs = require('bitcoinjs-lib');
 const { AppError, TransactionBuilder } = require('infinito-wallet-core');
 const Messages = require('./messages');
+global.Buffer = global.Buffer || require('buffer').Buffer;
 
 /**
  * Get default feerate from api

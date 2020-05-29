@@ -143,6 +143,10 @@ class WalletBuilder {
     let network = Networks.getNetwork(this.platform, this.isTestnet);
 
     if (privateKey === null || privateKey === undefined) {
+      if (!this.mnemonic) {
+        this.mnemonic = Keygen.createMnemonic();
+      }
+
       let keypair = await Keygen.createKeypair(this.platform, this.mnemonic, this.password, this.hdPath, this.isTestnet);
       privateKey = keypair.privateKey;
     }

@@ -5,8 +5,10 @@
   "main": "index.js",
   "scripts": {
     "postinstall": "lerna bootstrap",
-    "bootstrap": "lerna bootstrap",
-    "pack": "webpack-cli --mode=production --display-error-details"
+    "bootstrapx": "lerna bootstrap",
+    "pack": "webpack-cli --mode=production --display-error-details",
+    "bootstrap": "lerna bootstrap --hoist",
+    "start": "lerna run start --stream"
   },
   "author": "Infinito Technology",
   "license": "MIT",

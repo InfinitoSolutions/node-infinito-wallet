@@ -5,6 +5,14 @@ const Messages = require('./messages');
 const AppError = require('./app_error');
 const Bip44 = require('./bip44');
 const Networks = require('./networks');
+global.Buffer = global.Buffer || require('buffer').Buffer;
+
+/**
+ * Create Mnemonic
+ */
+function createMnemonic() {
+  return Bip39.generateMnemonic();
+}
 
 /**
  * Create keypair
@@ -96,5 +104,6 @@ function wifToPrivateKey(wifKey) {
 module.exports = {
   createKeypair,
   privateKeytoWif,
-  wifToPrivateKey
+  wifToPrivateKey,
+  createMnemonic
 };

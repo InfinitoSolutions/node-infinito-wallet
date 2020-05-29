@@ -11,9 +11,10 @@
   "author": "",
   "dependencies": {
     "bitcoinjs-lib": "^4.0.1",
+    "buffer": "^5.4.3",
     "coinselect": "^3.1.11",
-    "infinito-wallet-core": "^1.0.0",
-    "node-infinito-api": "git+https://deploy_user:Cb4zFRboeM3vCtwf4vhy@gitlab.blockchainlabs.asia/infinito-sdk/node-infinito-api.git#develop"
+    "infinito-wallet-core": "/Users/omart/Desktop/Omart-Dung/__IBL/node-infinito-wallet/packages/wallet-core",
+    "node-infinito-api": "/Users/omart/Desktop/Omart-Dung/__IBL/__LIBS/ibl-core-wallet-api"
   },
   "devDependencies": {
     "assert": "^1.4.1",
@@ -24,6 +25,9 @@
     "mocha": "^5.2.0",
     "mochawesome": "^3.1.1",
     "nyc": "^13.3.0"
+  },
+  "xx": {
+    "node-infinito-api": "git+https://deploy_user:Cb4zFRboeM3vCtwf4vhy@gitlab.blockchainlabs.asia/infinito-sdk/node-infinito-api.git#develop"
   },
   "publishConfig": {
     "access": "public"
