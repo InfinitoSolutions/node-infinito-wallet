@@ -13,8 +13,7 @@
     "bitcoinjs-lib": "^4.0.1",
     "buffer": "^5.4.3",
     "coinselect": "^3.1.11",
-    "infinito-wallet-core": "/Users/omart/Desktop/Omart-Dung/__IBL/node-infinito-wallet/packages/wallet-core",
-    "node-infinito-api": "/Users/omart/Desktop/Omart-Dung/__IBL/__LIBS/ibl-core-wallet-api"
+    "infinito-wallet-core": "../wallet-core"
   },
   "devDependencies": {
     "assert": "^1.4.1",

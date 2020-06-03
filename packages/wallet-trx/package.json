@@ -11,7 +11,7 @@
   "author": "",
   "dependencies": {
     "tronweb": "2.6.8",
-    "infinito-wallet-core": "/Users/omart/Desktop/Omart-Dung/__IBL/node-infinito-wallet/packages/wallet-core"
+    "infinito-wallet-core": "../wallet-core"
   },
   "devDependencies": {
     "assert": "^1.4.1",

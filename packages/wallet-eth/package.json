@@ -15,7 +15,7 @@
     "ethereumjs-tx": "1.3.7",
     "ethereumjs-util": "5.2.0",
     "ethereumjs-wallet": "0.6.2",
-    "infinito-wallet-core": "/Users/omart/Desktop/Omart-Dung/__IBL/node-infinito-wallet/packages/wallet-core"
+    "infinito-wallet-core": "../wallet-core"
   },
   "devDependencies": {
     "assert": "^1.4.1",

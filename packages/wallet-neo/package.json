@@ -11,8 +11,7 @@
   "author": "",
   "dependencies": {
     "@cityofzion/neon-js": "^4.7.0",
-    "infinito-wallet-core": "/Users/omart/Desktop/Omart-Dung/__IBL/node-infinito-wallet/packages/wallet-core",
-    "node-infinito-api": "/Users/omart/Desktop/Omart-Dung/__IBL/__LIBS/ibl-core-wallet-api"
+    "infinito-wallet-core": "../wallet-core"
   },
   "devDependencies": {
     "assert": "^1.4.1",

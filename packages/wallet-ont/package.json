@@ -11,7 +11,7 @@
   "author": "",
   "dependencies": {
     "ontology-ts-sdk": "1.0.10",
-    "infinito-wallet-core": "/Users/omart/Desktop/Omart-Dung/__IBL/node-infinito-wallet/packages/wallet-core"
+    "infinito-wallet-core": "../wallet-core"
   },
   "devDependencies": {
     "assert": "^1.4.1",

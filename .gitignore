@@ -5,3 +5,4 @@
 **/*.log
 **/.nyc_output
 **/.env
+**/packages/wallet/.cache

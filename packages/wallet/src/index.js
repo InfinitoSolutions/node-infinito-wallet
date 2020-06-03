@@ -1,21 +1,21 @@
 const {BtcWalletBuilder} = require('infinito-wallet-btc');
-const {NeoWalletBuilder} = require('infinito-wallet-neo');
-const {EthWalletBuilder} = require('infinito-wallet-eth');
-const {OntWalletBuilder} = require('infinito-wallet-ont');
-const {AdaWalletBuilder} = require('infinito-wallet-ada');
+// const {NeoWalletBuilder} = require('infinito-wallet-neo');
+// const {EthWalletBuilder} = require('infinito-wallet-eth');
+// const {OntWalletBuilder} = require('infinito-wallet-ont');
+// const {AdaWalletBuilder} = require('infinito-wallet-ada');
 
 const PLATFORM = {
   BTC: BtcWalletBuilder,
-  BCH: BtcWalletBuilder,
-  LTC: BtcWalletBuilder,
-  DOGE: BtcWalletBuilder,
-  DASH: BtcWalletBuilder,
-  NEO: NeoWalletBuilder,
-  ETH: EthWalletBuilder,
-  ETC: EthWalletBuilder,
-  EOS: BtcWalletBuilder,
-  ONT: OntWalletBuilder,
-  ADA: AdaWalletBuilder
+  // BCH: BtcWalletBuilder,
+  // LTC: BtcWalletBuilder,
+  // DOGE: BtcWalletBuilder,
+  // DASH: BtcWalletBuilder,
+  // NEO: NeoWalletBuilder,
+  // ETH: EthWalletBuilder,
+  // ETC: EthWalletBuilder,
+  // EOS: BtcWalletBuilder,
+  // ONT: OntWalletBuilder,
+  // ADA: AdaWalletBuilder
 }
 
 /**
@@ -28,4 +28,6 @@ const WalletBuilder = (platform) => {
   return new PLATFORM[(platform || 'BTC').toUpperCase()]();
 }
 
-module.exports = WalletBuilder;
+// module.exports = WalletBuilder;
+
+window.WalletBuilder = WalletBuilder;

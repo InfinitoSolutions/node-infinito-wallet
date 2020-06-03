@@ -2384,4 +2384,4 @@ module.exports.__wbindgen_throw = function(ptr, len) {
 };
 
 // wasm = require('./cardano_wallet_bg');
-wasm = require('./xx');
+// wasm = require('./xx');
